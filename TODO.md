@@ -2,7 +2,7 @@
 
 ## Todo
 
-* [ ] Add lining pipeline and precommit
+* [ ] Add linting pipeline and precommit
 
 * [ ] Setup API framework with go and add health check endpoint
   - **Note** look into which API framework to use i.e. gin etc
