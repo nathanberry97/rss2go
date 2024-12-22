@@ -1,0 +1,29 @@
+---
+name: Lint rss2go
+
+on:
+    pull_request:
+        branches: [main]
+
+jobs:
+    Deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Install go
+              uses: actions/setup-go@v5
+              with:
+                  go-version: 1.21.7
+
+            - name: Install pre-commit Dependencies
+              run: |
+                  pip install pre-commit
+                  make setup
+
+            - name: Validate pre-commit
+              run: |
+                  pre-commit run --all
+...
