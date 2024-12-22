@@ -20,6 +20,7 @@ jobs:
 
             - name: Install pre-commit Dependencies
               run: |
+                  pip install pre-commit
                   make setup
 
             - name: Validate pre-commit
