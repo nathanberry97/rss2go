@@ -2,12 +2,6 @@
 
 ## Todo
 
-* [ ] Add linting pipeline and precommit
-
-* [ ] Setup API framework with go and add health check endpoint
-  - **Note** look into which API framework to use i.e. gin etc
-  - **Note** look into setting up openapi documentation and get it working with go
-
 * [ ] Add dockerfile to build and run the application
 
 * [ ] Implement a database no-sql or sql
@@ -20,6 +14,11 @@
   - [ ] GET RSS feed posts from using the RSS feed URL
   - [ ] DELETE RSS feeds from the database
 
-## Inprogress
+## In progress
+
+* [ ] Setup API framework with go and add health check endpoint
+  - **Note** look into which API framework to use i.e. gin etc
 
 ## Completed
+
+* [X] Add linting pipeline and precommit

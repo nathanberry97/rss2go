@@ -1,0 +1,22 @@
+repos:
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v4.5.0
+      hooks:
+          - id: end-of-file-fixer
+          - id: trailing-whitespace
+
+    - repo: https://github.com/dnephin/pre-commit-golang
+      rev: v0.5.1
+      hooks:
+          - id: go-fmt
+
+    - repo: https://github.com/tbroadley/spellchecker-cli
+      rev: v6.2.0
+      hooks:
+          - id: spellchecker-cli
+            args: ["-l", "en-GB", "-d", ".spelling", "-f", "*.md"]
+            name: spellcheck
+            language_version: 18.19.1
+            types: [markdown]
+            stages:
+                - "pre-commit"
