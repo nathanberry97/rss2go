@@ -19,7 +19,8 @@ run: build ## Build and run backend API
 
 .PHONY: test
 test: ## Test backend for RSS2GO API
-	@cd api && go test src/*.go -v
+	@cd api && go test src/routes/*.go -v
+	@cd api && go test src/utils/*.go -v
 
 .PHONY: clean
 clean: ## Clean up build artifacts

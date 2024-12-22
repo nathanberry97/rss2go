@@ -16,9 +16,7 @@
 
 ## In progress
 
-* [ ] Setup API framework with go and add health check endpoint
-  - **Note** look into which API framework to use i.e. gin etc
-
 ## Completed
 
 * [X] Add linting pipeline and precommit
+* [X] Setup API framework with go and add health check endpoint
