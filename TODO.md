@@ -14,6 +14,7 @@
   - [ ] DELETE favourite articles
 
 * [ ] RSS feed endpoints
+  - [ ] Add a database connection to the API framework
   - [ ] POST new RSS feeds to the database
   - [ ] GET RSS feeds
   - [ ] GET RSS feed posts from using the RSS feed URL
@@ -22,15 +23,8 @@
 
 ## In progress
 
-* [ ] Implement a database sql
-  - [ ] Add Liquibase to the project to manage database
-  - [ ] Add postgres to the dockerfile
-  - [ ] Create a database schema for the project
-  - [ ] Add a database connection to the API framework
-
-> **Note** going to use PSQL for the database
-
 ## Completed
 
 * [X] Add linting pipeline and precommit
 * [X] Setup API framework with go and add health check endpoint
+* [X] Implement a database sql
