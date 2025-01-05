@@ -3,6 +3,9 @@ precommit
 RSS
 sql
 PSQL
+postgres
+frontend
+Liquibase
 no-sql
 dockerfile
 Todo
