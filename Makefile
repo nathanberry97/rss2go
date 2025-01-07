@@ -12,7 +12,7 @@ setup: ## Install pre-commit hooks
 .PHONY: start-db
 start-db: ## Run PostgreSQL database
 	@cd database && podman build -t postgresql .
-	@podman run --name rss2go-db -e POSTGRES_PASSWORD=postgres -d -p 5432:5432 postgresql
+	@podman run --name rss2go-db -e POSTGRES_PASSWORD=password -d -p 5432:5432 postgresql
 
 .PHONY: connect-db
 connect-db: ## Connect to PostgreSQL database
