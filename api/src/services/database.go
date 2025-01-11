@@ -2,7 +2,6 @@ package services
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"os"
 
@@ -16,8 +15,6 @@ func DatabaseConnection() *pgx.Conn {
 	if err != nil {
 		log.Fatalf("Unable to connect to database: %v\n", err)
 	}
-
-	fmt.Println("Successfully connected to the database!")
 
 	return conn
 }

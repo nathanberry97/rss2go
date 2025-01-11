@@ -8,8 +8,6 @@ func InitialiseRouter() *gin.Engine {
 	healthCheck(router)
 	postRssFeed(router)
 	getRssFeeds(router)
-	getRssFeedArticles(router)
-	getRssFeedArticlesByFeed(router)
 	deleteRssFeed(router)
 
 	return router

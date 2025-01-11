@@ -1,5 +1,10 @@
 package schema
 
 type RssPostBody struct {
-	Url string `json:"url"`
+	URL string `json:"url"`
+}
+
+type RssFeed struct {
+	ID  int    `json:"id"`
+	URL string `json:"url"`
 }
