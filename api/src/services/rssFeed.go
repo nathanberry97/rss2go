@@ -39,3 +39,27 @@ func PostRssFeed(conn *pgx.Conn, postBody schema.RssPostBody) (int, error) {
 	fmt.Printf("RSS feed inserted successfully with ID: %d\n", id)
 	return id, nil
 }
+
+func GetRssFeeds(conn *pgx.Conn) ([]schema.RssFeed, error) {
+	query := "SELECT id, name, url FROM rss.feeds"
+	rows, err := conn.Query(context.Background(), query)
+	if err != nil {
+		return nil, fmt.Errorf("error querying database: %w", err)
+	}
+	defer rows.Close()
+
+	var feeds []schema.RssFeed
+	for rows.Next() {
+		var feed schema.RssFeed
+		if err := rows.Scan(&feed.ID, &feed.NAME, &feed.URL); err != nil {
+			return nil, fmt.Errorf("error scanning row: %w", err)
+		}
+		feeds = append(feeds, feed)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("error during rows iteration: %w", err)
+	}
+
+	return feeds, nil
+}

@@ -47,7 +47,17 @@ func postRssFeed(router *gin.Engine) {
 
 func getRssFeeds(router *gin.Engine) {
 	router.GET("/rss_feed", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, gin.H{"message": "Rss feeds retrieved successfully"})
+		dbConn := services.DatabaseConnection()
+		defer dbConn.Close(context.Background())
+
+		feeds, err := services.GetRssFeeds(dbConn)
+
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Error retrieving RSS feeds"})
+			return
+		}
+
+		ctx.JSON(http.StatusOK, feeds)
 	})
 }
 

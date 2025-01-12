@@ -5,6 +5,7 @@ type RssPostBody struct {
 }
 
 type RssFeed struct {
-	ID  int    `json:"id"`
-	URL string `json:"url"`
+	ID   int    `json:"id"`
+	URL  string `json:"url"`
+	NAME string `json:"name"`
 }
