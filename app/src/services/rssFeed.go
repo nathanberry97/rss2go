@@ -67,3 +67,13 @@ func GetRssFeeds(conn *sql.DB) ([]schema.RssFeed, error) {
 
 	return feeds, nil
 }
+
+func DeleteRssFeed(conn *sql.DB, id int) error {
+	query := "DELETE FROM feeds WHERE id = ?"
+	_, err := conn.Exec(query, id)
+	if err != nil {
+		return fmt.Errorf("error deleting feed: %w", err)
+	}
+
+	return nil
+}

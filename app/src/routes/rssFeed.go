@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/nathanberry97/rss2go/src/schema"
@@ -62,6 +63,22 @@ func getRssFeeds(router *gin.Engine) {
 
 func deleteRssFeed(router *gin.Engine) {
 	router.DELETE("/rss_feed/:id", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, gin.H{"message": "Rss feed deleted successfully"})
+		idParam := ctx.Param("id")
+		id, err := strconv.Atoi(idParam)
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID format"})
+			return
+		}
+
+		dbConn := services.DatabaseConnection()
+		defer dbConn.Close()
+
+		err = services.DeleteRssFeed(dbConn, id)
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Error deleting RSS feed"})
+			return
+		}
+
+		ctx.JSON(http.StatusOK, gin.H{"message": "RSS feed deleted successfully"})
 	})
 }
