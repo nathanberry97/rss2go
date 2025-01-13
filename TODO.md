@@ -13,16 +13,12 @@
   - [ ] GET favourite articles
   - [ ] DELETE favourite articles
 
-* [ ] RSS Article endpoints
-  - [ ] GET RSS articles
-  - [ ] DELETE RSS articles
-
 ## In progress
 
-* [ ] RSS feed endpoints
-  - [X] POST new RSS feeds to the database
-  - [X] GET RSS feeds
-  - [ ] DELETE RSS feeds from the database
+* [ ] RSS Article endpoints
+  - [ ] Update POST new RSS feed to add articles to the database for the feed
+  - [ ] GET RSS articles
+  - [ ] DELETE RSS articles
 
 ## Completed
 
@@ -30,3 +26,7 @@
 * [X] Setup API framework with go and add health check endpoint
 * [X] Implement a database sql
 * [X] Add a database connection to the application
+* [X] RSS feed endpoints
+  - [X] POST new RSS feeds to the database
+  - [X] GET RSS feeds
+  - [X] DELETE RSS feeds from the database
