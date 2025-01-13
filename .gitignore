@@ -1,2 +1,3 @@
-api/bin
 scripts
+app/bin
+app/database/rss.db

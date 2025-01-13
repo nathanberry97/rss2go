@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"context"
 	"encoding/json"
 	"io"
 	"net/http"
@@ -11,6 +10,7 @@ import (
 	"github.com/nathanberry97/rss2go/src/services"
 )
 
+// postRssFeed handles POST requests to add a new RSS feed
 func postRssFeed(router *gin.Engine) {
 	router.POST("/rss_feed", func(ctx *gin.Context) {
 		body, err := io.ReadAll(ctx.Request.Body)
@@ -32,10 +32,9 @@ func postRssFeed(router *gin.Engine) {
 		}
 
 		dbConn := services.DatabaseConnection()
-		defer dbConn.Close(context.Background())
+		defer dbConn.Close()
 
 		id, err := services.PostRssFeed(dbConn, rssPostBody)
-
 		if err != nil {
 			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Error posting RSS feed"})
 			return
@@ -45,13 +44,13 @@ func postRssFeed(router *gin.Engine) {
 	})
 }
 
+// getRssFeeds handles GET requests to retrieve all RSS feeds
 func getRssFeeds(router *gin.Engine) {
 	router.GET("/rss_feed", func(ctx *gin.Context) {
 		dbConn := services.DatabaseConnection()
-		defer dbConn.Close(context.Background())
+		defer dbConn.Close()
 
 		feeds, err := services.GetRssFeeds(dbConn)
-
 		if err != nil {
 			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Error retrieving RSS feeds"})
 			return

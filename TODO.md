@@ -4,9 +4,9 @@
 
 * [ ] Add dockerfile to build and run the application
 
-* [ ] Add REACT frontend to the application
+* [ ] Add HTMX to the frontend
   - [ ] Add a frontend folder to the project
-  - [ ] Add a REACT frontend to the frontend folder
+  - [ ] Implement HTMX to the frontend to consume the API
 
 * [ ] Favourite articles endpoints
   - [ ] POST favourite articles
@@ -21,7 +21,7 @@
 
 * [ ] RSS feed endpoints
   - [X] POST new RSS feeds to the database
-  - [ ] GET RSS feeds
+  - [X] GET RSS feeds
   - [ ] DELETE RSS feeds from the database
 
 ## Completed
