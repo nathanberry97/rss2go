@@ -16,14 +16,14 @@ func postRssFeed(router *gin.Engine) {
 	router.POST("/rss_feed", func(ctx *gin.Context) {
 		body, err := io.ReadAll(ctx.Request.Body)
 		if err != nil {
-			ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+			ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request bopdy: " + err.Error()})
 			return
 		}
 
 		var rssPostBody schema.RssPostBody
 		err = json.Unmarshal(body, &rssPostBody)
 		if err != nil {
-			ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JSON format"})
+			ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JSON format: " + err.Error()})
 			return
 		}
 
@@ -37,7 +37,7 @@ func postRssFeed(router *gin.Engine) {
 
 		id, err := services.PostRssFeed(dbConn, rssPostBody)
 		if err != nil {
-			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Error posting RSS feed"})
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Error posting RSS feed: " + err.Error()})
 			return
 		}
 
@@ -52,7 +52,7 @@ func getRssFeeds(router *gin.Engine) {
 
 		feeds, err := services.GetRssFeeds(dbConn)
 		if err != nil {
-			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Error retrieving RSS feeds"})
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Error retrieving RSS feeds: " + err.Error()})
 			return
 		}
 
@@ -65,7 +65,7 @@ func deleteRssFeed(router *gin.Engine) {
 		idParam := ctx.Param("id")
 		id, err := strconv.Atoi(idParam)
 		if err != nil {
-			ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID format"})
+			ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID format: " + err.Error()})
 			return
 		}
 
@@ -74,7 +74,7 @@ func deleteRssFeed(router *gin.Engine) {
 
 		err = services.DeleteRssFeed(dbConn, id)
 		if err != nil {
-			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Error deleting RSS feed"})
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Error deleting RSS feed: " + err.Error()})
 			return
 		}
 

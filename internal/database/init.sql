@@ -11,11 +11,11 @@ CREATE TABLE IF NOT EXISTS articles (
   url TEXT NOT NULL UNIQUE,
   description TEXT,
   published_at DATETIME,
-  FOREIGN KEY (feed_id) REFERENCES feeds(id)
+  FOREIGN KEY (feed_id) REFERENCES feeds(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS favorites (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   article_id INTEGER NOT NULL,
-  FOREIGN KEY (article_id) REFERENCES articles(id)
+  FOREIGN KEY (article_id) REFERENCES articles(id) ON DELETE CASCADE
 );
