@@ -13,12 +13,9 @@
   - [ ] GET favourite articles
   - [ ] DELETE favourite articles
 
-## In progress
+* [ ] Implement unit tests for the application
 
-* [ ] RSS Article endpoints
-  - [ ] Update POST new RSS feed to add articles to the database for the feed
-  - [ ] GET RSS articles
-  - [ ] DELETE RSS articles
+## In progress
 
 ## Completed
 
@@ -30,3 +27,7 @@
   - [X] POST new RSS feeds to the database
   - [X] GET RSS feeds
   - [X] DELETE RSS feeds from the database
+* [X] RSS Article endpoints
+  - [X] Update POST new RSS feed to add articles to the database for the feed
+  - [X] GET RSS articles
+* [X] Implement script to test the API using curl

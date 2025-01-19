@@ -10,18 +10,22 @@ setup: ## Install pre-commit hooks
 	@pre-commit install
 
 .PHONY: build
-build: ## Build rss2go app
-	@cd app && go build -o bin/app src/*.go
+build: ## Build rss2go api
+	@go build -o bin/api cmd/api/main.go
 
 .PHONY: run
-run: build ## Build and run rss2go app
-	@cd app && ./bin/app
+run: build ## Build and run rss2go api
+	@./bin/api
+
+.PHONY: seed
+seed: ## Seed rss2go database
+	@./scripts/seed.sh
 
 .PHONY: test
 test: ## Test backend for rss2go app
-	@cd app && go test src/routes/*.go -v
-	@cd app && go test src/utils/*.go -v
+	@go test pkg/routes/*.go -v
+	@go test internal/utils/*.go -v
 
 .PHONY: clean
 clean: ## Clean up build artifacts
-	@rm -rf api/bin
+	@rm -rf bin

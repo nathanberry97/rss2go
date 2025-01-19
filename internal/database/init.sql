@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS articles (
   title TEXT NOT NULL,
   url TEXT NOT NULL UNIQUE,
   description TEXT,
+  published_at DATETIME,
   FOREIGN KEY (feed_id) REFERENCES feeds(id)
 );
 

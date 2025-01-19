@@ -7,11 +7,11 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/nathanberry97/rss2go/src/schema"
-	"github.com/nathanberry97/rss2go/src/services"
+	"github.com/nathanberry97/rss2go/internal/database"
+	"github.com/nathanberry97/rss2go/pkg/schema"
+	"github.com/nathanberry97/rss2go/pkg/services"
 )
 
-// postRssFeed handles POST requests to add a new RSS feed
 func postRssFeed(router *gin.Engine) {
 	router.POST("/rss_feed", func(ctx *gin.Context) {
 		body, err := io.ReadAll(ctx.Request.Body)
@@ -32,7 +32,7 @@ func postRssFeed(router *gin.Engine) {
 			return
 		}
 
-		dbConn := services.DatabaseConnection()
+		dbConn := database.DatabaseConnection()
 		defer dbConn.Close()
 
 		id, err := services.PostRssFeed(dbConn, rssPostBody)
@@ -45,10 +45,9 @@ func postRssFeed(router *gin.Engine) {
 	})
 }
 
-// getRssFeeds handles GET requests to retrieve all RSS feeds
 func getRssFeeds(router *gin.Engine) {
 	router.GET("/rss_feed", func(ctx *gin.Context) {
-		dbConn := services.DatabaseConnection()
+		dbConn := database.DatabaseConnection()
 		defer dbConn.Close()
 
 		feeds, err := services.GetRssFeeds(dbConn)
@@ -70,7 +69,7 @@ func deleteRssFeed(router *gin.Engine) {
 			return
 		}
 
-		dbConn := services.DatabaseConnection()
+		dbConn := database.DatabaseConnection()
 		defer dbConn.Close()
 
 		err = services.DeleteRssFeed(dbConn, id)

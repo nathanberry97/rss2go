@@ -1,4 +1,4 @@
-package services
+package database
 
 import (
 	"database/sql"
@@ -11,7 +11,7 @@ import (
 )
 
 func DatabaseConnection() *sql.DB {
-	conn, err := sql.Open("sqlite", "database/rss.db")
+	conn, err := sql.Open("sqlite", "internal/database/rss.db")
 	if err != nil {
 		log.Fatalf("Unable to connect to SQLite database: %v\n", err)
 	}
@@ -31,7 +31,7 @@ func InitializeDatabase(db *sql.DB) error {
 		return fmt.Errorf("error enabling foreign keys: %w", err)
 	}
 
-	file, err := os.Open("database/init.sql")
+	file, err := os.Open("internal/database/init.sql")
 	if err != nil {
 		return fmt.Errorf("error reading init.sql: %w", err)
 	}
