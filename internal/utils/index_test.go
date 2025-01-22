@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"errors"
 	"os"
 	"testing"
 )
@@ -20,21 +19,6 @@ func TestSetEnv(t *testing.T) {
 	// Assert
 	Assert(t, "test", os.Getenv("TEST_ENV"))
 	os.Remove(testFile)
-}
-
-func TestCheckErr(t *testing.T) {
-	// Arrange
-	err := errors.New("Test Error")
-
-	// Act
-	defer func() {
-		if r := recover(); r != nil {
-			CheckErr(err)
-		}
-	}()
-
-	// Assert
-	Assert(t, "Test Error", err.Error())
 }
 
 func TestAssert(t *testing.T) {

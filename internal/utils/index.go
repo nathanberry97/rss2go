@@ -10,11 +10,12 @@ import (
 
 func SetEnv(envFile string) {
 	file, err := os.Open(envFile)
-	CheckErr(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
-
 	for scanner.Scan() {
 		env := strings.Split(scanner.Text(), "=")
 
@@ -23,12 +24,6 @@ func SetEnv(envFile string) {
 		}
 
 		os.Setenv(env[0], env[1])
-	}
-}
-
-func CheckErr(err error) {
-	if err != nil {
-		log.Fatal(err)
 	}
 }
 

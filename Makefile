@@ -9,29 +9,23 @@ explain:
 setup: ## Install pre-commit hooks
 	@pre-commit install
 
-.PHONY: start-db
-start-db: ## Run PostgreSQL database
-	@cd database && podman build -t postgresql .
-	@podman run --name rss2go-db -e POSTGRES_PASSWORD=postgres -d -p 5432:5432 postgresql
-
-.PHONY: connect-db
-connect-db: ## Connect to PostgreSQL database
-	@podman exec -it rss2go-db psql -U postgres -d postgres
-
 .PHONY: build
-build: ## Build backend for RSS2GO API
-	@cd api && go build -o bin/api src/*.go
+build: ## Build rss2go api
+	@go build -o bin/api cmd/api/main.go
 
 .PHONY: run
-run: build ## Build and run backend API
-	@cd api && ./bin/api
+run: build ## Build and run rss2go api
+	@./bin/api
+
+.PHONY: seed
+seed: ## Seed rss2go database
+	@./scripts/seed.sh
 
 .PHONY: test
-test: ## Test backend for RSS2GO API
-	@cd api && go test src/routes/*.go -v
-	@cd api && go test src/utils/*.go -v
+test: ## Test backend for rss2go app
+	@go test pkg/routes/*.go -v
+	@go test internal/utils/*.go -v
 
 .PHONY: clean
 clean: ## Clean up build artifacts
-	@rm -rf api/bin
-	@podman rm rss2go-db
+	@rm -rf bin

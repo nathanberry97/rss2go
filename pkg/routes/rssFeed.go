@@ -1,0 +1,83 @@
+package routes
+
+import (
+	"encoding/json"
+	"io"
+	"net/http"
+	"strconv"
+
+	"github.com/gin-gonic/gin"
+	"github.com/nathanberry97/rss2go/internal/database"
+	"github.com/nathanberry97/rss2go/pkg/schema"
+	"github.com/nathanberry97/rss2go/pkg/services"
+)
+
+func postRssFeed(router *gin.Engine) {
+	router.POST("/rss_feed", func(ctx *gin.Context) {
+		body, err := io.ReadAll(ctx.Request.Body)
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request bopdy: " + err.Error()})
+			return
+		}
+
+		var rssPostBody schema.RssPostBody
+		err = json.Unmarshal(body, &rssPostBody)
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JSON format: " + err.Error()})
+			return
+		}
+
+		if rssPostBody.URL == "" {
+			ctx.JSON(http.StatusBadRequest, gin.H{"error": "URL is required"})
+			return
+		}
+
+		dbConn := database.DatabaseConnection()
+		defer dbConn.Close()
+
+		id, err := services.PostRssFeed(dbConn, rssPostBody)
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Error posting RSS feed: " + err.Error()})
+			return
+		}
+
+		ctx.JSON(http.StatusOK, gin.H{"message": "RSS feed posted successfully", "id": id})
+	})
+}
+
+func getRssFeeds(router *gin.Engine) {
+	router.GET("/rss_feed", func(ctx *gin.Context) {
+		dbConn := database.DatabaseConnection()
+		defer dbConn.Close()
+
+		feeds, err := services.GetRssFeeds(dbConn)
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Error retrieving RSS feeds: " + err.Error()})
+			return
+		}
+
+		ctx.JSON(http.StatusOK, feeds)
+	})
+}
+
+func deleteRssFeed(router *gin.Engine) {
+	router.DELETE("/rss_feed/:id", func(ctx *gin.Context) {
+		idParam := ctx.Param("id")
+		id, err := strconv.Atoi(idParam)
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID format: " + err.Error()})
+			return
+		}
+
+		dbConn := database.DatabaseConnection()
+		defer dbConn.Close()
+
+		err = services.DeleteRssFeed(dbConn, id)
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Error deleting RSS feed: " + err.Error()})
+			return
+		}
+
+		ctx.JSON(http.StatusOK, gin.H{"message": "RSS feed deleted successfully"})
+	})
+}

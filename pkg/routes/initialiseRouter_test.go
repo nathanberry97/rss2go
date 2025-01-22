@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"github.com/nathanberry97/rss2go/src/utils"
+	"github.com/nathanberry97/rss2go/internal/utils"
 	"net/http"
 	"net/http/httptest"
 	"testing"
