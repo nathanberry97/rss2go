@@ -1,7 +1,7 @@
 package schema
 
 type RssPostBody struct {
-	URL string `json:"url"`
+	URL string `form:"url" json:"url"`
 }
 
 type RssFeed struct {

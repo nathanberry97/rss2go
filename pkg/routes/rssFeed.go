@@ -1,8 +1,7 @@
 package routes
 
 import (
-	"encoding/json"
-	"io"
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -14,19 +13,13 @@ import (
 
 func postRssFeed(router *gin.Engine) {
 	router.POST("/rss_feed", func(ctx *gin.Context) {
-		body, err := io.ReadAll(ctx.Request.Body)
-		if err != nil {
-			ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request bopdy: " + err.Error()})
-			return
-		}
-
 		var rssPostBody schema.RssPostBody
-		err = json.Unmarshal(body, &rssPostBody)
-		if err != nil {
-			ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JSON format: " + err.Error()})
+		if err := ctx.ShouldBind(&rssPostBody); err != nil {
+			ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid form data: " + err.Error()})
 			return
 		}
 
+		fmt.Println(rssPostBody)
 		if rssPostBody.URL == "" {
 			ctx.JSON(http.StatusBadRequest, gin.H{"error": "URL is required"})
 			return

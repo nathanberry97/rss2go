@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>rss2go</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <script src="/static/js/htmx.min.js"></script>
+    <script src="/static/js/index.js"></script>
+</head>
+
+<body>
+  <form hx-post="/rss_feed" hx-target="#response" hx-swap="innerHTML">
+    <label for="url">RSS Feed URL:</label>
+    <input type="text" id="url" name="url" required>
+    <button type="submit">Submit</button>
+  </form>
+
+  <div id="response" style="margin-top: 20px;">
+
+</body>
+</html>

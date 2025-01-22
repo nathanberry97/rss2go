@@ -8,6 +8,9 @@ func InitialiseRouter() *gin.Engine {
 	// Health check
 	healthCheck(router)
 
+	// HTML routes
+	homepage(router)
+
 	// RSS feed routes
 	postRssFeed(router)
 	getRssFeeds(router)
