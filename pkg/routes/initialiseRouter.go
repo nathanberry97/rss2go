@@ -9,7 +9,7 @@ func InitialiseRouter() *gin.Engine {
 	healthCheck(router)
 
 	// HTML routes
-	homepage(router)
+	feedsPage(router)
 
 	// RSS feed routes
 	postRssFeed(router)

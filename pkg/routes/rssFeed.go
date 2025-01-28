@@ -7,6 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/nathanberry97/rss2go/internal/database"
+	"github.com/nathanberry97/rss2go/pkg/components"
 	"github.com/nathanberry97/rss2go/pkg/schema"
 	"github.com/nathanberry97/rss2go/pkg/services"
 )
@@ -49,7 +50,13 @@ func getRssFeeds(router *gin.Engine) {
 			return
 		}
 
-		ctx.JSON(http.StatusOK, feeds)
+		updatedFeedListHtml := components.GenerateFeedList(feeds)
+		fmt.Println(updatedFeedListHtml)
+
+		// Return the updated feed list
+		ctx.HTML(http.StatusOK, "", gin.H{
+			"feedList": updatedFeedListHtml,
+		})
 	})
 }
 
