@@ -6,7 +6,6 @@
     <title>rss2go</title>
     <link rel="stylesheet" href="/static/css/style.css" />
     <script src="/static/js/htmx.min.js"></script>
-    <script src="/static/js/index.js"></script>
 </head>
 
 <body>
@@ -14,7 +13,10 @@
 
     {{ .form }}
 
-    <div id="feedList" style="margin-top: 20px;">
+    <div id="feed-refresh"
+         hx-trigger="load, refreshFeed from:body"
+         hx-get="/rss_feed"
+         hx-swap="innerHTML">
         {{ .feedList }}
     </div>
 </body>

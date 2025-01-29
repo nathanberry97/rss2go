@@ -35,7 +35,10 @@ func postRssFeed(router *gin.Engine) {
 			return
 		}
 
-		ctx.JSON(http.StatusOK, gin.H{"message": "RSS feed posted successfully", "id": id})
+		fmt.Println(id)
+
+		ctx.Header("HX-Trigger", "refreshFeed")
+		ctx.Status(http.StatusOK)
 	})
 }
 
@@ -51,12 +54,8 @@ func getRssFeeds(router *gin.Engine) {
 		}
 
 		updatedFeedListHtml := components.GenerateFeedList(feeds)
-		fmt.Println(updatedFeedListHtml)
 
-		// Return the updated feed list
-		ctx.HTML(http.StatusOK, "", gin.H{
-			"feedList": updatedFeedListHtml,
-		})
+		ctx.Data(http.StatusOK, "text/html; charset=utf-8", []byte(updatedFeedListHtml))
 	})
 }
 
