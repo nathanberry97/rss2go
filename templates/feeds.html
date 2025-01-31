@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>rss2go</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <script src="/static/js/htmx.min.js"></script>
+</head>
+
+<body>
+
+<header>
+    {{ .navbar }}
+</header>
+
+<main>
+    <h1>{{ .title }}</h1>
+
+    {{ .form }}
+
+    <div id="feed-refresh"
+         hx-trigger="load, refreshFeed from:body"
+         hx-get="/partials/feed"
+         hx-swap="innerHTML">
+        {{ .feedList }}
+    </div>
+</main>
+
+</body>
+</html>

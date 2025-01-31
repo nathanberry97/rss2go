@@ -9,15 +9,20 @@
 </head>
 
 <body>
+
+<header>
+    {{ .navbar }}
+</header>
+
+<main>
     <h1>{{ .title }}</h1>
 
-    {{ .form }}
-
-    <div id="feed-refresh"
-         hx-trigger="load, refreshFeed from:body"
-         hx-get="/rss_feed"
+    <div id="articles"
+         hx-trigger="load"
+         hx-get="/partials/articles"
          hx-swap="innerHTML">
-        {{ .feedList }}
     </div>
+</main>
+
 </body>
 </html>

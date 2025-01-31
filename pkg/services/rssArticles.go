@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/nathanberry97/rss2go/pkg/schema"
+	"github.com/nathanberry97/rss2go/internal/schema"
 )
 
 func GetRssArticles(conn *sql.DB, page int, limit int) (schema.PaginationResponse, error) {
@@ -30,7 +30,7 @@ func GetRssArticles(conn *sql.DB, page int, limit int) (schema.PaginationRespons
 	var articles []schema.RssArticle
 	for rows.Next() {
 		var article schema.RssArticle
-		if err := rows.Scan(&article.FEED_ID, &article.TITLE, &article.DESCRIPTION, &article.LINK, &article.PUB_DATE); err != nil {
+		if err := rows.Scan(&article.FeedId, &article.Title, &article.Description, &article.Link, &article.PubDate); err != nil {
 			return schema.PaginationResponse{}, fmt.Errorf("failed to scan row: %w", err)
 		}
 		articles = append(articles, article)

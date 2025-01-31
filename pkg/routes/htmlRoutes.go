@@ -2,21 +2,29 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/nathanberry97/rss2go/pkg/components"
-	// "github.com/nathanberry97/rss2go/internal/database"
-	// "github.com/nathanberry97/rss2go/pkg/services"
+	"github.com/nathanberry97/rss2go/internal/components"
 )
 
 func feedsPage(router *gin.Engine) {
-	router.Static("/static", "./static")
-	router.LoadHTMLGlob("templates/*")
+	router.GET("/feeds", func(c *gin.Context) {
+		formHTML := components.GenerateForm("/partials/feed", "RSS Feed URL")
+		navbar := components.GenerateNavbar()
 
+		c.HTML(200, "feeds.html", gin.H{
+			"title":  "RSS Feeds",
+			"form":   formHTML,
+			"navbar": navbar,
+		})
+	})
+}
+
+func articlesPage(router *gin.Engine) {
 	router.GET("/", func(c *gin.Context) {
-		formHTML := components.GenerateForm("/rss_feed", "RSS Feed URL")
+		navbar := components.GenerateNavbar()
 
-		c.HTML(200, "index.html", gin.H{
-			"title": "RSS Feeds",
-			"form":  formHTML,
+		c.HTML(200, "articles.html", gin.H{
+			"title":  "RSS Articles",
+			"navbar": navbar,
 		})
 	})
 }

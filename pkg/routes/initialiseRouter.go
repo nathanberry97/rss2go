@@ -5,10 +5,14 @@ import "github.com/gin-gonic/gin"
 func InitialiseRouter() *gin.Engine {
 	router := gin.Default()
 
+	router.Static("/static", "./static")
+	router.LoadHTMLGlob("templates/*.html")
+
 	// Health check
 	healthCheck(router)
 
 	// HTML routes
+	articlesPage(router)
 	feedsPage(router)
 
 	// RSS feed routes

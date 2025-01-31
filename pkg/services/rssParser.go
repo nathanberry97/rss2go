@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/gocolly/colly/v2"
-	"github.com/nathanberry97/rss2go/pkg/schema"
+	"github.com/nathanberry97/rss2go/internal/schema"
 )
 
 func parseRssItems(url string) ([]schema.RssItem, error) {
@@ -31,10 +31,10 @@ func parseRssItems(url string) ([]schema.RssItem, error) {
 		formattedDate := parsedDate.Format("2006-01-02 15:04:05")
 
 		article := schema.RssItem{
-			TITLE:       e.ChildText("title"),
-			DESCRIPTION: e.ChildText("description"),
-			LINK:        e.ChildText("link"),
-			PUB_DATE:    formattedDate, // Use the formatted date
+			Title:       e.ChildText("title"),
+			Description: e.ChildText("description"),
+			Link:        e.ChildText("link"),
+			PubDate:     formattedDate, // Use the formatted date
 		}
 
 		articles = append(articles, article)

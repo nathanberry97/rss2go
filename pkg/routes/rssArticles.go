@@ -5,13 +5,13 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/nathanberry97/rss2go/internal/components"
 	"github.com/nathanberry97/rss2go/internal/database"
-	"github.com/nathanberry97/rss2go/pkg/schema"
 	"github.com/nathanberry97/rss2go/pkg/services"
 )
 
 func GetRssArticles(router *gin.Engine) {
-	router.GET("/rss_articles", func(c *gin.Context) {
+	router.GET("/partials/articles", func(c *gin.Context) {
 		pageStr := c.DefaultQuery("page", "0")
 		limitStr := c.DefaultQuery("limit", "10")
 
@@ -39,13 +39,14 @@ func GetRssArticles(router *gin.Engine) {
 			return
 		}
 
-		response := schema.PaginationResponse{
-			TotalItems: articles.TotalItems,
-			Page:       articles.Page,
-			Limit:      articles.Limit,
-			Items:      articles.Items,
-		}
+		// response := schema.PaginationResponse{
+		// 	TotalItems: articles.TotalItems,
+		// 	Page:       articles.Page,
+		// 	Limit:      articles.Limit,
+		// 	Items:      articles.Items,
+		// }
+		response := components.GenerateArticleList(articles.Items)
 
-		c.JSON(http.StatusOK, response)
+		c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(response))
 	})
 }
