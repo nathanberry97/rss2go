@@ -1,71 +1,68 @@
 package routes
 
 import (
-	"encoding/json"
-	"io"
+	"fmt"
 	"net/http"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/nathanberry97/rss2go/internal/components"
 	"github.com/nathanberry97/rss2go/internal/database"
-	"github.com/nathanberry97/rss2go/pkg/schema"
+	"github.com/nathanberry97/rss2go/internal/schema"
 	"github.com/nathanberry97/rss2go/pkg/services"
 )
 
 func postRssFeed(router *gin.Engine) {
-	router.POST("/rss_feed", func(ctx *gin.Context) {
-		body, err := io.ReadAll(ctx.Request.Body)
-		if err != nil {
-			ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request bopdy: " + err.Error()})
-			return
-		}
-
+	router.POST("/partials/feed", func(c *gin.Context) {
 		var rssPostBody schema.RssPostBody
-		err = json.Unmarshal(body, &rssPostBody)
-		if err != nil {
-			ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JSON format: " + err.Error()})
+		if err := c.ShouldBind(&rssPostBody); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid form data: " + err.Error()})
 			return
 		}
 
+		fmt.Println(rssPostBody)
 		if rssPostBody.URL == "" {
-			ctx.JSON(http.StatusBadRequest, gin.H{"error": "URL is required"})
+			c.JSON(http.StatusBadRequest, gin.H{"error": "URL is required"})
 			return
 		}
 
 		dbConn := database.DatabaseConnection()
 		defer dbConn.Close()
 
-		id, err := services.PostRssFeed(dbConn, rssPostBody)
+		_, err := services.PostRssFeed(dbConn, rssPostBody)
 		if err != nil {
-			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Error posting RSS feed: " + err.Error()})
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error posting RSS feed: " + err.Error()})
 			return
 		}
 
-		ctx.JSON(http.StatusOK, gin.H{"message": "RSS feed posted successfully", "id": id})
+		c.Header("HX-Trigger", "refreshFeed")
+		c.Status(http.StatusOK)
 	})
 }
 
 func getRssFeeds(router *gin.Engine) {
-	router.GET("/rss_feed", func(ctx *gin.Context) {
+	router.GET("/partials/feed", func(c *gin.Context) {
 		dbConn := database.DatabaseConnection()
 		defer dbConn.Close()
 
 		feeds, err := services.GetRssFeeds(dbConn)
 		if err != nil {
-			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Error retrieving RSS feeds: " + err.Error()})
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error retrieving RSS feeds: " + err.Error()})
 			return
 		}
 
-		ctx.JSON(http.StatusOK, feeds)
+		updatedFeedListHtml := components.GenerateFeedList(feeds)
+
+		c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(updatedFeedListHtml))
 	})
 }
 
 func deleteRssFeed(router *gin.Engine) {
-	router.DELETE("/rss_feed/:id", func(ctx *gin.Context) {
-		idParam := ctx.Param("id")
+	router.DELETE("/partials/feed/:id", func(c *gin.Context) {
+		idParam := c.Param("id")
 		id, err := strconv.Atoi(idParam)
 		if err != nil {
-			ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID format: " + err.Error()})
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID format: " + err.Error()})
 			return
 		}
 
@@ -74,10 +71,11 @@ func deleteRssFeed(router *gin.Engine) {
 
 		err = services.DeleteRssFeed(dbConn, id)
 		if err != nil {
-			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Error deleting RSS feed: " + err.Error()})
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error deleting RSS feed: " + err.Error()})
 			return
 		}
 
-		ctx.JSON(http.StatusOK, gin.H{"message": "RSS feed deleted successfully"})
+		c.Header("HX-Trigger", "refreshFeed")
+		c.Status(http.StatusOK)
 	})
 }

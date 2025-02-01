@@ -4,16 +4,34 @@
 
 * [ ] Add dockerfile to build and run the application
 
-* [ ] Add HTMX to the frontend
-  - [ ] Add a frontend folder to the project
-  - [ ] Implement HTMX to the frontend to consume the API
+* [ ] GET articles by feed
+  - [ ] GET
+  - [ ] Frontend
 
-* [ ] Favourite articles endpoints
-  - [ ] POST favourite articles
-  - [ ] GET favourite articles
-  - [ ] DELETE favourite articles
+* [ ] Read later
+  - [ ] POST
+  - [ ] GET
+  - [ ] DELETE
+  - [ ] Frontend
+
+* [ ] Favourite articles
+  - [ ] POST
+  - [ ] GET
+  - [ ] DELETE
+  - [ ] Frontend
+
+* [ ] Add better error handling
+
+* [ ] Improve the rss reader function
+  - [ ] Make it work on a schedule to allow new posts to be added
+  - [ ] Make it work with .atom feeds too
 
 * [ ] Implement unit tests for the application
+
+* [ ] Add tailwind css and alpine.js
+  - Add css to improve ui [ ]
+  - Add alpine or implement code to clear form after sending the request [ ]
+  - Implement loading bar on feeds page [ ]
 
 ## In progress
 
@@ -24,10 +42,11 @@
 * [X] Implement a database sql
 * [X] Add a database connection to the application
 * [X] RSS feed endpoints
-  - [X] POST new RSS feeds to the database
-  - [X] GET RSS feeds
-  - [X] DELETE RSS feeds from the database
+  - [X] POST
+  - [X] GET
+  - [X] DELETE
 * [X] RSS Article endpoints
-  - [X] Update POST new RSS feed to add articles to the database for the feed
-  - [X] GET RSS articles
-* [X] Implement script to test the API using curl
+  - [X] GET
+  - [X] POST (Update RSS feed post to do this)
+* [X] Implement seeding script
+* [X] Add HTMX to the frontend

@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/nathanberry97/rss2go/pkg/schema"
+	"github.com/nathanberry97/rss2go/internal/schema"
 )
 
 func PostRssFeed(conn *sql.DB, postBody schema.RssPostBody) (int64, error) {
@@ -39,7 +39,7 @@ func PostRssFeed(conn *sql.DB, postBody schema.RssPostBody) (int64, error) {
 	defer stmt.Close()
 
 	for _, article := range articles {
-		_, err = stmt.Exec(feedID, article.TITLE, article.DESCRIPTION, article.LINK, article.PUB_DATE)
+		_, err = stmt.Exec(feedID, article.Title, article.Description, article.Link, article.PubDate)
 		if err != nil {
 			fmt.Println("failed to insert article into database:", err)
 			return 0, fmt.Errorf("failed to insert article into database: %w", err)
@@ -60,7 +60,7 @@ func GetRssFeeds(conn *sql.DB) ([]schema.RssFeed, error) {
 	var feeds []schema.RssFeed
 	for rows.Next() {
 		var feed schema.RssFeed
-		if err := rows.Scan(&feed.ID, &feed.NAME, &feed.URL); err != nil {
+		if err := rows.Scan(&feed.ID, &feed.Name, &feed.URL); err != nil {
 			return nil, fmt.Errorf("error scanning row: %w", err)
 		}
 		feeds = append(feeds, feed)

@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/nathanberry97/rss2go/pkg/schema"
+	"github.com/nathanberry97/rss2go/internal/schema"
 )
 
 func GetRssArticles(conn *sql.DB, page int, limit int) (schema.PaginationResponse, error) {
@@ -13,6 +13,7 @@ func GetRssArticles(conn *sql.DB, page int, limit int) (schema.PaginationRespons
 	}
 
 	offset := page * limit
+	nextPage := page + 1
 
 	query := `
         SELECT id, title, description, url, published_at
@@ -30,7 +31,7 @@ func GetRssArticles(conn *sql.DB, page int, limit int) (schema.PaginationRespons
 	var articles []schema.RssArticle
 	for rows.Next() {
 		var article schema.RssArticle
-		if err := rows.Scan(&article.FEED_ID, &article.TITLE, &article.DESCRIPTION, &article.LINK, &article.PUB_DATE); err != nil {
+		if err := rows.Scan(&article.FeedId, &article.Title, &article.Description, &article.Link, &article.PubDate); err != nil {
 			return schema.PaginationResponse{}, fmt.Errorf("failed to scan row: %w", err)
 		}
 		articles = append(articles, article)
@@ -45,9 +46,15 @@ func GetRssArticles(conn *sql.DB, page int, limit int) (schema.PaginationRespons
 		return schema.PaginationResponse{}, fmt.Errorf("failed to get total items: %w", err)
 	}
 
+	remainingItems := totalItems - (page * limit)
+	fmt.Println(remainingItems)
+	if remainingItems <= 0 {
+		nextPage = -1
+	}
+
 	response := schema.PaginationResponse{
 		TotalItems: totalItems,
-		Page:       page,
+		NextPage:   nextPage,
 		Limit:      limit,
 		Items:      articles,
 	}

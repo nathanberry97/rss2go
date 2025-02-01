@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>rss2go</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <script src="/static/js/htmx.min.js"></script>
+</head>
+
+<body>
+
+<header>
+    {{ .navbar }}
+</header>
+
+<main>
+    <h1>{{ .title }}</h1>
+
+    <div id="articles"
+         hx-trigger="revealed"
+         hx-get="/partials/articles?page=0"
+         hx-swap="afterend">
+    </div>
+</main>
+
+</body>
+</html>
