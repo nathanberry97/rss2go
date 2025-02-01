@@ -39,14 +39,7 @@ func GetRssArticles(router *gin.Engine) {
 			return
 		}
 
-		// response := schema.PaginationResponse{
-		// 	TotalItems: articles.TotalItems,
-		// 	Page:       articles.Page,
-		// 	Limit:      articles.Limit,
-		// 	Items:      articles.Items,
-		// }
-		response := components.GenerateArticleList(articles.Items)
-
+		response := components.GenerateArticleList(articles)
 		c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(response))
 	})
 }

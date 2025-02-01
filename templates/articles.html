@@ -18,9 +18,9 @@
     <h1>{{ .title }}</h1>
 
     <div id="articles"
-         hx-trigger="load"
-         hx-get="/partials/articles"
-         hx-swap="innerHTML">
+         hx-trigger="revealed"
+         hx-get="/partials/articles?page=0"
+         hx-swap="afterend">
     </div>
 </main>
 

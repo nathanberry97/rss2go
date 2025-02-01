@@ -13,6 +13,7 @@ func GetRssArticles(conn *sql.DB, page int, limit int) (schema.PaginationRespons
 	}
 
 	offset := page * limit
+	nextPage := page + 1
 
 	query := `
         SELECT id, title, description, url, published_at
@@ -45,9 +46,15 @@ func GetRssArticles(conn *sql.DB, page int, limit int) (schema.PaginationRespons
 		return schema.PaginationResponse{}, fmt.Errorf("failed to get total items: %w", err)
 	}
 
+	remainingItems := totalItems - (page * limit)
+	fmt.Println(remainingItems)
+	if remainingItems <= 0 {
+		nextPage = -1
+	}
+
 	response := schema.PaginationResponse{
 		TotalItems: totalItems,
-		Page:       page,
+		NextPage:   nextPage,
 		Limit:      limit,
 		Items:      articles,
 	}

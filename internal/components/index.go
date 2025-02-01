@@ -1,6 +1,7 @@
 package components
 
 import (
+	"fmt"
 	"html/template"
 	"strconv"
 
@@ -17,10 +18,11 @@ func GenerateForm(endpoint, label string) template.HTML {
     `)
 }
 
-func GenerateArticleList(articles []schema.RssArticle) template.HTML {
+func GenerateArticleList(articles schema.PaginationResponse) template.HTML {
 	articleItems := ""
+	var articlesHTML template.HTML
 
-	for _, article := range articles {
+	for _, article := range articles.Items {
 		articleItems += `<li>
 			<a href="` + article.Link + `" target="_blank">` + article.Title + `</a>
             <br>
@@ -28,7 +30,18 @@ func GenerateArticleList(articles []schema.RssArticle) template.HTML {
         </li>`
 	}
 
-	return template.HTML(`<ul>` + articleItems + `</ul>`)
+	articlesHTML = template.HTML(`<ul id=articles-list>` + articleItems + `</ul>`)
+
+	if articles.NextPage != -1 {
+		articlesHTML += template.HTML(fmt.Sprintf(`
+            <div id="articles"
+                 hx-trigger="revealed"
+                 hx-get="/partials/articles?page=%d"
+                 hx-swap="afterend">
+            </div>`, articles.NextPage))
+	}
+
+	return template.HTML(articlesHTML)
 }
 
 func GenerateFeedList(feeds []schema.RssFeed) template.HTML {
@@ -37,7 +50,7 @@ func GenerateFeedList(feeds []schema.RssFeed) template.HTML {
 		listItems += `<li>
 			<a href="` + feed.URL + `" target="_blank">` + feed.Name + `</a>
 			<button class="delete-btn"
-                    hx-delete="/rss_feed/` + strconv.Itoa(feed.ID) + `"
+                    hx-delete="/partials/feed/` + strconv.Itoa(feed.ID) + `"
                     hx-trigger="click"
                     hx-swap="none"
                     data-feed-id="` + strconv.Itoa(feed.ID) + `">
@@ -53,7 +66,7 @@ func GenerateNavbar() template.HTML {
         <div class="navbar-container">
             <nav class="navbar-nav">
               <ul style="list-style-type: none; padding: 0; margin: 0; display: flex;">
-                <li style="margin-right: 20px;"><a href="/" style="text-decoration: none;">Home</a></li>
+                <li style="margin-right: 20px;"><a href="/" style="text-decoration: none;">Articles</a></li>
                 <li><a href="/feeds" style="text-decoration: none;">Feeds</a></li>
               </ul>
             </nav>

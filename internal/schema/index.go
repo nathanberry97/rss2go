@@ -32,7 +32,7 @@ type RssArticleResponse struct {
 
 type PaginationResponse struct {
 	TotalItems int `json:"total_items"`
-	Page       int `json:"page"`
+	NextPage   int `json:"page"`
 	Limit      int `json:"limit"`
 	Items      []RssArticle
 }
