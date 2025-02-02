@@ -25,9 +25,8 @@ func GenerateArticleList(articles schema.PaginationResponse) template.HTML {
 	for _, article := range articles.Items {
 		articleItems += `<li>
 			<a href="` + article.Link + `" target="_blank">` + article.Title + `</a>
-            <br>
             <small>` + article.PubDate + `</small>
-        </li>`
+        </li><br>`
 	}
 
 	articlesHTML = template.HTML(`<ul id=articles-list>` + articleItems + `</ul>`)
@@ -64,6 +63,9 @@ func GenerateFeedList(feeds []schema.RssFeed) template.HTML {
 func GenerateNavbar() template.HTML {
 	return template.HTML(`
         <div class="navbar">
+            <div class="navbar-logo">
+                <span class="logo-text">rss</span><span class="logo-number">2</span><span class="logo-text">go</span>
+            </div>
             <nav class="navbar-nav">
               <ul>
                 <li><a href="/">Articles</a></li>
@@ -71,5 +73,21 @@ func GenerateNavbar() template.HTML {
               </ul>
             </nav>
         </div>
+    `)
+}
+
+func GenerateMetaData() template.HTML {
+	return template.HTML(`
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>rss2go</title>
+        <link rel="stylesheet" href="/static/css/style.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700|Roboto:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+        <script src="/static/js/htmx.min.js"></script>
     `)
 }

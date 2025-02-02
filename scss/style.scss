@@ -1,35 +1,171 @@
+@use "sass:color";
+
+/**
+ * Variables
+ */
+$font-stack: "Roboto", sans-serif;
+$background: #121212;
+$background-seconary: #1a1a1a;
+$text-primary: #f0f0f0;
+$text-secondary: #c8c7c4;
+
+/**
+ * Standard styling
+ */
+html,
 body {
-    font-size: 20px;
+  overflow-y: auto;
+  overflow-x: hidden !important;
+  align-items: left;
+  display: flex;
+  width: 90%;
+  font-family: $font-stack;
+  justify-content: left;
+  margin: 10px;
 }
 
-form {
-  display: block;
-  margin-top: 20px;
+body {
+  font-size: 18px;
+  background: $background;
 }
 
-label, input, button {
-  display: block;
-  margin-bottom: 10px;
+h1,
+h2,
+h3,
+h4 {
+  color: $text-primary;
 }
 
-input {
-    padding: 5px;
-    width: 25%;
-}
-
+/**
+ * Navbar
+ */
 .navbar {
+  background-color: $background-seconary;
+  padding: 10px;
+  width: 200px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  font-weight: bold;
+
+  .navbar-logo {
+    text-align: center;
+    font-size: 24px;
+    margin-top: 5%;
+    margin-bottom: 20%;
+  }
+
+  .logo-text {
+    color: $text-secondary;
+  }
+
+  .logo-number {
+    color: $text-primary;
+  }
+
+  .navbar-nav {
+    flex-grow: 1;
+  }
+
   ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
     display: flex;
+    flex-direction: column;
+    margin-top: auto;
   }
 
   li {
-    margin-right: 20px;
+    margin: 5px 0;
+    font-size: 16px;
   }
 
   a {
     text-decoration: none;
+    color: $text-primary;
+    padding: 10px;
+    display: block;
+    border-radius: 8px;
+
+    &:hover {
+      background-color: color.adjust(#9c9c9c, $lightness: -10%);
+    }
+  }
+}
+
+/**
+ * Articles page styling
+ */
+.articles {
+  flex-direction: row;
+  max-width: 85%;
+  min-width: 600px;
+  height: 80%;
+  margin-left: 220px;
+  margin-right: auto;
+  margin-top: 0px;
+
+  h1 {
+    margin-bottom: 50px;
+  }
+
+  ul {
+    margin-top: -10px;
+    font-size: 16px;
+
+    li {
+      list-style-type: none;
+      font-weight: bold;
+      padding: 5px;
+
+      a {
+        text-decoration: none;
+        color: $text-secondary;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: inline-block;
+        flex: 1;
+        max-width: 70%;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      small {
+        flex-shrink: 0;
+        float: right;
+        padding-top: 5px;
+        max-width: 30%;
+        color: $text-secondary;
+      }
+    }
+  }
+}
+
+/**
+ * Feed
+ */
+.feed {
+  margin-left: 220px;
+
+  form {
+    display: block;
+    margin-top: 20px;
+  }
+
+  label, input, button {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  input {
+      padding: 5px;
+      width: 25%;
   }
 }
