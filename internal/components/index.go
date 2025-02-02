@@ -11,9 +11,7 @@ import (
 func GenerateForm(endpoint, label string) template.HTML {
 	return template.HTML(`
         <form hx-post="` + endpoint + `" hx-trigger="submit" hx-swap="none">
-            <label for="url">` + label + `</label>
-            <input type="text" id="url" name="url" required>
-            <button type="submit">Submit</button>
+            <input type="text" id="url" name="url" placeholder="` + label + `" required>
         </form>
     `)
 }

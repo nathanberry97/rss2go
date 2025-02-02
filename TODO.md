@@ -31,7 +31,7 @@
 ## In progress
 
 * [ ] Add scss and js into the project
-  - Add css to improve ui [ ]
+  - Add css to improve ui [X]
   - Add alpine or implement code to clear form after sending the request [ ]
   - Implement loading bar on feeds page [ ]
 
