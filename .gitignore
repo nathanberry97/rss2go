@@ -1,3 +1,4 @@
 scripts
 bin
 internal/database/rss.db
+static/css/*

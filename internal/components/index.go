@@ -63,11 +63,11 @@ func GenerateFeedList(feeds []schema.RssFeed) template.HTML {
 
 func GenerateNavbar() template.HTML {
 	return template.HTML(`
-        <div class="navbar-container">
+        <div class="navbar">
             <nav class="navbar-nav">
-              <ul style="list-style-type: none; padding: 0; margin: 0; display: flex;">
-                <li style="margin-right: 20px;"><a href="/" style="text-decoration: none;">Articles</a></li>
-                <li><a href="/feeds" style="text-decoration: none;">Feeds</a></li>
+              <ul>
+                <li><a href="/">Articles</a></li>
+                <li><a href="/feeds">Feeds</a></li>
               </ul>
             </nav>
         </div>

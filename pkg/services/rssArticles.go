@@ -47,7 +47,6 @@ func GetRssArticles(conn *sql.DB, page int, limit int) (schema.PaginationRespons
 	}
 
 	remainingItems := totalItems - (page * limit)
-	fmt.Println(remainingItems)
 	if remainingItems <= 0 {
 		nextPage = -1
 	}

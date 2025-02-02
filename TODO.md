@@ -28,12 +28,12 @@
 
 * [ ] Implement unit tests for the application
 
-* [ ] Add tailwind css and alpine.js
+## In progress
+
+* [ ] Add scss and js into the project
   - Add css to improve ui [ ]
   - Add alpine or implement code to clear form after sending the request [ ]
   - Implement loading bar on feeds page [ ]
-
-## In progress
 
 ## Completed
 

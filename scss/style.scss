@@ -16,3 +16,20 @@ input {
     padding: 5px;
     width: 25%;
 }
+
+.navbar {
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+  }
+
+  li {
+    margin-right: 20px;
+  }
+
+  a {
+    text-decoration: none;
+  }
+}

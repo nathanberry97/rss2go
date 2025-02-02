@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -20,7 +19,6 @@ func postRssFeed(router *gin.Engine) {
 			return
 		}
 
-		fmt.Println(rssPostBody)
 		if rssPostBody.URL == "" {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "URL is required"})
 			return

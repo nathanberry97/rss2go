@@ -9,5 +9,7 @@ frontend
 precommit
 rss
 rss2go
+scss
 sql
 ui
+js

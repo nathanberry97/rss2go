@@ -13,7 +13,7 @@ import (
 func GetRssArticles(router *gin.Engine) {
 	router.GET("/partials/articles", func(c *gin.Context) {
 		pageStr := c.DefaultQuery("page", "0")
-		limitStr := c.DefaultQuery("limit", "10")
+		limitStr := c.DefaultQuery("limit", "50")
 
 		page, err := strconv.Atoi(pageStr)
 		if err != nil || page < 0 {
