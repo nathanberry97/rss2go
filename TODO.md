@@ -4,6 +4,11 @@
 
 * [ ] Add dockerfile to build and run the application
 
+* [ ] Improve scss and js into the project
+  - [ ] Refine current scss and js
+  - [ ] Add loading animation
+  - [ ] Make responsive
+
 * [ ] GET articles by feed
   - [ ] GET
   - [ ] Frontend
@@ -20,20 +25,15 @@
   - [ ] DELETE
   - [ ] Frontend
 
+* [ ] Implement unit tests for the application
+
 * [ ] Add better error handling
 
 * [ ] Improve the rss reader function
   - [ ] Make it work on a schedule to allow new posts to be added
   - [ ] Make it work with .atom feeds too
 
-* [ ] Implement unit tests for the application
-
 ## In progress
-
-* [ ] Add scss and js into the project
-  - Add css to improve ui [X]
-  - Add alpine or implement code to clear form after sending the request [ ]
-  - Implement loading bar on feeds page [ ]
 
 ## Completed
 
@@ -50,3 +50,4 @@
   - [X] POST (Update RSS feed post to do this)
 * [X] Implement seeding script
 * [X] Add HTMX to the frontend
+* [X] Add scss and js into the project
