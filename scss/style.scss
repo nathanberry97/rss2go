@@ -1,7 +1,7 @@
 /**
  * Variables
  */
-$font-stack: "Roboto", sans-serif;
+$font-stack: "Inter", Arial, sans-serif;
 $background: #121212;
 $background-seconary: #1a1a1a;
 $accent: #333333;
@@ -49,13 +49,13 @@ h4 {
   top: 0;
   left: 0;
   font-weight: bold;
-  border-right: 1px solid $accent;
+  border-right: 0.5px solid $accent;
 
   .navbar-logo {
     text-align: center;
     font-size: 24px;
     margin-top: 5%;
-    margin-bottom: 20%;
+    margin-bottom: 10%;
   }
 
   .logo-text {
@@ -133,6 +133,7 @@ h4 {
   }
 
   #toTop {
+    font-family: $font-stack;
     position: fixed;
     bottom: 20px;
     right: 20px;
@@ -170,12 +171,14 @@ h4 {
 
   ul {
     li {
+      padding: 0px;
       small {
         flex-shrink: 0;
         float: right;
         padding-top: 5px;
         max-width: 30%;
         color: $accent;
+        font-weight: bold;
       }
       a {
         &:hover {
@@ -208,6 +211,7 @@ h4 {
   }
 
   input {
+    font-family: $font-stack;
     padding: 5px;
     height: 36px;
     flex-grow: 1;
@@ -244,6 +248,7 @@ h4 {
   }
 
   .delete-btn {
+    font-family: $font-stack;
     padding: 5px 10px;
     height: 30px;
     cursor: pointer;

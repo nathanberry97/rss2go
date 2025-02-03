@@ -41,7 +41,7 @@ func GetRssArticles(conn *sql.DB, page int, limit int) (schema.PaginationRespons
 			return schema.PaginationResponse{}, fmt.Errorf("failed parsing pubDate: %w", err)
 		}
 
-		formatPubDate := t.Format("01/02/2006 15:04")
+		formatPubDate := t.Format("01/02/2006")
 		article.PubDate = formatPubDate
 
 		articles = append(articles, article)
