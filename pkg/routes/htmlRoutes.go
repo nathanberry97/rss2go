@@ -7,24 +7,30 @@ import (
 
 func feedsPage(router *gin.Engine) {
 	router.GET("/feeds", func(c *gin.Context) {
+		title := "Feeds"
 		formHTML := components.GenerateForm("/partials/feed", "RSS Feed URL")
 		navbar := components.GenerateNavbar()
+		metadata := components.GenerateMetaData()
 
 		c.HTML(200, "feeds.html", gin.H{
-			"title":  "RSS Feeds",
-			"form":   formHTML,
-			"navbar": navbar,
+			"title":    title,
+			"form":     formHTML,
+			"navbar":   navbar,
+			"metadata": metadata,
 		})
 	})
 }
 
 func articlesPage(router *gin.Engine) {
 	router.GET("/", func(c *gin.Context) {
+		title := "Articles"
 		navbar := components.GenerateNavbar()
+		metadata := components.GenerateMetaData()
 
 		c.HTML(200, "articles.html", gin.H{
-			"title":  "RSS Articles",
-			"navbar": navbar,
+			"title":    title,
+			"navbar":   navbar,
+			"metadata": metadata,
 		})
 	})
 }

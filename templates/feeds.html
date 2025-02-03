@@ -1,31 +1,27 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>rss2go</title>
-    <link rel="stylesheet" href="/static/css/style.css" />
-    <script src="/static/js/htmx.min.js"></script>
+    {{ .metadata }}
 </head>
 
 <body>
+    <header>
+        {{ .navbar }}
+    </header>
 
-<header>
-    {{ .navbar }}
-</header>
+    <main class=feed>
+        <h1>{{ .title }}</h1>
 
-<main>
-    <h1>{{ .title }}</h1>
+        {{ .form }}
 
-    {{ .form }}
+        <div id="feed-refresh"
+             hx-trigger="load, refreshFeed from:body"
+             hx-get="/partials/feed"
+             hx-swap="innerHTML">
+            {{ .feedList }}
+        </div>
 
-    <div id="feed-refresh"
-         hx-trigger="load, refreshFeed from:body"
-         hx-get="/partials/feed"
-         hx-swap="innerHTML">
-        {{ .feedList }}
-    </div>
-</main>
-
+        <button onclick="toTop()" id="toTop" class="toTop">↑</button>
+    </main>
 </body>
 </html>

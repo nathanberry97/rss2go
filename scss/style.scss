@@ -1,0 +1,266 @@
+/**
+ * Variables
+ */
+$font-stack: "Inter", Arial, sans-serif;
+$background: #121212;
+$background-seconary: #1a1a1a;
+$accent: #333333;
+$text-primary: #f0f0f0;
+$text-secondary: #c8c7c4;
+
+/**
+ * Standard styling
+ */
+html,
+body {
+  overflow-y: auto;
+  overflow-x: hidden !important;
+  align-items: left;
+  display: flex;
+  width: 95%;
+  font-family: $font-stack;
+  justify-content: left;
+  margin: 10px;
+}
+
+body {
+  font-size: 18px;
+  background: $background;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: $text-primary;
+}
+
+/**
+ * Navbar
+ */
+.navbar {
+  background-color: $background-seconary;
+  padding: 10px;
+  width: 200px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  font-weight: bold;
+  border-right: 0.5px solid $accent;
+
+  .navbar-logo {
+    text-align: center;
+    font-size: 24px;
+    margin-top: 5%;
+    margin-bottom: 10%;
+  }
+
+  .logo-text {
+    color: $text-secondary;
+  }
+
+  .logo-number {
+    color: $text-primary;
+  }
+
+  .navbar-nav {
+    flex-grow: 1;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+  }
+
+  li {
+    margin: 5px 0;
+    font-size: 16px;
+  }
+
+  a {
+    text-decoration: none;
+    color: $text-primary;
+    padding: 10px;
+    display: block;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    &:hover {
+      background-color: $accent;
+    }
+  }
+}
+
+/**
+ * Articles and Feeds shared styling
+ */
+.articles, .feed {
+  flex-direction: row;
+  max-width: 85%;
+  min-width: 600px;
+  height: 80%;
+  margin-left: 220px;
+  margin-right: auto;
+  margin-top: 0px;
+
+  ul {
+    margin-top: -10px;
+    font-size: 16px;
+
+    li {
+      list-style-type: none;
+      font-weight: bold;
+      padding: 5px;
+
+      a {
+        text-decoration: none;
+        color: $text-secondary;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: inline-block;
+        flex: 1;
+        max-width: 70%;
+      }
+    }
+  }
+
+  #toTop {
+    font-family: $font-stack;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 5px 10px;
+    height: 30px;
+    cursor: pointer;
+    background-color: $background;
+    color: $accent;
+    border: 2px solid $accent;
+    border-radius: 8px;
+    transition: opacity 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+
+    opacity: 0;
+    visibility: hidden;
+
+    &:hover {
+      background-color: $accent;
+      color: $text-secondary;
+    }
+
+    &.show {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+/**
+ * Articles styling
+ */
+.articles {
+  h1 {
+    margin-bottom: 50px;
+  }
+
+  ul {
+    li {
+      padding: 0px;
+      small {
+        flex-shrink: 0;
+        float: right;
+        padding-top: 5px;
+        max-width: 30%;
+        color: $accent;
+        font-weight: bold;
+      }
+      a {
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Feed styling
+ */
+.feed {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
+  h1 {
+    margin-bottom: 5px;
+  }
+
+  form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 500px;
+    margin-right: auto;
+    width: 100%;
+  }
+
+  input {
+    font-family: $font-stack;
+    padding: 5px;
+    height: 36px;
+    flex-grow: 1;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: $background;
+    color: $text-primary;
+    border: 2px solid $accent;
+    border-radius: 8px;
+
+    &:focus {
+      outline: none;
+      color: $text-secondary;
+    }
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+    li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      a {
+        flex-grow: 1;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
+  .delete-btn {
+    font-family: $font-stack;
+    padding: 5px 10px;
+    height: 30px;
+    cursor: pointer;
+    background-color: $background;
+    color: $accent;
+    border: 2px solid $accent;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    &:hover {
+      background-color: $accent;
+      color: $text-secondary;
+    }
+  }
+}

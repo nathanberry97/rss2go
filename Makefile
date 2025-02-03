@@ -9,8 +9,12 @@ explain:
 setup: ## Install pre-commit hooks
 	@pre-commit install
 
+.PHONY: compile
+compile: ## Compile scss to css
+	@sass --no-source-map scss/style.scss static/css/style.css
+
 .PHONY: build
-build: ## Build rss2go api
+build: compile ## Build rss2go api
 	@go build -o bin/api cmd/api/main.go
 
 .PHONY: run
