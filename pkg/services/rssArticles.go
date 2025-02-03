@@ -3,6 +3,7 @@ package services
 import (
 	"database/sql"
 	"fmt"
+	"time"
 
 	"github.com/nathanberry97/rss2go/internal/schema"
 )
@@ -34,6 +35,15 @@ func GetRssArticles(conn *sql.DB, page int, limit int) (schema.PaginationRespons
 		if err := rows.Scan(&article.FeedId, &article.Title, &article.Description, &article.Link, &article.PubDate); err != nil {
 			return schema.PaginationResponse{}, fmt.Errorf("failed to scan row: %w", err)
 		}
+
+		t, err := time.Parse(time.RFC3339, article.PubDate)
+		if err != nil {
+			return schema.PaginationResponse{}, fmt.Errorf("failed parsing pubDate: %w", err)
+		}
+
+		formatPubDate := t.Format("01/02/2006 15:04")
+		article.PubDate = formatPubDate
+
 		articles = append(articles, article)
 	}
 	if err := rows.Err(); err != nil {

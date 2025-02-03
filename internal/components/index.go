@@ -10,7 +10,7 @@ import (
 
 func GenerateForm(endpoint, label string) template.HTML {
 	return template.HTML(`
-        <form hx-post="` + endpoint + `" hx-trigger="submit" hx-swap="none">
+        <form hx-post="` + endpoint + `" hx-trigger="submit" hx-swap="none" hx-on::after-request="clearInput()">
             <input type="text" id="url" name="url" placeholder="` + label + `" required>
         </form>
     `)
@@ -87,5 +87,6 @@ func GenerateMetaData() template.HTML {
             rel="stylesheet"
         />
         <script src="/static/js/htmx.min.js"></script>
+        <script src="/static/js/index.js"></script>
     `)
 }
