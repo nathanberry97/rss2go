@@ -11,7 +11,13 @@ func PostRssFeed(conn *sql.DB, postBody schema.RssPostBody) (int64, error) {
 	var name string
 	var articles []schema.RssItem
 
-	articles, err := parseRssItems(postBody.URL)
+	err := checkValidFeed(postBody.URL)
+	if err != nil {
+		fmt.Println(err)
+		return 0, fmt.Errorf("Not a valid RSS feed: %w", err)
+	}
+
+	articles, err = parseRssItems(postBody.URL)
 	if err != nil {
 		return 0, fmt.Errorf("failed to parse RSS feed: %w", err)
 	}

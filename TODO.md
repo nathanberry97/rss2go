@@ -2,6 +2,10 @@
 
 ## Todo
 
+* [ ] Upload to docker hub and release pipeline
+
+* [ ] Documentation site
+
 * [ ] Add dockerfile to build and run the application
 
 * [ ] Improve scss and js into the project
@@ -29,11 +33,12 @@
 
 * [ ] Add better error handling
 
+## In progress
+
 * [ ] Improve the rss reader function
+  - [ ] Improve the general function
   - [ ] Make it work on a schedule to allow new posts to be added
   - [ ] Make it work with .atom feeds too
-
-## In progress
 
 ## Completed
 

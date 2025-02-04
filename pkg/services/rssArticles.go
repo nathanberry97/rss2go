@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/nathanberry97/rss2go/internal/schema"
+	"github.com/nathanberry97/rss2go/internal/utils"
 )
 
 func GetRssArticles(conn *sql.DB, page int, limit int) (schema.PaginationResponse, error) {
@@ -36,16 +37,15 @@ func GetRssArticles(conn *sql.DB, page int, limit int) (schema.PaginationRespons
 			return schema.PaginationResponse{}, fmt.Errorf("failed to scan row: %w", err)
 		}
 
-		t, err := time.Parse(time.RFC3339, article.PubDate)
+		formatPubDate, err := utils.FormatDate(article.PubDate, time.RFC3339, time.DateOnly)
 		if err != nil {
 			return schema.PaginationResponse{}, fmt.Errorf("failed parsing pubDate: %w", err)
 		}
 
-		formatPubDate := t.Format("01/02/2006")
 		article.PubDate = formatPubDate
-
 		articles = append(articles, article)
 	}
+
 	if err := rows.Err(); err != nil {
 		return schema.PaginationResponse{}, fmt.Errorf("rows iteration error: %w", err)
 	}

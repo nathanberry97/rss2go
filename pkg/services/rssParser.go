@@ -6,45 +6,27 @@ import (
 
 	"github.com/gocolly/colly/v2"
 	"github.com/nathanberry97/rss2go/internal/schema"
+	"github.com/nathanberry97/rss2go/internal/utils"
 )
 
-func parseRssItems(url string) ([]schema.RssItem, error) {
-	var articles []schema.RssItem
+func checkValidFeed(url string) error {
+	isValid := false
 
 	c := colly.NewCollector()
 
-	c.OnXML("//rss/channel/item", func(e *colly.XMLElement) {
-		pubDate := e.ChildText("pubDate")
-
-		// Try parsing the first format (with timezone offset)
-		parsedDate, err := time.Parse("Mon, 02 Jan 2006 15:04:05 -0700", pubDate)
-		if err != nil {
-			// If the first format fails, try parsing the second format (with GMT)
-			parsedDate, err = time.Parse("Mon, 02 Jan 2006 15:04:05 GMT", pubDate)
-			if err != nil {
-				fmt.Printf("failed to parse pubDate: %v\n", err)
-				return
-			}
-		}
-
-		// Format the date into the desired format (YYYY-MM-DD HH:MM:SS)
-		formattedDate := parsedDate.Format("2006-01-02 15:04:05")
-
-		article := schema.RssItem{
-			Title:       e.ChildText("title"),
-			Description: e.ChildText("description"),
-			Link:        e.ChildText("link"),
-			PubDate:     formattedDate, // Use the formatted date
-		}
-
-		articles = append(articles, article)
+	c.OnXML("//rss", func(e *colly.XMLElement) {
+		isValid = true
 	})
 
 	if err := c.Visit(url); err != nil {
-		return nil, fmt.Errorf("failed to visit URL %q: %w", url, err)
+		return fmt.Errorf("failed to visit URL %q: %w", url, err)
 	}
 
-	return articles, nil
+	if isValid == false {
+		return fmt.Errorf("not a valid rss feed")
+	}
+
+	return nil
 }
 
 func parseRssTitle(url string) (string, error) {
@@ -65,4 +47,52 @@ func parseRssTitle(url string) (string, error) {
 	}
 
 	return name, nil
+}
+
+func parseRssItems(url string) ([]schema.RssItem, error) {
+	var articles []schema.RssItem
+
+	c := colly.NewCollector()
+
+	c.OnXML("//rss/channel/item", func(e *colly.XMLElement) {
+
+		pubDate := e.ChildText("pubDate")
+		formattedDate, err := parsePubDate(pubDate)
+		if err != nil {
+			fmt.Printf("failed to parse pubDate: %v\n", err)
+			return
+		}
+
+		article := schema.RssItem{
+			Title:       e.ChildText("title"),
+			Description: e.ChildText("description"),
+			Link:        e.ChildText("link"),
+			PubDate:     formattedDate,
+		}
+
+		articles = append(articles, article)
+	})
+
+	if err := c.Visit(url); err != nil {
+		return nil, fmt.Errorf("failed to visit URL %q: %w", url, err)
+	}
+
+	return articles, nil
+}
+
+func parsePubDate(pubDate string) (string, error) {
+	formats := []string{
+		time.RFC1123,
+		time.RFC1123Z,
+		time.RFC3339,
+	}
+
+	for _, format := range formats {
+		formattedDate, err := utils.FormatDate(pubDate, format, time.DateTime)
+		if err == nil {
+			return formattedDate, nil
+		}
+	}
+
+	return "", fmt.Errorf("Unable to process pubDate")
 }
