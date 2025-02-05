@@ -5,7 +5,7 @@ import "github.com/gin-gonic/gin"
 func InitialiseRouter() *gin.Engine {
 	router := gin.Default()
 	router.Static("/static", "./static")
-	router.LoadHTMLGlob("templates/*.html")
+	router.LoadHTMLGlob("templates/*.tmpl")
 
 	// Health check
 	healthCheck(router)
