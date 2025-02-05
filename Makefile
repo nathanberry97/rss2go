@@ -15,11 +15,11 @@ compile: ## Compile scss to css
 
 .PHONY: build
 build: compile ## Build rss2go api
-	@go build -o bin/api cmd/api/main.go
+	@go build -o bin/app cmd/app/main.go
 
 .PHONY: run
 run: build ## Build and run rss2go api
-	@./bin/api
+	@./bin/app
 
 .PHONY: seed
 seed: ## Seed rss2go database
@@ -27,7 +27,6 @@ seed: ## Seed rss2go database
 
 .PHONY: test
 test: ## Test backend for rss2go app
-	@go test pkg/routes/*.go -v
 	@go test internal/utils/*.go -v
 
 .PHONY: clean

@@ -9,7 +9,7 @@ import (
 	"github.com/nathanberry97/rss2go/internal/utils"
 )
 
-func GetRssArticles(conn *sql.DB, page int, limit int) (schema.PaginationResponse, error) {
+func GetArticles(conn *sql.DB, page int, limit int) (schema.PaginationResponse, error) {
 	if page < 0 || limit <= 0 {
 		return schema.PaginationResponse{}, fmt.Errorf("invalid pagination parameters: page=%d, limit=%d", page, limit)
 	}

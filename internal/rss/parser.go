@@ -1,4 +1,4 @@
-package services
+package rss
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ import (
 	"github.com/nathanberry97/rss2go/internal/utils"
 )
 
-func checkValidFeed(url string) error {
+func CheckValidFeed(url string) error {
 	isValid := false
 
 	c := colly.NewCollector()
@@ -29,7 +29,7 @@ func checkValidFeed(url string) error {
 	return nil
 }
 
-func parseRssTitle(url string) (string, error) {
+func ParseRssTitle(url string) (string, error) {
 	var name string
 
 	c := colly.NewCollector()
@@ -49,7 +49,7 @@ func parseRssTitle(url string) (string, error) {
 	return name, nil
 }
 
-func parseRssItems(url string) ([]schema.RssItem, error) {
+func ParseRssItems(url string) ([]schema.RssItem, error) {
 	var articles []schema.RssItem
 
 	c := colly.NewCollector()

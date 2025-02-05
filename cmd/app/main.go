@@ -4,8 +4,8 @@ import (
 	"os"
 
 	"github.com/nathanberry97/rss2go/internal/database"
+	"github.com/nathanberry97/rss2go/internal/routes"
 	"github.com/nathanberry97/rss2go/internal/utils"
-	"github.com/nathanberry97/rss2go/pkg/routes"
 )
 
 func main() {

@@ -4,7 +4,6 @@ import "github.com/gin-gonic/gin"
 
 func InitialiseRouter() *gin.Engine {
 	router := gin.Default()
-
 	router.Static("/static", "./static")
 	router.LoadHTMLGlob("templates/*.html")
 
@@ -15,13 +14,13 @@ func InitialiseRouter() *gin.Engine {
 	articlesPage(router)
 	feedsPage(router)
 
-	// RSS feed routes
-	postRssFeed(router)
-	getRssFeeds(router)
-	deleteRssFeed(router)
+	// Feed routes
+	getFeeds(router)
+	postFeed(router)
+	deleteFeed(router)
 
-	// RSS article routes
-	GetRssArticles(router)
+	// Article routes
+	getArticles(router)
 
 	return router
 }

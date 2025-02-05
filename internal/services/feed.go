@@ -4,27 +4,28 @@ import (
 	"database/sql"
 	"fmt"
 
+	"github.com/nathanberry97/rss2go/internal/rss"
 	"github.com/nathanberry97/rss2go/internal/schema"
 )
 
-func PostRssFeed(conn *sql.DB, postBody schema.RssPostBody) (int64, error) {
+func PostFeed(conn *sql.DB, postBody schema.RssPostBody) (int64, error) {
 	var name string
 	var articles []schema.RssItem
 
-	err := checkValidFeed(postBody.URL)
+	err := rss.CheckValidFeed(postBody.URL)
 	if err != nil {
 		fmt.Println(err)
 		return 0, fmt.Errorf("Not a valid RSS feed: %w", err)
 	}
 
-	articles, err = parseRssItems(postBody.URL)
-	if err != nil {
-		return 0, fmt.Errorf("failed to parse RSS feed: %w", err)
-	}
-
-	name, err = parseRssTitle(postBody.URL)
+	name, err = rss.ParseRssTitle(postBody.URL)
 	if err != nil {
 		return 0, fmt.Errorf("failed to parse RSS feed title: %w", err)
+	}
+
+	articles, err = rss.ParseRssItems(postBody.URL)
+	if err != nil {
+		return 0, fmt.Errorf("failed to parse RSS feed: %w", err)
 	}
 
 	query := "INSERT INTO feeds (name, url) VALUES (?, ?)"
@@ -55,7 +56,7 @@ func PostRssFeed(conn *sql.DB, postBody schema.RssPostBody) (int64, error) {
 	return feedID, nil
 }
 
-func GetRssFeeds(conn *sql.DB) ([]schema.RssFeed, error) {
+func GetFeeds(conn *sql.DB) ([]schema.RssFeed, error) {
 	query := "SELECT id, name, url FROM feeds"
 	rows, err := conn.Query(query)
 	if err != nil {
@@ -79,7 +80,7 @@ func GetRssFeeds(conn *sql.DB) ([]schema.RssFeed, error) {
 	return feeds, nil
 }
 
-func DeleteRssFeed(conn *sql.DB, id int) error {
+func DeleteFeed(conn *sql.DB, id int) error {
 	_, err := conn.Exec("PRAGMA foreign_keys = ON;")
 	if err != nil {
 		return fmt.Errorf("error enabling foreign keys: %w", err)
