@@ -18,7 +18,7 @@ func GetRssArticles(conn *sql.DB, page int, limit int) (schema.PaginationRespons
 	nextPage := page + 1
 
 	query := `
-        SELECT id, title, description, url, published_at
+        SELECT id, title, url, published_at
         FROM articles
         ORDER BY published_at DESC
         LIMIT ? OFFSET ?
@@ -33,7 +33,7 @@ func GetRssArticles(conn *sql.DB, page int, limit int) (schema.PaginationRespons
 	var articles []schema.RssArticle
 	for rows.Next() {
 		var article schema.RssArticle
-		if err := rows.Scan(&article.FeedId, &article.Title, &article.Description, &article.Link, &article.PubDate); err != nil {
+		if err := rows.Scan(&article.FeedId, &article.Title, &article.Link, &article.PubDate); err != nil {
 			return schema.PaginationResponse{}, fmt.Errorf("failed to scan row: %w", err)
 		}
 

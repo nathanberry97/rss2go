@@ -2,10 +2,9 @@ package schema
 
 // Data models
 type RssItem struct {
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	Link        string `json:"link"`
-	PubDate     string `json:"pub_date"`
+	Title   string `json:"title"`
+	Link    string `json:"link"`
+	PubDate string `json:"pub_date"`
 }
 
 type RssArticle struct {

@@ -64,10 +64,9 @@ func parseRssItems(url string) ([]schema.RssItem, error) {
 		}
 
 		article := schema.RssItem{
-			Title:       e.ChildText("title"),
-			Description: e.ChildText("description"),
-			Link:        e.ChildText("link"),
-			PubDate:     formattedDate,
+			Title:   e.ChildText("title"),
+			Link:    e.ChildText("link"),
+			PubDate: formattedDate,
 		}
 
 		articles = append(articles, article)

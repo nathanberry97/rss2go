@@ -66,7 +66,7 @@ func GenerateNavbar() template.HTML {
             </div>
             <nav class="navbar-nav">
               <ul>
-                <li><a href="/">Articles</a></li>
+                <li><a href="/">Latest</a></li>
                 <li><a href="/feeds">Feeds</a></li>
               </ul>
             </nav>
@@ -79,6 +79,7 @@ func GenerateMetaData() template.HTML {
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>rss2go</title>
+        <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg" />
         <link rel="stylesheet" href="/static/css/style.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

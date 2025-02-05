@@ -38,14 +38,14 @@ func PostRssFeed(conn *sql.DB, postBody schema.RssPostBody) (int64, error) {
 		return 0, fmt.Errorf("failed to retrieve last insert ID: %w", err)
 	}
 
-	stmt, err := conn.Prepare("INSERT INTO articles (feed_id, title, description, url, published_at) VALUES (?, ?, ?, ?, ?)")
+	stmt, err := conn.Prepare("INSERT OR IGNORE INTO articles (feed_id, title, url, published_at) VALUES (?, ?, ?, ?)")
 	if err != nil {
 		return 0, fmt.Errorf("failed to prepare article insertion statement: %w", err)
 	}
 	defer stmt.Close()
 
 	for _, article := range articles {
-		_, err = stmt.Exec(feedID, article.Title, article.Description, article.Link, article.PubDate)
+		_, err = stmt.Exec(feedID, article.Title, article.Link, article.PubDate)
 		if err != nil {
 			fmt.Println("failed to insert article into database:", err)
 			return 0, fmt.Errorf("failed to insert article into database: %w", err)

@@ -23,7 +23,7 @@ func feedsPage(router *gin.Engine) {
 
 func articlesPage(router *gin.Engine) {
 	router.GET("/", func(c *gin.Context) {
-		title := "Articles"
+		title := "Latest"
 		navbar := components.GenerateNavbar()
 		metadata := components.GenerateMetaData()
 
