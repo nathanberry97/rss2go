@@ -8,52 +8,33 @@ import (
 	"github.com/nathanberry97/rss2go/internal/schema"
 )
 
-func PostFeed(conn *sql.DB, postBody schema.RssPostBody) (int64, error) {
+func PostFeed(conn *sql.DB, postBody schema.RssPostBody) error {
 	var name string
 	var articles []schema.RssItem
 
-	err := rss.CheckValidFeed(postBody.URL)
+	name, articles, err := rss.PostFeedHandler(postBody.URL)
 	if err != nil {
 		fmt.Println(err)
-		return 0, fmt.Errorf("Not a valid RSS feed: %w", err)
-	}
-
-	name, err = rss.ParseRssTitle(postBody.URL)
-	if err != nil {
-		return 0, fmt.Errorf("failed to parse RSS feed title: %w", err)
-	}
-
-	articles, err = rss.ParseRssItems(postBody.URL)
-	if err != nil {
-		return 0, fmt.Errorf("failed to parse RSS feed: %w", err)
+		return fmt.Errorf("Error while parsing feed: %w", err)
 	}
 
 	query := "INSERT INTO feeds (name, url) VALUES (?, ?)"
 	result, err := conn.Exec(query, name, postBody.URL)
 	if err != nil {
-		return 0, fmt.Errorf("failed to insert feed into database: %w", err)
+		return fmt.Errorf("failed to insert feed into database: %w", err)
 	}
 
 	feedID, err := result.LastInsertId()
 	if err != nil {
-		return 0, fmt.Errorf("failed to retrieve last insert ID: %w", err)
+		return fmt.Errorf("failed to retrieve last insert ID: %w", err)
 	}
 
-	stmt, err := conn.Prepare("INSERT OR IGNORE INTO articles (feed_id, title, url, published_at) VALUES (?, ?, ?, ?)")
+	err = insertArticles(conn, articles, feedID)
 	if err != nil {
-		return 0, fmt.Errorf("failed to prepare article insertion statement: %w", err)
-	}
-	defer stmt.Close()
-
-	for _, article := range articles {
-		_, err = stmt.Exec(feedID, article.Title, article.Link, article.PubDate)
-		if err != nil {
-			fmt.Println("failed to insert article into database:", err)
-			return 0, fmt.Errorf("failed to insert article into database: %w", err)
-		}
+		return err
 	}
 
-	return feedID, nil
+	return nil
 }
 
 func GetFeeds(conn *sql.DB) ([]schema.RssFeed, error) {

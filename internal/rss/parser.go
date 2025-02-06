@@ -9,7 +9,26 @@ import (
 	"github.com/nathanberry97/rss2go/internal/utils"
 )
 
-func CheckValidFeed(url string) error {
+func PostFeedHandler(url string) (string, []schema.RssItem, error) {
+	err := checkValidFeed(url)
+	if err != nil {
+		return "", nil, err
+	}
+
+	name, err := parseRssTitle(url)
+	if err != nil {
+		return "", nil, err
+	}
+
+	articles, err := parseRssItems(url)
+	if err != nil {
+		return "", nil, err
+	}
+
+	return name, articles, nil
+}
+
+func checkValidFeed(url string) error {
 	isValid := false
 
 	c := colly.NewCollector()
@@ -29,7 +48,7 @@ func CheckValidFeed(url string) error {
 	return nil
 }
 
-func ParseRssTitle(url string) (string, error) {
+func parseRssTitle(url string) (string, error) {
 	var name string
 
 	c := colly.NewCollector()
@@ -49,7 +68,7 @@ func ParseRssTitle(url string) (string, error) {
 	return name, nil
 }
 
-func ParseRssItems(url string) ([]schema.RssItem, error) {
+func parseRssItems(url string) ([]schema.RssItem, error) {
 	var articles []schema.RssItem
 
 	c := colly.NewCollector()

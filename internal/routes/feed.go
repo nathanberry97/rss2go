@@ -27,7 +27,7 @@ func postFeed(router *gin.Engine) {
 		dbConn := database.DatabaseConnection()
 		defer dbConn.Close()
 
-		_, err := services.PostFeed(dbConn, rssPostBody)
+		err := services.PostFeed(dbConn, rssPostBody)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error posting RSS feed: " + err.Error()})
 			return
