@@ -12,6 +12,14 @@ type RssArticle struct {
 	RssItem
 }
 
+type FeedType string
+
+const (
+	FeedTypeRSS  FeedType = "rss"
+	FeedTypeAtom FeedType = "atom"
+	FeedTypeNone FeedType = ""
+)
+
 // Request bodies
 type RssPostBody struct {
 	URL string `form:"url" json:"url"`

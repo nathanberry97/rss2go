@@ -10,17 +10,20 @@ import (
 )
 
 func PostFeedHandler(url string) (string, []schema.RssItem, error) {
-	err := checkValidFeed(url)
+	var name string
+	var articles []schema.RssItem
+
+	feedType, err := checkValidFeed(url)
 	if err != nil {
 		return "", nil, err
 	}
 
-	name, err := parseRssTitle(url)
+	name, err = parseFeedTitle(url, feedType)
 	if err != nil {
 		return "", nil, err
 	}
 
-	articles, err := parseRssItems(url)
+	articles, err = parseFeedItems(url, feedType)
 	if err != nil {
 		return "", nil, err
 	}
@@ -28,32 +31,43 @@ func PostFeedHandler(url string) (string, []schema.RssItem, error) {
 	return name, articles, nil
 }
 
-func checkValidFeed(url string) error {
-	isValid := false
-
+func checkValidFeed(url string) (schema.FeedType, error) {
+	feedType := schema.FeedTypeNone
 	c := colly.NewCollector()
 
 	c.OnXML("//rss", func(e *colly.XMLElement) {
-		isValid = true
+		feedType = schema.FeedTypeRSS
+	})
+
+	c.OnXML("//feed", func(e *colly.XMLElement) {
+		feedType = schema.FeedTypeAtom
 	})
 
 	if err := c.Visit(url); err != nil {
-		return fmt.Errorf("failed to visit URL %q: %w", url, err)
+		return schema.FeedTypeNone, fmt.Errorf("failed to visit URL %q: %w", url, err)
 	}
 
-	if isValid == false {
-		return fmt.Errorf("not a valid rss feed")
+	if feedType == schema.FeedTypeNone {
+		return schema.FeedTypeNone, fmt.Errorf("not a valid rss or atom feed")
 	}
 
-	return nil
+	return feedType, nil
 }
 
-func parseRssTitle(url string) (string, error) {
-	var name string
-
+func parseFeedTitle(url string, feedType schema.FeedType) (string, error) {
+	var title, name string
 	c := colly.NewCollector()
 
-	c.OnXML("//rss/channel/title", func(e *colly.XMLElement) {
+	switch feedType {
+	case schema.FeedTypeRSS:
+		title = "//rss/channel/title"
+	case schema.FeedTypeAtom:
+		title = "//feed/title"
+	default:
+		return "", fmt.Errorf("Unsupported feed type: %v", feedType)
+	}
+
+	c.OnXML(title, func(e *colly.XMLElement) {
 		name = e.Text
 	})
 
@@ -68,23 +82,39 @@ func parseRssTitle(url string) (string, error) {
 	return name, nil
 }
 
-func parseRssItems(url string) ([]schema.RssItem, error) {
+func parseFeedItems(url string, feedType schema.FeedType) ([]schema.RssItem, error) {
 	var articles []schema.RssItem
-
+	var item, dateField string
 	c := colly.NewCollector()
 
-	c.OnXML("//rss/channel/item", func(e *colly.XMLElement) {
+	switch feedType {
+	case schema.FeedTypeRSS:
+		item = "//rss/channel/item"
+		dateField = "pubDate"
+	case schema.FeedTypeAtom:
+		item = "//feed/entry"
+		dateField = "updated"
+	default:
+		return nil, fmt.Errorf("Unsupported feed type: %v", feedType)
+	}
 
-		pubDate := e.ChildText("pubDate")
+	c.OnXML(item, func(e *colly.XMLElement) {
+
+		pubDate := e.ChildText(dateField)
 		formattedDate, err := parsePubDate(pubDate)
 		if err != nil {
 			fmt.Printf("failed to parse pubDate: %v\n", err)
 			return
 		}
 
+		link := e.ChildAttr("link", "href")
+		if link == "" {
+			link = e.ChildText("link")
+		}
+
 		article := schema.RssItem{
 			Title:   e.ChildText("title"),
-			Link:    e.ChildText("link"),
+			Link:    link,
 			PubDate: formattedDate,
 		}
 

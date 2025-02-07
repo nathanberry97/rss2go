@@ -17,7 +17,6 @@ func insertArticles(conn *sql.DB, articles []schema.RssItem, feedID int64) error
 	for _, article := range articles {
 		_, err = stmt.Exec(feedID, article.Title, article.Link, article.PubDate)
 		if err != nil {
-			fmt.Println("failed to insert article into database:", err)
 			return fmt.Errorf("failed to insert article into database: %w", err)
 		}
 	}

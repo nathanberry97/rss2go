@@ -15,5 +15,5 @@ curl -v \
 curl -v \
     -X POST \
     -H "Content-Type: application/json" \
-    -d '{"url": "https://feeds.bbci.co.uk/news/technology/rss.xml"}' \
+    -d '{"url": "https://world.hey.com/dhh/feed.atom"}' \
     localhost:8080/rss_feed
