@@ -4,52 +4,40 @@ import (
 	"database/sql"
 	"fmt"
 
+	"github.com/nathanberry97/rss2go/internal/rss"
 	"github.com/nathanberry97/rss2go/internal/schema"
 )
 
-func PostRssFeed(conn *sql.DB, postBody schema.RssPostBody) (int64, error) {
+func PostFeed(conn *sql.DB, postBody schema.RssPostBody) error {
 	var name string
 	var articles []schema.RssItem
 
-	articles, err := parseRssItems(postBody.URL)
+	name, articles, err := rss.PostFeedHandler(postBody.URL)
 	if err != nil {
-		return 0, fmt.Errorf("failed to parse RSS feed: %w", err)
-	}
-
-	name, err = parseRssTitle(postBody.URL)
-	if err != nil {
-		return 0, fmt.Errorf("failed to parse RSS feed title: %w", err)
+		fmt.Println(err)
+		return fmt.Errorf("Error while parsing feed: %w", err)
 	}
 
 	query := "INSERT INTO feeds (name, url) VALUES (?, ?)"
 	result, err := conn.Exec(query, name, postBody.URL)
 	if err != nil {
-		return 0, fmt.Errorf("failed to insert feed into database: %w", err)
+		return fmt.Errorf("failed to insert feed into database: %w", err)
 	}
 
 	feedID, err := result.LastInsertId()
 	if err != nil {
-		return 0, fmt.Errorf("failed to retrieve last insert ID: %w", err)
+		return fmt.Errorf("failed to retrieve last insert ID: %w", err)
 	}
 
-	stmt, err := conn.Prepare("INSERT INTO articles (feed_id, title, description, url, published_at) VALUES (?, ?, ?, ?, ?)")
+	err = insertArticles(conn, articles, feedID)
 	if err != nil {
-		return 0, fmt.Errorf("failed to prepare article insertion statement: %w", err)
-	}
-	defer stmt.Close()
-
-	for _, article := range articles {
-		_, err = stmt.Exec(feedID, article.Title, article.Description, article.Link, article.PubDate)
-		if err != nil {
-			fmt.Println("failed to insert article into database:", err)
-			return 0, fmt.Errorf("failed to insert article into database: %w", err)
-		}
+		return err
 	}
 
-	return feedID, nil
+	return nil
 }
 
-func GetRssFeeds(conn *sql.DB) ([]schema.RssFeed, error) {
+func GetFeeds(conn *sql.DB) ([]schema.RssFeed, error) {
 	query := "SELECT id, name, url FROM feeds"
 	rows, err := conn.Query(query)
 	if err != nil {
@@ -73,7 +61,7 @@ func GetRssFeeds(conn *sql.DB) ([]schema.RssFeed, error) {
 	return feeds, nil
 }
 
-func DeleteRssFeed(conn *sql.DB, id int) error {
+func DeleteFeed(conn *sql.DB, id int) error {
 	_, err := conn.Exec("PRAGMA foreign_keys = ON;")
 	if err != nil {
 		return fmt.Errorf("error enabling foreign keys: %w", err)

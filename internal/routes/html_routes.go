@@ -12,7 +12,7 @@ func feedsPage(router *gin.Engine) {
 		navbar := components.GenerateNavbar()
 		metadata := components.GenerateMetaData()
 
-		c.HTML(200, "feeds.html", gin.H{
+		c.HTML(200, "feeds.tmpl", gin.H{
 			"title":    title,
 			"form":     formHTML,
 			"navbar":   navbar,
@@ -23,11 +23,11 @@ func feedsPage(router *gin.Engine) {
 
 func articlesPage(router *gin.Engine) {
 	router.GET("/", func(c *gin.Context) {
-		title := "Articles"
+		title := "Latest"
 		navbar := components.GenerateNavbar()
 		metadata := components.GenerateMetaData()
 
-		c.HTML(200, "articles.html", gin.H{
+		c.HTML(200, "articles.tmpl", gin.H{
 			"title":    title,
 			"navbar":   navbar,
 			"metadata": metadata,

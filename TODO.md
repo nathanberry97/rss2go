@@ -2,12 +2,7 @@
 
 ## Todo
 
-* [ ] Add dockerfile to build and run the application
-
-* [ ] Improve scss and js into the project
-  - [ ] Refine current scss and js
-  - [ ] Add loading animation
-  - [ ] Make responsive
+* [ ] Documentation site
 
 * [ ] GET articles by feed
   - [ ] GET
@@ -25,13 +20,23 @@
   - [ ] DELETE
   - [ ] Frontend
 
+* [ ] Upload to docker hub and release pipeline
+
+* [ ] Add dockerfile to build and run the application
+
+
 * [ ] Implement unit tests for the application
 
 * [ ] Add better error handling
 
-* [ ] Improve the rss reader function
-  - [ ] Make it work on a schedule to allow new posts to be added
-  - [ ] Make it work with .atom feeds too
+* [ ] Improve scss and js into the project
+  - [ ] Refine current scss and js
+  - [ ] Add loading animation
+  - [ ] Make responsive
+
+* [ ] Add support for OPML
+
+* [ ] Integrate go worker pool to update feeds in the background
 
 ## In progress
 
@@ -51,3 +56,6 @@
 * [X] Implement seeding script
 * [X] Add HTMX to the frontend
 * [X] Add scss and js into the project
+* [X] Improve the rss reader function
+  - [X] Improve the general function
+  - [X] Make it work with .atom feeds too

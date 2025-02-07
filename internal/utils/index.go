@@ -2,11 +2,24 @@ package utils
 
 import (
 	"bufio"
+	"fmt"
 	"log"
 	"os"
 	"strings"
 	"testing"
+	"time"
 )
+
+func FormatDate(dateStr, inputFormat, outputFormat string) (string, error) {
+	t, err := time.Parse(inputFormat, dateStr)
+
+	if err != nil {
+		fmt.Println(err)
+		return "", fmt.Errorf("Failed to parse time: %w", err)
+	}
+
+	return t.Format(outputFormat), nil
+}
 
 func SetEnv(envFile string) {
 	file, err := os.Open(envFile)

@@ -6,9 +6,10 @@ import (
 	"time"
 
 	"github.com/nathanberry97/rss2go/internal/schema"
+	"github.com/nathanberry97/rss2go/internal/utils"
 )
 
-func GetRssArticles(conn *sql.DB, page int, limit int) (schema.PaginationResponse, error) {
+func GetArticles(conn *sql.DB, page int, limit int) (schema.PaginationResponse, error) {
 	if page < 0 || limit <= 0 {
 		return schema.PaginationResponse{}, fmt.Errorf("invalid pagination parameters: page=%d, limit=%d", page, limit)
 	}
@@ -17,7 +18,7 @@ func GetRssArticles(conn *sql.DB, page int, limit int) (schema.PaginationRespons
 	nextPage := page + 1
 
 	query := `
-        SELECT id, title, description, url, published_at
+        SELECT id, title, url, published_at
         FROM articles
         ORDER BY published_at DESC
         LIMIT ? OFFSET ?
@@ -32,20 +33,19 @@ func GetRssArticles(conn *sql.DB, page int, limit int) (schema.PaginationRespons
 	var articles []schema.RssArticle
 	for rows.Next() {
 		var article schema.RssArticle
-		if err := rows.Scan(&article.FeedId, &article.Title, &article.Description, &article.Link, &article.PubDate); err != nil {
+		if err := rows.Scan(&article.FeedId, &article.Title, &article.Link, &article.PubDate); err != nil {
 			return schema.PaginationResponse{}, fmt.Errorf("failed to scan row: %w", err)
 		}
 
-		t, err := time.Parse(time.RFC3339, article.PubDate)
+		formatPubDate, err := utils.FormatDate(article.PubDate, time.RFC3339, time.DateOnly)
 		if err != nil {
 			return schema.PaginationResponse{}, fmt.Errorf("failed parsing pubDate: %w", err)
 		}
 
-		formatPubDate := t.Format("01/02/2006")
 		article.PubDate = formatPubDate
-
 		articles = append(articles, article)
 	}
+
 	if err := rows.Err(); err != nil {
 		return schema.PaginationResponse{}, fmt.Errorf("rows iteration error: %w", err)
 	}

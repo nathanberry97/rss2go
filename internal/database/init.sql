@@ -9,13 +9,16 @@ CREATE TABLE IF NOT EXISTS articles (
   feed_id INTEGER NOT NULL,
   title TEXT NOT NULL,
   url TEXT NOT NULL UNIQUE,
-  description TEXT,
   published_at DATETIME,
   FOREIGN KEY (feed_id) REFERENCES feeds(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS favorites (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  article_id INTEGER NOT NULL,
+  article_id INTEGER PRIMARY KEY,
+  FOREIGN KEY (article_id) REFERENCES articles(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS read_later (
+  article_id INTEGER PRIMARY KEY,
   FOREIGN KEY (article_id) REFERENCES articles(id) ON DELETE CASCADE
 );

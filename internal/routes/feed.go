@@ -8,10 +8,10 @@ import (
 	"github.com/nathanberry97/rss2go/internal/components"
 	"github.com/nathanberry97/rss2go/internal/database"
 	"github.com/nathanberry97/rss2go/internal/schema"
-	"github.com/nathanberry97/rss2go/pkg/services"
+	"github.com/nathanberry97/rss2go/internal/services"
 )
 
-func postRssFeed(router *gin.Engine) {
+func postFeed(router *gin.Engine) {
 	router.POST("/partials/feed", func(c *gin.Context) {
 		var rssPostBody schema.RssPostBody
 		if err := c.ShouldBind(&rssPostBody); err != nil {
@@ -27,7 +27,7 @@ func postRssFeed(router *gin.Engine) {
 		dbConn := database.DatabaseConnection()
 		defer dbConn.Close()
 
-		_, err := services.PostRssFeed(dbConn, rssPostBody)
+		err := services.PostFeed(dbConn, rssPostBody)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error posting RSS feed: " + err.Error()})
 			return
@@ -38,12 +38,12 @@ func postRssFeed(router *gin.Engine) {
 	})
 }
 
-func getRssFeeds(router *gin.Engine) {
+func getFeeds(router *gin.Engine) {
 	router.GET("/partials/feed", func(c *gin.Context) {
 		dbConn := database.DatabaseConnection()
 		defer dbConn.Close()
 
-		feeds, err := services.GetRssFeeds(dbConn)
+		feeds, err := services.GetFeeds(dbConn)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error retrieving RSS feeds: " + err.Error()})
 			return
@@ -55,7 +55,7 @@ func getRssFeeds(router *gin.Engine) {
 	})
 }
 
-func deleteRssFeed(router *gin.Engine) {
+func deleteFeed(router *gin.Engine) {
 	router.DELETE("/partials/feed/:id", func(c *gin.Context) {
 		idParam := c.Param("id")
 		id, err := strconv.Atoi(idParam)
@@ -67,7 +67,7 @@ func deleteRssFeed(router *gin.Engine) {
 		dbConn := database.DatabaseConnection()
 		defer dbConn.Close()
 
-		err = services.DeleteRssFeed(dbConn, id)
+		err = services.DeleteFeed(dbConn, id)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error deleting RSS feed: " + err.Error()})
 			return

@@ -2,16 +2,23 @@ package schema
 
 // Data models
 type RssItem struct {
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	Link        string `json:"link"`
-	PubDate     string `json:"pub_date"`
+	Title   string `json:"title"`
+	Link    string `json:"link"`
+	PubDate string `json:"pub_date"`
 }
 
 type RssArticle struct {
 	FeedId int `json:"feed_id"`
 	RssItem
 }
+
+type FeedType string
+
+const (
+	FeedTypeRSS  FeedType = "rss"
+	FeedTypeAtom FeedType = "atom"
+	FeedTypeNone FeedType = ""
+)
 
 // Request bodies
 type RssPostBody struct {
