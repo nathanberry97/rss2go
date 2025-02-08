@@ -6,6 +6,7 @@ import (
 	"github.com/nathanberry97/rss2go/internal/database"
 	"github.com/nathanberry97/rss2go/internal/routes"
 	"github.com/nathanberry97/rss2go/internal/utils"
+	"github.com/nathanberry97/rss2go/internal/worker"
 )
 
 func main() {
@@ -22,6 +23,9 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	// Set up worker pool to refresh the feeds async
+	go worker.ScheduleFeedUpdates(5)
 
 	// Start the server
 	router := routes.InitialiseRouter()

@@ -24,7 +24,6 @@
 
 * [ ] Add dockerfile to build and run the application
 
-
 * [ ] Implement unit tests for the application
 
 * [ ] Add better error handling
@@ -36,9 +35,11 @@
 
 * [ ] Add support for OPML
 
-* [ ] Integrate go worker pool to update feeds in the background
-
 ## In progress
+
+* [ ] Integrate go worker pool to update feeds in the background
+    - Run on a schedule (Every 6 hours perhaps?)
+    - Allow user to trigger this manually with POST endpoint
 
 ## Completed
 

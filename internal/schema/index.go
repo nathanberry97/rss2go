@@ -1,10 +1,17 @@
 package schema
 
+import "database/sql"
+
 // Data models
 type RssItem struct {
 	Title   string `json:"title"`
 	Link    string `json:"link"`
 	PubDate string `json:"pub_date"`
+}
+
+type Task struct {
+	URL  string
+	Conn *sql.DB
 }
 
 type RssArticle struct {
