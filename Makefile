@@ -11,7 +11,7 @@ setup: ## Install pre-commit hooks
 
 .PHONY: compile
 compile: ## Compile scss to css
-	@sass --no-source-map scss/style.scss static/css/style.css
+	@sass --no-source-map web/scss/style.scss web/static/css/style.css
 
 .PHONY: build
 build: compile ## Build rss2go api

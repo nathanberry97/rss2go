@@ -1,0 +1,229 @@
+/**
+ * Variables
+ */
+/**
+ * Standard styling
+ */
+html,
+body {
+  overflow-y: auto;
+  overflow-x: hidden !important;
+  align-items: left;
+  display: flex;
+  width: 95%;
+  font-family: "Inter", Arial, sans-serif;
+  justify-content: left;
+  margin: 10px;
+}
+
+body {
+  font-size: 18px;
+  background: #121212;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: #f0f0f0;
+}
+
+/**
+ * Navbar
+ */
+.navbar {
+  background-color: #1a1a1a;
+  padding: 10px;
+  width: 200px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  font-weight: bold;
+  border-right: 0.5px solid #333333;
+}
+.navbar .navbar-logo {
+  text-align: center;
+  font-size: 24px;
+  margin-top: 5%;
+  margin-bottom: 10%;
+}
+.navbar .logo-text {
+  color: #c8c7c4;
+}
+.navbar .logo-number {
+  color: #f0f0f0;
+}
+.navbar .navbar-nav {
+  flex-grow: 1;
+}
+.navbar ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;
+}
+.navbar li {
+  margin: 5px 0;
+  font-size: 16px;
+}
+.navbar a {
+  text-decoration: none;
+  color: #f0f0f0;
+  padding: 10px;
+  display: block;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.navbar a:hover {
+  background-color: #333333;
+}
+
+/**
+ * Articles and Feeds shared styling
+ */
+.articles, .feed {
+  flex-direction: row;
+  max-width: 85%;
+  min-width: 600px;
+  height: 80%;
+  margin-left: 220px;
+  margin-right: auto;
+  margin-top: 0px;
+}
+.articles ul, .feed ul {
+  margin-top: -10px;
+  font-size: 16px;
+}
+.articles ul li, .feed ul li {
+  list-style-type: none;
+  font-weight: bold;
+  padding: 5px;
+}
+.articles ul li a, .feed ul li a {
+  text-decoration: none;
+  color: #c8c7c4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  flex: 1;
+  max-width: 70%;
+}
+.articles #toTop, .feed #toTop {
+  font-family: "Inter", Arial, sans-serif;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 5px 10px;
+  height: 30px;
+  cursor: pointer;
+  background-color: #121212;
+  color: #333333;
+  border: 2px solid #333333;
+  border-radius: 8px;
+  transition: opacity 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+  opacity: 0;
+  visibility: hidden;
+}
+.articles #toTop:hover, .feed #toTop:hover {
+  background-color: #333333;
+  color: #c8c7c4;
+}
+.articles #toTop.show, .feed #toTop.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/**
+ * Articles styling
+ */
+.articles h1 {
+  margin-bottom: 50px;
+}
+.articles ul li {
+  padding: 0px;
+}
+.articles ul li small {
+  flex-shrink: 0;
+  float: right;
+  padding-top: 5px;
+  max-width: 30%;
+  color: #333333;
+  font-weight: bold;
+}
+.articles ul li a:hover {
+  text-decoration: underline;
+}
+
+/**
+ * Feed styling
+ */
+.feed {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.feed h1 {
+  margin-bottom: 5px;
+}
+.feed form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 500px;
+  margin-right: auto;
+  width: 100%;
+}
+.feed input {
+  font-family: "Inter", Arial, sans-serif;
+  padding: 5px;
+  height: 36px;
+  flex-grow: 1;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #121212;
+  color: #f0f0f0;
+  border: 2px solid #333333;
+  border-radius: 8px;
+}
+.feed input:focus {
+  outline: none;
+  color: #c8c7c4;
+}
+.feed ul {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+.feed ul li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+.feed ul li a {
+  flex-grow: 1;
+}
+.feed ul li a:hover {
+  text-decoration: none;
+}
+.feed .delete-btn {
+  font-family: "Inter", Arial, sans-serif;
+  padding: 5px 10px;
+  height: 30px;
+  cursor: pointer;
+  background-color: #121212;
+  color: #333333;
+  border: 2px solid #333333;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.feed .delete-btn:hover {
+  background-color: #333333;
+  color: #c8c7c4;
+}
