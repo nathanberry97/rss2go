@@ -3,6 +3,8 @@
 ## Todo
 
 * [ ] Documentation site
+  - [ ] Create site
+  - [ ] Host site in AWS or Github pages?
 
 * [ ] GET articles by feed
   - [ ] GET
@@ -20,26 +22,34 @@
   - [ ] DELETE
   - [ ] Frontend
 
+* [ ] Add support for OPML
+  - [ ] POST
+  - [ ] GET
+  - [ ] Frontend
+
+* [ ] Add better error handling
+    - [ ] Backend to return HTML to the frontend
+    - [ ] Frontend to show the error in the UI
+
 * [ ] Upload to docker hub and release pipeline
+    - [ ] Works on v0.0.0 branches
+    - [ ] Pushes the build to docker hub
+    - [ ] Creates a release within the repo itself
 
 * [ ] Add dockerfile to build and run the application
 
 * [ ] Implement unit tests for the application
-
-* [ ] Add better error handling
+    - [ ] worker
+    - [ ] rss
+    - [ ] services
+    - [ ] utils
 
 * [ ] Improve scss and js into the project
   - [ ] Refine current scss and js
   - [ ] Add loading animation
   - [ ] Make responsive
 
-* [ ] Add support for OPML
-
 ## In progress
-
-* [ ] Integrate go worker pool to update feeds in the background
-    - Run on a schedule (Every 6 hours perhaps?)
-    - Allow user to trigger this manually with POST endpoint
 
 ## Completed
 
@@ -60,3 +70,7 @@
 * [X] Improve the rss reader function
   - [X] Improve the general function
   - [X] Make it work with .atom feeds too
+* [X] Integrate go worker pool to update feeds in the background
+    - [X] Run on a schedule (Every 1 hours perhaps?)
+    - [X] Run when server starts up
+    - [X] Updates the articles table

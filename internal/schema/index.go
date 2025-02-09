@@ -10,8 +10,9 @@ type RssItem struct {
 }
 
 type Task struct {
-	URL  string
-	Conn *sql.DB
+	FeedId int64
+	URL    string
+	Conn   *sql.DB
 }
 
 type RssArticle struct {

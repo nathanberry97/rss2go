@@ -44,11 +44,13 @@ func runFeedUpdate(workers int) {
 
 	for _, url := range feeds {
 		jobs <- schema.Task{
-			URL:  url.URL,
-			Conn: conn,
+			FeedId: int64(url.ID),
+			URL:    url.URL,
+			Conn:   conn,
 		}
 	}
 
+	close(jobs)
 	wg.Wait()
 }
 
@@ -56,14 +58,11 @@ func worker(id int, jobs <-chan schema.Task, wg *sync.WaitGroup) {
 	defer wg.Done()
 
 	for job := range jobs {
-		fmt.Printf("Worker %d processing feed: %s\n", id, job.URL)
-
-		_, articles, err := rss.PostFeedHandler(job.URL)
+		_, articles, err := rss.FeedHandler(job.URL)
 		if err != nil {
 			fmt.Println(err)
 		}
 
-		// TODO need to actually do something with the function
-		fmt.Println(articles)
+		services.InsertArticles(job.Conn, articles, job.FeedId)
 	}
 }
