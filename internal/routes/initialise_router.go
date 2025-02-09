@@ -4,8 +4,8 @@ import "github.com/gin-gonic/gin"
 
 func InitialiseRouter() *gin.Engine {
 	router := gin.Default()
-	router.Static("/static", "./static")
-	router.LoadHTMLGlob("templates/*.tmpl")
+	router.Static("/static", "./web/static")
+	router.LoadHTMLGlob("./web/templates/*.tmpl")
 
 	// Health check
 	healthCheck(router)

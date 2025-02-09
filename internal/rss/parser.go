@@ -9,7 +9,7 @@ import (
 	"github.com/nathanberry97/rss2go/internal/utils"
 )
 
-func PostFeedHandler(url string) (string, []schema.RssItem, error) {
+func FeedHandler(url string) (string, []schema.RssItem, error) {
 	var name string
 	var articles []schema.RssItem
 

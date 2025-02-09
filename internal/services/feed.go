@@ -12,7 +12,7 @@ func PostFeed(conn *sql.DB, postBody schema.RssPostBody) error {
 	var name string
 	var articles []schema.RssItem
 
-	name, articles, err := rss.PostFeedHandler(postBody.URL)
+	name, articles, err := rss.FeedHandler(postBody.URL)
 	if err != nil {
 		fmt.Println(err)
 		return fmt.Errorf("Error while parsing feed: %w", err)
@@ -29,7 +29,7 @@ func PostFeed(conn *sql.DB, postBody schema.RssPostBody) error {
 		return fmt.Errorf("failed to retrieve last insert ID: %w", err)
 	}
 
-	err = insertArticles(conn, articles, feedID)
+	err = InsertArticles(conn, articles, feedID)
 	if err != nil {
 		return err
 	}
