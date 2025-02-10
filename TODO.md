@@ -44,12 +44,12 @@
     - [ ] services
     - [ ] utils
 
+## In progress
+
 * [ ] Improve scss and js into the project
   - [ ] Refine current scss and js
   - [ ] Add loading animation
   - [ ] Make responsive
-
-## In progress
 
 ## Completed
 

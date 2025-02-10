@@ -51,7 +51,7 @@ func GenerateFeedList(feeds []schema.RssFeed) template.HTML {
                     hx-trigger="click"
                     hx-swap="none"
                     data-feed-id="` + strconv.Itoa(feed.ID) + `">
-                Delete
+                <img src="/static/images/icons/delete.svg" alt="Delete" width="20" height="20" class="delete-icon">
             </button>
 		</li>`
 	}

@@ -99,65 +99,33 @@ h4 {
 }
 
 /**
- * Articles and Feeds shared styling
+ * toTop button styling
  */
-.articles, .feed {
-  flex-direction: row;
-  max-width: 85%;
-  min-width: 600px;
-  height: 80%;
-  margin-left: 220px;
-  margin-right: auto;
-  margin-top: 0px;
+#toTop {
+  font-family: $font-stack;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 5px 10px;
+  height: 30px;
+  cursor: pointer;
+  background-color: $background;
+  color: $accent;
+  border: 2px solid $accent;
+  border-radius: 8px;
+  transition: opacity 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 
-  ul {
-    margin-top: -10px;
-    font-size: 16px;
+  opacity: 0;
+  visibility: hidden;
 
-    li {
-      list-style-type: none;
-      font-weight: bold;
-      padding: 5px;
-
-      a {
-        text-decoration: none;
-        color: $text-secondary;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: inline-block;
-        flex: 1;
-        max-width: 70%;
-      }
-    }
+  &:hover {
+    background-color: $accent;
+    color: $text-secondary;
   }
 
-  #toTop {
-    font-family: $font-stack;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    padding: 5px 10px;
-    height: 30px;
-    cursor: pointer;
-    background-color: $background;
-    color: $accent;
-    border: 2px solid $accent;
-    border-radius: 8px;
-    transition: opacity 0.3s ease, background-color 0.3s ease, color 0.3s ease;
-
-    opacity: 0;
-    visibility: hidden;
-
-    &:hover {
-      background-color: $accent;
-      color: $text-secondary;
-    }
-
-    &.show {
-      opacity: 1;
-      visibility: visible;
-    }
+  &.show {
+    opacity: 1;
+    visibility: visible;
   }
 }
 
@@ -165,22 +133,46 @@ h4 {
  * Articles styling
  */
 .articles {
+  flex-direction: row;
+  height: 80%;
+  margin-left: 220px;
+  margin-right: auto;
+  margin-top: 0px;
+  max-width: 85%;
+  min-width: 600px;
+
   h1 {
     margin-bottom: 50px;
   }
 
   ul {
+    font-size: 16px;
+    margin-top: -10px;
+
     li {
+      font-weight: bold;
+      list-style-type: none;
       padding: 0px;
+
       small {
+        color: $accent;
         flex-shrink: 0;
         float: right;
-        padding-top: 5px;
-        max-width: 30%;
-        color: $accent;
         font-weight: bold;
+        max-width: 30%;
+        padding-top: 5px;
       }
+
       a {
+        color: $text-secondary;
+        display: inline-block;
+        flex: 1;
+        max-width: 70%;
+        overflow: hidden;
+        text-decoration: none;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
         &:hover {
           text-decoration: underline;
         }
@@ -196,71 +188,115 @@ h4 {
   display: flex;
   flex-direction: column;
   gap: 30px;
+  height: 80%;
+  margin: 0 auto;
+  max-width: 100%;
+  min-width: 600px;
+  align-items: flex-start;
+  text-align: left;
+  position: relative;
+  left: 200px;
 
   h1 {
     margin-bottom: 5px;
+    text-align: left;
+    align-self: flex-start;
   }
 
   form {
+    align-items: left;
     display: flex;
-    align-items: center;
     gap: 10px;
     max-width: 500px;
-    margin-right: auto;
     width: 100%;
+    align-self: left;
+    text-align: left;
   }
 
   input {
-    font-family: $font-stack;
-    padding: 5px;
-    height: 36px;
-    flex-grow: 1;
-    width: 100%;
-    box-sizing: border-box;
     background-color: $background;
-    color: $text-primary;
-    border: 2px solid $accent;
     border-radius: 8px;
+    border: 2px solid $accent;
+    box-sizing: border-box;
+    color: $text-primary;
+    flex-grow: 1;
+    font-family: $font-stack;
+    height: 36px;
+    padding: 5px;
+    width: 100%;
 
     &:focus {
-      outline: none;
       color: $text-secondary;
+      outline: none;
     }
   }
 
   ul {
+    font-size: 16px;
     list-style: none;
+    margin-top: -10px;
     padding: 0;
+    max-width: 500px;
     width: 100%;
+
     li {
-      display: flex;
       align-items: center;
+      display: flex;
+      font-weight: bold;
       gap: 10px;
+      list-style-type: none;
+      padding: 5px;
       width: 100%;
+      justify-content: space-between;
+      flex-grow: 1;
+
       a {
+        color: $text-secondary;
+        display: inline-block;
         flex-grow: 1;
+        flex: 1;
+        max-width: 100%;
+        overflow: hidden;
+        text-decoration: none;
+        text-overflow: ellipsis;
+        white-space: nowrap;
 
         &:hover {
           text-decoration: none;
         }
       }
-    }
-  }
 
-  .delete-btn {
-    font-family: $font-stack;
-    padding: 5px 10px;
-    height: 30px;
-    cursor: pointer;
-    background-color: $background;
-    color: $accent;
-    border: 2px solid $accent;
-    border-radius: 8px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+      .delete-btn {
+        align-items: center;
+        margin-left: 225px;
+        background-color: transparent;
+        border-radius: 50%;
+        border: 2px solid transparent;
+        cursor: pointer;
+        display: flex;
+        height: 32px;
+        justify-content: center;
+        padding: 6px;
+        transition: background-color 0.3s ease, border-radius 0.3s ease, transform 0.2s ease;
+        width: 32px;
 
-    &:hover {
-      background-color: $accent;
-      color: $text-secondary;
+        &:hover {
+          background-color: $accent;
+          transform: scale(1.1);
+
+          .delete-icon {
+            content: url('/static/images/icons/delete-hover.svg');
+            transform: scale(1.2);
+          }
+        }
+
+        .delete-icon {
+          content: url('/static/images/icons/delete.svg');
+          height: 20px;
+          transition: transform 0.2s ease, content 0.3s ease;
+          width: 20px;
+        }
+      }
     }
   }
 }
