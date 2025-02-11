@@ -3,7 +3,7 @@
  */
 $font-stack: "Inter", Arial, sans-serif;
 $background: #121212;
-$background-seconary: #1a1a1a;
+$background-secondary: #1a1a1a;
 $accent: #333333;
 $text-primary: #f0f0f0;
 $text-secondary: #c8c7c4;
@@ -39,7 +39,7 @@ h4 {
  * Navbar
  */
 .navbar {
-  background-color: $background-seconary;
+  background-color: $background-secondary;
   padding: 10px;
   width: 200px;
   height: 100vh;
@@ -56,44 +56,54 @@ h4 {
     font-size: 24px;
     margin-top: 5%;
     margin-bottom: 10%;
-  }
 
-  .logo-text {
-    color: $text-secondary;
-  }
+    .logo-text {
+      color: $text-secondary;
+    }
 
-  .logo-number {
-    color: $text-primary;
+    .logo-number {
+      color: $text-primary;
+    }
   }
 
   .navbar-nav {
     flex-grow: 1;
-  }
 
-  ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    margin-top: auto;
-  }
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      margin-top: auto;
 
-  li {
-    margin: 5px 0;
-    font-size: 16px;
-  }
+      li {
+        margin: 5px 0;
+        font-size: 16px;
 
-  a {
-    text-decoration: none;
-    color: $text-primary;
-    padding: 10px;
-    display: block;
-    border-radius: 8px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+        a {
+          display: flex;
+          align-items: center;
+          text-decoration: none;
+          color: $text-primary;
+          padding: 10px;
+          display: block;
+          border-radius: 8px;
+          transition: background-color 0.3s ease, color 0.3s ease;
 
-    &:hover {
-      background-color: $accent;
+          &:hover {
+            background-color: $accent;
+          }
+
+          img {
+            width: 20px;
+            height: 20px;
+            padding-right: 10px;
+            transform: translateY(3px);
+            flex-shrink: 0;
+          }
+        }
+      }
     }
   }
 }
@@ -130,58 +140,6 @@ h4 {
 }
 
 /**
- * Articles styling
- */
-.articles {
-  flex-direction: row;
-  height: 80%;
-  margin-left: 220px;
-  margin-right: auto;
-  margin-top: 0px;
-  max-width: 85%;
-  min-width: 600px;
-
-  h1 {
-    margin-bottom: 50px;
-  }
-
-  ul {
-    font-size: 16px;
-    margin-top: -10px;
-
-    li {
-      font-weight: bold;
-      list-style-type: none;
-      padding: 0px;
-
-      small {
-        color: $accent;
-        flex-shrink: 0;
-        float: right;
-        font-weight: bold;
-        max-width: 30%;
-        padding-top: 5px;
-      }
-
-      a {
-        color: $text-secondary;
-        display: inline-block;
-        flex: 1;
-        max-width: 70%;
-        overflow: hidden;
-        text-decoration: none;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-    }
-  }
-}
-
-/**
  * Feed styling
  */
 .feed {
@@ -204,30 +162,63 @@ h4 {
   }
 
   form {
-    align-items: left;
     display: flex;
-    gap: 10px;
+    flex-direction: column;
     max-width: 500px;
     width: 100%;
-    align-self: left;
-    text-align: left;
-  }
 
-  input {
-    background-color: $background;
-    border-radius: 8px;
-    border: 2px solid $accent;
-    box-sizing: border-box;
-    color: $text-primary;
-    flex-grow: 1;
-    font-family: $font-stack;
-    height: 36px;
-    padding: 5px;
-    width: 100%;
+    .input-wrapper {
+      position: relative;
+      width: 100%;
 
-    &:focus {
-      color: $text-secondary;
-      outline: none;
+      input {
+        width: 100%;
+        padding-right: 80px;
+        background-color: $background;
+        border-radius: 5px;
+        border: 1.5px solid $accent;
+        color: $text-primary;
+        font-family: $font-stack;
+        height: 40px;
+        padding: 5px 12px;
+        box-sizing: border-box;
+
+        &:focus {
+          color: $text-secondary;
+          outline: none;
+        }
+      }
+
+      button {
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        background-color: $background;
+        color: $background;
+        border: 1.5px solid $accent;
+        border-radius: 0 5px 5px 0;
+        border-left: none;
+        padding: 0 15px;
+        font-family: $font-stack;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+
+        &:focus {
+          outline: none;
+        }
+
+        img.search-icon {
+          width: 20px;
+          height: 20px;
+          transition: transform 0.2s ease-in-out;
+        }
+
+        &:hover img.search-icon {
+          filter: invert(1);
+          transform: scale(1.1);
+        }
+      }
     }
   }
 
@@ -286,7 +277,6 @@ h4 {
 
           .delete-icon {
             content: url('/static/images/icons/delete-hover.svg');
-            transform: scale(1.2);
           }
         }
 
@@ -295,6 +285,58 @@ h4 {
           height: 20px;
           transition: transform 0.2s ease, content 0.3s ease;
           width: 20px;
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Articles styling
+ */
+.articles {
+  flex-direction: row;
+  height: 80%;
+  margin-left: 220px;
+  margin-right: auto;
+  margin-top: 0px;
+  max-width: 85%;
+  min-width: 600px;
+
+  h1 {
+    margin-bottom: 50px;
+  }
+
+  ul {
+    font-size: 16px;
+    margin-top: -10px;
+
+    li {
+      font-weight: bold;
+      list-style-type: none;
+      padding: 0px;
+
+      small {
+        color: $accent;
+        flex-shrink: 0;
+        float: right;
+        font-weight: bold;
+        max-width: 30%;
+        padding-top: 5px;
+      }
+
+      a {
+        color: $text-secondary;
+        display: inline-block;
+        flex: 1;
+        max-width: 70%;
+        overflow: hidden;
+        text-decoration: none;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        &:hover {
+          text-decoration: underline;
         }
       }
     }

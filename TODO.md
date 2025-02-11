@@ -15,12 +15,14 @@
   - [ ] GET
   - [ ] DELETE
   - [ ] Frontend
+  - UI icon bookmark
 
 * [ ] Favourite articles
   - [ ] POST
   - [ ] GET
   - [ ] DELETE
   - [ ] Frontend
+  - UI icon heart
 
 * [ ] Add support for OPML
   - [ ] POST
