@@ -11,7 +11,12 @@ import (
 func GenerateForm(endpoint, label string) template.HTML {
 	return template.HTML(`
         <form hx-post="` + endpoint + `" hx-trigger="submit" hx-swap="none" hx-on::after-request="clearInput()">
-            <input type="text" id="url" name="url" placeholder="` + label + `" required>
+            <div class="input-wrapper">
+                <input type="text" id="url" name="url" placeholder="` + label + `" required>
+                <button type="submit">
+                    <img src="/static/images/icons/search.svg" alt="Search" width="20" height="20" class="search-icon">
+                </button>
+            </div>
         </form>
     `)
 }
@@ -51,7 +56,7 @@ func GenerateFeedList(feeds []schema.RssFeed) template.HTML {
                     hx-trigger="click"
                     hx-swap="none"
                     data-feed-id="` + strconv.Itoa(feed.ID) + `">
-                Delete
+                <img src="/static/images/icons/delete.svg" alt="Delete" width="20" height="20" class="delete-icon">
             </button>
 		</li>`
 	}
@@ -66,8 +71,18 @@ func GenerateNavbar() template.HTML {
             </div>
             <nav class="navbar-nav">
               <ul>
-                <li><a href="/">Latest</a></li>
-                <li><a href="/feeds">Feeds</a></li>
+                <li>
+                    <a href="/">
+                        <img src="/static/images/icons/latest.svg" alt="Latest" width="20" height="20" class="latest-icon">
+                        Latest
+                    </a>
+                </li>
+                <li>
+                    <a href="/feeds">
+                        <img src="/static/images/favicon.svg" alt="Feeds" width="20" height="20" class="feed-icon">
+                        Feeds
+                    </a>
+                </li>
               </ul>
             </nav>
         </div>

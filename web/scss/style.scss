@@ -1,15 +1,30 @@
 /**
- * Variables
+ * CONTENTS
+ * ========
+ * 00. VARIABLES
+ * 01. STANDARD STYLING
+ * 02. NAVBAR
+ * 03. FEED
+ * 04. ARTICLES
+ * 05. TOTOP BUTTON
  */
-$font-stack: "Inter", Arial, sans-serif;
-$background: #121212;
-$background-seconary: #1a1a1a;
-$accent: #333333;
-$text-primary: #f0f0f0;
-$text-secondary: #c8c7c4;
 
 /**
- * Standard styling
+ * 00. VARIABLES
+ * =============
+ */
+$font-family-base: "Inter", Arial, sans-serif;
+
+$colour-bg-primary: #121212;
+$colour-bg-secondary: #1a1a1a;
+$colour-accent: #333333;
+
+$colour-text-primary: #f0f0f0;
+$colour-text-secondary: #c8c7c4;
+
+/**
+ * 01. STANDARD STYLING
+ * ====================
  */
 html,
 body {
@@ -18,28 +33,29 @@ body {
   align-items: left;
   display: flex;
   width: 95%;
-  font-family: $font-stack;
+  font-family: $font-family-base;
   justify-content: left;
   margin: 10px;
 }
 
 body {
   font-size: 18px;
-  background: $background;
+  background: $colour-bg-primary;
 }
 
 h1,
 h2,
 h3,
 h4 {
-  color: $text-primary;
+  color: $colour-text-primary;
 }
 
 /**
- * Navbar
+ * 02. NAVBAR
+ * ==========
  */
 .navbar {
-  background-color: $background-seconary;
+  background-color: $colour-bg-secondary;
   padding: 10px;
   width: 200px;
   height: 100vh;
@@ -49,140 +65,59 @@ h4 {
   top: 0;
   left: 0;
   font-weight: bold;
-  border-right: 0.5px solid $accent;
+  border-right: 0.5px solid $colour-accent;
 
   .navbar-logo {
     text-align: center;
     font-size: 24px;
     margin-top: 5%;
     margin-bottom: 10%;
-  }
 
-  .logo-text {
-    color: $text-secondary;
-  }
+    .logo-text {
+      color: $colour-text-secondary;
+    }
 
-  .logo-number {
-    color: $text-primary;
+    .logo-number {
+      color: $colour-text-primary;
+    }
   }
 
   .navbar-nav {
     flex-grow: 1;
-  }
 
-  ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    margin-top: auto;
-  }
-
-  li {
-    margin: 5px 0;
-    font-size: 16px;
-  }
-
-  a {
-    text-decoration: none;
-    color: $text-primary;
-    padding: 10px;
-    display: block;
-    border-radius: 8px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-
-    &:hover {
-      background-color: $accent;
-    }
-  }
-}
-
-/**
- * Articles and Feeds shared styling
- */
-.articles, .feed {
-  flex-direction: row;
-  max-width: 85%;
-  min-width: 600px;
-  height: 80%;
-  margin-left: 220px;
-  margin-right: auto;
-  margin-top: 0px;
-
-  ul {
-    margin-top: -10px;
-    font-size: 16px;
-
-    li {
+    ul {
       list-style-type: none;
-      font-weight: bold;
-      padding: 5px;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      margin-top: auto;
 
-      a {
-        text-decoration: none;
-        color: $text-secondary;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: inline-block;
-        flex: 1;
-        max-width: 70%;
-      }
-    }
-  }
+      li {
+        margin: 5px 0;
+        font-size: 16px;
 
-  #toTop {
-    font-family: $font-stack;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    padding: 5px 10px;
-    height: 30px;
-    cursor: pointer;
-    background-color: $background;
-    color: $accent;
-    border: 2px solid $accent;
-    border-radius: 8px;
-    transition: opacity 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+        a {
+          display: flex;
+          align-items: center;
+          text-decoration: none;
+          color: $colour-text-primary;
+          padding: 10px;
+          display: block;
+          border-radius: 8px;
+          transition: background-color 0.3s ease, color 0.3s ease;
 
-    opacity: 0;
-    visibility: hidden;
+          &:hover {
+            background-color: $colour-accent;
+          }
 
-    &:hover {
-      background-color: $accent;
-      color: $text-secondary;
-    }
-
-    &.show {
-      opacity: 1;
-      visibility: visible;
-    }
-  }
-}
-
-/**
- * Articles styling
- */
-.articles {
-  h1 {
-    margin-bottom: 50px;
-  }
-
-  ul {
-    li {
-      padding: 0px;
-      small {
-        flex-shrink: 0;
-        float: right;
-        padding-top: 5px;
-        max-width: 30%;
-        color: $accent;
-        font-weight: bold;
-      }
-      a {
-        &:hover {
-          text-decoration: underline;
+          img {
+            width: 20px;
+            height: 20px;
+            padding-right: 10px;
+            transform: translateY(3px);
+            flex-shrink: 0;
+          }
         }
       }
     }
@@ -190,77 +125,250 @@ h4 {
 }
 
 /**
- * Feed styling
+ * 03. FEED
+ * ========
  */
 .feed {
   display: flex;
   flex-direction: column;
   gap: 30px;
+  height: 80%;
+  margin: 0 auto;
+  max-width: 100%;
+  min-width: 600px;
+  align-items: flex-start;
+  text-align: left;
+  position: relative;
+  left: 200px;
 
   h1 {
     margin-bottom: 5px;
+    text-align: left;
+    align-self: flex-start;
   }
 
   form {
     display: flex;
-    align-items: center;
-    gap: 10px;
+    flex-direction: column;
     max-width: 500px;
-    margin-right: auto;
     width: 100%;
-  }
 
-  input {
-    font-family: $font-stack;
-    padding: 5px;
-    height: 36px;
-    flex-grow: 1;
-    width: 100%;
-    box-sizing: border-box;
-    background-color: $background;
-    color: $text-primary;
-    border: 2px solid $accent;
-    border-radius: 8px;
-
-    &:focus {
-      outline: none;
-      color: $text-secondary;
-    }
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-    width: 100%;
-    li {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    .input-wrapper {
+      right: 5px;
+      position: relative;
       width: 100%;
-      a {
-        flex-grow: 1;
 
-        &:hover {
-          text-decoration: none;
+      input {
+        width: 100%;
+        padding-right: 80px;
+        background-color: $colour-bg-primary;
+        border-radius: 5px;
+        border: 1.5px solid $colour-accent;
+        color: $colour-text-primary;
+        font-family: $font-family-base;
+        height: 40px;
+        padding: 5px 12px;
+        box-sizing: border-box;
+
+        &:focus {
+          color: $colour-text-secondary;
+          outline: none;
+        }
+      }
+
+      button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        background-color: $colour-bg-primary;
+        color: $colour-bg-primary;
+        border: 1.5px solid $colour-accent;
+        border-radius: 0 5px 5px 0;
+        border-left: none;
+        padding: 0 15px;
+        font-family: $font-family-base;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+
+        &:focus {
+          outline: none;
+        }
+
+        img.search-icon {
+          width: 20px;
+          height: 20px;
+          transition: transform 0.2s ease-in-out;
+        }
+
+        &:hover img.search-icon {
+          filter: invert(1);
+          transform: scale(1.1);
         }
       }
     }
   }
 
-  .delete-btn {
-    font-family: $font-stack;
-    padding: 5px 10px;
-    height: 30px;
-    cursor: pointer;
-    background-color: $background;
-    color: $accent;
-    border: 2px solid $accent;
-    border-radius: 8px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+  ul {
+    font-size: 16px;
+    list-style: none;
+    margin-top: -10px;
+    padding: 0;
+    max-width: 500px;
+    width: 100%;
 
-    &:hover {
-      background-color: $accent;
-      color: $text-secondary;
+    li {
+      align-items: center;
+      display: flex;
+      font-weight: bold;
+      gap: 10px;
+      list-style-type: none;
+      padding: 5px;
+      width: 100%;
+      justify-content: space-between;
+      flex-grow: 1;
+
+      a {
+        color: $colour-text-secondary;
+        display: inline-block;
+        flex-grow: 1;
+        flex: 1;
+        max-width: 100%;
+        overflow: hidden;
+        text-decoration: none;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+
+      .delete-btn {
+        align-items: center;
+        margin-left: 225px;
+        background-color: transparent;
+        border-radius: 50%;
+        border: 2px solid transparent;
+        cursor: pointer;
+        display: flex;
+        height: 32px;
+        justify-content: center;
+        padding: 6px;
+        transition: background-color 0.3s ease, border-radius 0.3s ease, transform 0.2s ease;
+        width: 32px;
+
+        &:hover {
+          background-color: $colour-accent;
+          transform: scale(1.1);
+
+          .delete-icon {
+            content: url('/static/images/icons/delete-hover.svg');
+          }
+        }
+
+        .delete-icon {
+          content: url('/static/images/icons/delete.svg');
+          height: 20px;
+          transition: transform 0.2s ease, content 0.3s ease;
+          width: 20px;
+        }
+      }
     }
+  }
+}
+
+/**
+ * 04. ARTICLES
+ * ============
+ */
+.articles {
+  flex-direction: row;
+  height: 80%;
+  margin-left: 220px;
+  margin-right: auto;
+  margin-top: 0px;
+  max-width: 85%;
+  min-width: 600px;
+  width: 100%;
+
+  h1 {
+    margin-bottom: 50px;
+  }
+
+  ul {
+    font-size: 16px;
+    margin-top: -10px;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+
+    li {
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+      list-style-type: none;
+      padding: 0px;
+      width: 100%;
+      gap: 10px;
+      overflow: hidden;
+
+      a {
+        color: $colour-text-secondary;
+        flex-grow: 1 1 auto;
+        flex-shrink: 0;
+        min-width: 90%;
+        max-width: 0%;
+        overflow: hidden;
+        text-decoration: none;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      small {
+        color: $colour-accent;
+        font-weight: bold;
+        flex: 0 0 auto;
+        text-align: left;
+        white-space: nowrap;
+        min-width: 10%;
+      }
+    }
+  }
+}
+
+/**
+ * 05. TOTOP BUTTON
+ * ================
+ */
+#toTop {
+  font-family: $font-family-base;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 5px 10px;
+  height: 30px;
+  cursor: pointer;
+  background-color: $colour-bg-primary;
+  color: $colour-accent;
+  border: 2px solid $colour-accent;
+  border-radius: 8px;
+  transition: opacity 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+
+  opacity: 0;
+  visibility: hidden;
+
+  &:hover {
+    background-color: $colour-accent;
+    color: $colour-text-secondary;
+  }
+
+  &.show {
+    opacity: 1;
+    visibility: visible;
   }
 }

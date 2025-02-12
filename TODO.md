@@ -15,12 +15,14 @@
   - [ ] GET
   - [ ] DELETE
   - [ ] Frontend
+  - UI icon bookmark
 
 * [ ] Favourite articles
   - [ ] POST
   - [ ] GET
   - [ ] DELETE
   - [ ] Frontend
+  - UI icon heart
 
 * [ ] Add support for OPML
   - [ ] POST
@@ -44,12 +46,12 @@
     - [ ] services
     - [ ] utils
 
-* [ ] Improve scss and js into the project
-  - [ ] Refine current scss and js
-  - [ ] Add loading animation
-  - [ ] Make responsive
-
 ## In progress
+
+* [ ] Improve scss and js into the project
+  - [X] Refine current scss and js
+  - [ ] Add loading animations
+  - [ ] Make responsive
 
 ## Completed
 
