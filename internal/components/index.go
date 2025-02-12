@@ -52,7 +52,7 @@ func GenerateFeedList(feeds []schema.RssFeed) template.HTML {
 		listItems += `<li>
 			<a href="` + feed.URL + `" target="_blank">` + feed.Name + `</a>
 			<button class="delete-btn"
-                   hx-delete="/partials/feed/` + strconv.Itoa(feed.ID) + `"
+                    hx-delete="/partials/feed/` + strconv.Itoa(feed.ID) + `"
                     hx-trigger="click"
                     hx-swap="none"
                     data-feed-id="` + strconv.Itoa(feed.ID) + `">
