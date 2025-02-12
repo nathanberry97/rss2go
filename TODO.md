@@ -49,8 +49,8 @@
 ## In progress
 
 * [ ] Improve scss and js into the project
-  - [ ] Refine current scss and js
-  - [ ] Add loading animation
+  - [X] Refine current scss and js
+  - [ ] Add loading animations
   - [ ] Make responsive
 
 ## Completed

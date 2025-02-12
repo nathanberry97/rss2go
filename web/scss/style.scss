@@ -1,15 +1,30 @@
 /**
- * Variables
+ * CONTENTS
+ * ========
+ * 00. VARIABLES
+ * 01. STANDARD STYLING
+ * 02. NAVBAR
+ * 03. FEED
+ * 04. ARTICLES
+ * 05. TOTOP BUTTON
  */
-$font-stack: "Inter", Arial, sans-serif;
-$background: #121212;
-$background-secondary: #1a1a1a;
-$accent: #333333;
-$text-primary: #f0f0f0;
-$text-secondary: #c8c7c4;
 
 /**
- * Standard styling
+ * 00. VARIABLES
+ * =============
+ */
+$font-family-base: "Inter", Arial, sans-serif;
+
+$colour-bg-primary: #121212;
+$colour-bg-secondary: #1a1a1a;
+$colour-accent: #333333;
+
+$colour-text-primary: #f0f0f0;
+$colour-text-secondary: #c8c7c4;
+
+/**
+ * 01. STANDARD STYLING
+ * ====================
  */
 html,
 body {
@@ -18,28 +33,29 @@ body {
   align-items: left;
   display: flex;
   width: 95%;
-  font-family: $font-stack;
+  font-family: $font-family-base;
   justify-content: left;
   margin: 10px;
 }
 
 body {
   font-size: 18px;
-  background: $background;
+  background: $colour-bg-primary;
 }
 
 h1,
 h2,
 h3,
 h4 {
-  color: $text-primary;
+  color: $colour-text-primary;
 }
 
 /**
- * Navbar
+ * 02. NAVBAR
+ * ==========
  */
 .navbar {
-  background-color: $background-secondary;
+  background-color: $colour-bg-secondary;
   padding: 10px;
   width: 200px;
   height: 100vh;
@@ -49,7 +65,7 @@ h4 {
   top: 0;
   left: 0;
   font-weight: bold;
-  border-right: 0.5px solid $accent;
+  border-right: 0.5px solid $colour-accent;
 
   .navbar-logo {
     text-align: center;
@@ -58,11 +74,11 @@ h4 {
     margin-bottom: 10%;
 
     .logo-text {
-      color: $text-secondary;
+      color: $colour-text-secondary;
     }
 
     .logo-number {
-      color: $text-primary;
+      color: $colour-text-primary;
     }
   }
 
@@ -85,14 +101,14 @@ h4 {
           display: flex;
           align-items: center;
           text-decoration: none;
-          color: $text-primary;
+          color: $colour-text-primary;
           padding: 10px;
           display: block;
           border-radius: 8px;
           transition: background-color 0.3s ease, color 0.3s ease;
 
           &:hover {
-            background-color: $accent;
+            background-color: $colour-accent;
           }
 
           img {
@@ -109,38 +125,8 @@ h4 {
 }
 
 /**
- * toTop button styling
- */
-#toTop {
-  font-family: $font-stack;
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding: 5px 10px;
-  height: 30px;
-  cursor: pointer;
-  background-color: $background;
-  color: $accent;
-  border: 2px solid $accent;
-  border-radius: 8px;
-  transition: opacity 0.3s ease, background-color 0.3s ease, color 0.3s ease;
-
-  opacity: 0;
-  visibility: hidden;
-
-  &:hover {
-    background-color: $accent;
-    color: $text-secondary;
-  }
-
-  &.show {
-    opacity: 1;
-    visibility: visible;
-  }
-}
-
-/**
- * Feed styling
+ * 03. FEED
+ * ========
  */
 .feed {
   display: flex;
@@ -168,39 +154,40 @@ h4 {
     width: 100%;
 
     .input-wrapper {
+      right: 5px;
       position: relative;
       width: 100%;
 
       input {
         width: 100%;
         padding-right: 80px;
-        background-color: $background;
+        background-color: $colour-bg-primary;
         border-radius: 5px;
-        border: 1.5px solid $accent;
-        color: $text-primary;
-        font-family: $font-stack;
+        border: 1.5px solid $colour-accent;
+        color: $colour-text-primary;
+        font-family: $font-family-base;
         height: 40px;
         padding: 5px 12px;
         box-sizing: border-box;
 
         &:focus {
-          color: $text-secondary;
+          color: $colour-text-secondary;
           outline: none;
         }
       }
 
       button {
         position: absolute;
-        right: 0;
         top: 0;
+        right: 0;
         height: 100%;
-        background-color: $background;
-        color: $background;
-        border: 1.5px solid $accent;
+        background-color: $colour-bg-primary;
+        color: $colour-bg-primary;
+        border: 1.5px solid $colour-accent;
         border-radius: 0 5px 5px 0;
         border-left: none;
         padding: 0 15px;
-        font-family: $font-stack;
+        font-family: $font-family-base;
         cursor: pointer;
         transition: background-color 0.2s ease-in-out;
 
@@ -242,7 +229,7 @@ h4 {
       flex-grow: 1;
 
       a {
-        color: $text-secondary;
+        color: $colour-text-secondary;
         display: inline-block;
         flex-grow: 1;
         flex: 1;
@@ -272,7 +259,7 @@ h4 {
         width: 32px;
 
         &:hover {
-          background-color: $accent;
+          background-color: $colour-accent;
           transform: scale(1.1);
 
           .delete-icon {
@@ -292,7 +279,8 @@ h4 {
 }
 
 /**
- * Articles styling
+ * 04. ARTICLES
+ * ============
  */
 .articles {
   flex-direction: row;
@@ -302,6 +290,7 @@ h4 {
   margin-top: 0px;
   max-width: 85%;
   min-width: 600px;
+  width: 100%;
 
   h1 {
     margin-bottom: 50px;
@@ -310,26 +299,26 @@ h4 {
   ul {
     font-size: 16px;
     margin-top: -10px;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
 
     li {
+      display: flex;
+      align-items: center;
       font-weight: bold;
       list-style-type: none;
       padding: 0px;
-
-      small {
-        color: $accent;
-        flex-shrink: 0;
-        float: right;
-        font-weight: bold;
-        max-width: 30%;
-        padding-top: 5px;
-      }
+      width: 100%;
+      gap: 10px;
+      overflow: hidden;
 
       a {
-        color: $text-secondary;
-        display: inline-block;
-        flex: 1;
-        max-width: 70%;
+        color: $colour-text-secondary;
+        flex-grow: 1 1 auto;
+        flex-shrink: 0;
+        min-width: 90%;
+        max-width: 0%;
         overflow: hidden;
         text-decoration: none;
         text-overflow: ellipsis;
@@ -339,6 +328,47 @@ h4 {
           text-decoration: underline;
         }
       }
+
+      small {
+        color: $colour-accent;
+        font-weight: bold;
+        flex: 0 0 auto;
+        text-align: left;
+        white-space: nowrap;
+        min-width: 10%;
+      }
     }
+  }
+}
+
+/**
+ * 05. TOTOP BUTTON
+ * ================
+ */
+#toTop {
+  font-family: $font-family-base;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 5px 10px;
+  height: 30px;
+  cursor: pointer;
+  background-color: $colour-bg-primary;
+  color: $colour-accent;
+  border: 2px solid $colour-accent;
+  border-radius: 8px;
+  transition: opacity 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+
+  opacity: 0;
+  visibility: hidden;
+
+  &:hover {
+    background-color: $colour-accent;
+    color: $colour-text-secondary;
+  }
+
+  &.show {
+    opacity: 1;
+    visibility: visible;
   }
 }
