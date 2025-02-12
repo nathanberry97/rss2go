@@ -317,7 +317,11 @@ h4 {
         color: $colour-text-secondary;
         flex-grow: 1 1 auto;
         flex-shrink: 0;
-        min-width: 90%;
+        /**
+         * Looks better at 90% on monitor but cuts the date off on laptop screen
+         * will change when implementing mobile scss
+         */
+        min-width: 82.5%;
         max-width: 0%;
         overflow: hidden;
         text-decoration: none;
