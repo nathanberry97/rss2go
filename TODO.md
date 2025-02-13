@@ -10,6 +10,10 @@
   - [ ] GET
   - [ ] Frontend
 
+* [ ] Add loading animations
+
+* [ ] Refine scss and responsive design
+
 * [ ] Read later
   - [ ] POST
   - [ ] GET
@@ -24,11 +28,6 @@
   - [ ] Frontend
   - UI icon heart
 
-* [ ] Add support for OPML
-  - [ ] POST
-  - [ ] GET
-  - [ ] Frontend
-
 * [ ] Add better error handling
     - [ ] Backend to return HTML to the frontend
     - [ ] Frontend to show the error in the UI
@@ -40,6 +39,11 @@
 
 * [ ] Add dockerfile to build and run the application
 
+* [ ] Add support for OPML
+    - [ ] POST
+    - [ ] GET
+    - [ ] Frontend
+
 * [ ] Implement unit tests for the application
     - [ ] worker
     - [ ] rss
@@ -47,11 +51,6 @@
     - [ ] utils
 
 ## In progress
-
-* [ ] Improve scss and js into the project
-  - [X] Refine current scss and js
-  - [ ] Add loading animations
-  - [ ] Make responsive
 
 ## Completed
 
@@ -76,3 +75,6 @@
     - [X] Run on a schedule (Every 1 hours perhaps?)
     - [X] Run when server starts up
     - [X] Updates the articles table
+* [X] Improve scss and js into the project
+  - [X] Refine current scss and js
+  - [X] Make responsive (ensure it looks fine on monitor and laptop screen)
