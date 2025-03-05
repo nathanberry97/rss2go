@@ -44,13 +44,13 @@
     - [ ] GET
     - [ ] Frontend
 
+## In progress
+
 * [ ] Implement unit tests for the application
     - [ ] worker
     - [ ] rss
     - [ ] services
     - [ ] utils
-
-## In progress
 
 ## Completed
 
@@ -78,3 +78,4 @@
 * [X] Improve scss and js into the project
   - [X] Refine current scss and js
   - [X] Make responsive (ensure it looks fine on monitor and laptop screen)
+* [X] Migrate over from `colly` to `gofeed` for rss parser

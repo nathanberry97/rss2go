@@ -6,7 +6,6 @@ import (
 	"log"
 	"os"
 	"strings"
-	"testing"
 	"time"
 )
 
@@ -14,7 +13,6 @@ func FormatDate(dateStr, inputFormat, outputFormat string) (string, error) {
 	t, err := time.Parse(inputFormat, dateStr)
 
 	if err != nil {
-		fmt.Println(err)
 		return "", fmt.Errorf("Failed to parse time: %w", err)
 	}
 
@@ -37,11 +35,5 @@ func SetEnv(envFile string) {
 		}
 
 		os.Setenv(env[0], env[1])
-	}
-}
-
-func Assert(t *testing.T, expected interface{}, actual interface{}) {
-	if expected != actual {
-		t.Errorf("Expected %s, got %s", expected, actual)
 	}
 }
