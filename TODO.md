@@ -2,17 +2,40 @@
 
 ## Todo
 
-* [ ] Documentation site
+* [ ] Documentation site (probably be its own git repo)
   - [ ] Create site
   - [ ] Host site in AWS or Github pages?
 
-* [ ] GET articles by feed
-  - [ ] GET
-  - [ ] Frontend
+* [ ] Upload to docker hub and release pipeline
+    - [ ] Works on v1.0.0 branches
+    - [ ] Pushes the build to docker hub
+    - [ ] Creates a release within the repo itself
+
+* [ ] Add better error handling
+    - [ ] Backend to return HTML to the frontend
+    - [ ] Frontend to show the error in the UI
+
+* [ ] Add dockerfile to build and run the application
+
+* [ ] Add support for OPML
+    - [ ] POST
+    - [ ] GET
+    - [ ] Frontend
 
 * [ ] Add loading animations
 
 * [ ] Refine scss and responsive design
+
+* [ ] Implement unit tests for the application
+    - [ ] worker
+    - [ ] rss
+    - [ ] services
+    - [ ] utils
+
+
+* [ ] GET articles by feed
+  - [ ] GET
+  - [ ] Frontend
 
 * [ ] Read later
   - [ ] POST
@@ -27,28 +50,6 @@
   - [ ] DELETE
   - [ ] Frontend
   - UI icon heart
-
-* [ ] Add better error handling
-    - [ ] Backend to return HTML to the frontend
-    - [ ] Frontend to show the error in the UI
-
-* [ ] Upload to docker hub and release pipeline
-    - [ ] Works on v0.0.0 branches
-    - [ ] Pushes the build to docker hub
-    - [ ] Creates a release within the repo itself
-
-* [ ] Add dockerfile to build and run the application
-
-* [ ] Add support for OPML
-    - [ ] POST
-    - [ ] GET
-    - [ ] Frontend
-
-* [ ] Implement unit tests for the application
-    - [ ] worker
-    - [ ] rss
-    - [ ] services
-    - [ ] utils
 
 ## In progress
 
@@ -78,3 +79,4 @@
 * [X] Improve scss and js into the project
   - [X] Refine current scss and js
   - [X] Make responsive (ensure it looks fine on monitor and laptop screen)
+* [X] Migrate over from `colly` to `gofeed` for rss parser

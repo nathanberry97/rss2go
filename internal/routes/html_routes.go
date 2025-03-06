@@ -8,7 +8,7 @@ import (
 func feedsPage(router *gin.Engine) {
 	router.GET("/feeds", func(c *gin.Context) {
 		title := "Feeds"
-		formHTML := components.GenerateForm("/partials/feed", "RSS Feed URL")
+		formHTML := components.GenerateInputForm("/partials/feed", "RSS Feed URL")
 		navbar := components.GenerateNavbar()
 		metadata := components.GenerateMetaData()
 

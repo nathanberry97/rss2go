@@ -8,7 +8,7 @@ import (
 	"github.com/nathanberry97/rss2go/internal/schema"
 )
 
-func GenerateForm(endpoint, label string) template.HTML {
+func GenerateInputForm(endpoint, label string) template.HTML {
 	return template.HTML(`
         <form hx-post="` + endpoint + `" hx-trigger="submit" hx-swap="none" hx-on::after-request="clearInput()">
             <div class="input-wrapper">
@@ -98,10 +98,7 @@ func GenerateMetaData() template.HTML {
         <link rel="stylesheet" href="/static/css/style.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
-            rel="stylesheet"
-        />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
         <script src="/static/js/htmx.min.js"></script>
         <script src="/static/js/index.js"></script>
     `)
