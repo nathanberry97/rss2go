@@ -21,6 +21,7 @@ func InitialiseRouter() *gin.Engine {
 
 	// Article routes
 	getArticles(router)
+	getArticlesByFeedId(router)
 
 	return router
 }

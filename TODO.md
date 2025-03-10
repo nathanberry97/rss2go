@@ -32,11 +32,6 @@
     - [ ] services
     - [ ] utils
 
-
-* [ ] GET articles by feed
-  - [ ] GET
-  - [ ] Frontend
-
 * [ ] Read later
   - [ ] POST
   - [ ] GET
@@ -52,6 +47,10 @@
   - UI icon heart
 
 ## In progress
+
+* [ ] GET articles by feed
+  - [X] GET
+  - [ ] Frontend
 
 ## Completed
 
