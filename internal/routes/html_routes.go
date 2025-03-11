@@ -38,7 +38,7 @@ func articlesPage(router *gin.Engine) {
 func articlesByFeedPage(router *gin.Engine) {
 	router.GET("/articles/:feedId", func(c *gin.Context) {
 		feedId := c.Param("feedId")
-		title := "Feed Test"
+		title := c.DefaultQuery("title", "Feed")
 		navbar := components.GenerateNavbar()
 		metadata := components.GenerateMetaData()
 

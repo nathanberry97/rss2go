@@ -46,11 +46,12 @@
   - [ ] Frontend
   - UI icon heart
 
-## In progress
+* [ ] Create placeholder pages
+  - [ ] Settings
+  - [ ] Favourites
+  - [ ] Read later
 
-* [ ] GET articles by feed
-  - [X] GET
-  - [ ] Frontend
+## In progress
 
 ## Completed
 
@@ -59,23 +60,12 @@
 * [X] Implement a database sql
 * [X] Add a database connection to the application
 * [X] RSS feed endpoints
-  - [X] POST
-  - [X] GET
-  - [X] DELETE
 * [X] RSS Article endpoints
-  - [X] GET
-  - [X] POST (Update RSS feed post to do this)
 * [X] Implement seeding script
 * [X] Add HTMX to the frontend
 * [X] Add scss and js into the project
 * [X] Improve the rss reader function
-  - [X] Improve the general function
-  - [X] Make it work with .atom feeds too
 * [X] Integrate go worker pool to update feeds in the background
-    - [X] Run on a schedule (Every 1 hours perhaps?)
-    - [X] Run when server starts up
-    - [X] Updates the articles table
 * [X] Improve scss and js into the project
-  - [X] Refine current scss and js
-  - [X] Make responsive (ensure it looks fine on monitor and laptop screen)
 * [X] Migrate over from `colly` to `gofeed` for rss parser
+* [X] GET articles by feed
