@@ -46,13 +46,6 @@
 
 ## In progress
 
-* [ ] Create placeholder pages
-  - [ ] Settings
-  - [ ] Favourites
-      - UI icon heart
-  - [ ] Read later
-      - UI icon bookmark
-
 ## Completed
 
 * [X] Add linting pipeline and precommit
@@ -69,3 +62,4 @@
 * [X] Improve scss and js into the project
 * [X] Migrate over from `colly` to `gofeed` for rss parser
 * [X] GET articles by feed
+* [X] Create placeholder pages
