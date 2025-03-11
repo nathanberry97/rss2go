@@ -17,7 +17,7 @@
 
 * [ ] Add dockerfile to build and run the application
 
-* [ ] Add support for OPML
+* [ ] Add support for OPML (Inside of settings page)
     - [ ] POST
     - [ ] GET
     - [ ] Frontend
@@ -37,21 +37,21 @@
   - [ ] GET
   - [ ] DELETE
   - [ ] Frontend
-  - UI icon bookmark
 
 * [ ] Favourite articles
   - [ ] POST
   - [ ] GET
   - [ ] DELETE
   - [ ] Frontend
-  - UI icon heart
+
+## In progress
 
 * [ ] Create placeholder pages
   - [ ] Settings
   - [ ] Favourites
+      - UI icon heart
   - [ ] Read later
-
-## In progress
+      - UI icon bookmark
 
 ## Completed
 
