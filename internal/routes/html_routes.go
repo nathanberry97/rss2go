@@ -34,3 +34,19 @@ func articlesPage(router *gin.Engine) {
 		})
 	})
 }
+
+func articlesByFeedPage(router *gin.Engine) {
+	router.GET("/articles/:feedId", func(c *gin.Context) {
+		feedId := c.Param("feedId")
+		title := c.DefaultQuery("title", "Feed")
+		navbar := components.GenerateNavbar()
+		metadata := components.GenerateMetaData()
+
+		c.HTML(200, "articlesByFeedId.tmpl", gin.H{
+			"title":    title,
+			"navbar":   navbar,
+			"metadata": metadata,
+			"feedId":   feedId,
+		})
+	})
+}
