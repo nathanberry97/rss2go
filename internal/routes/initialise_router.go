@@ -13,6 +13,7 @@ func InitialiseRouter() *gin.Engine {
 	// HTML routes
 	articlesPage(router)
 	feedsPage(router)
+	articlesByFeedPage(router)
 
 	// Feed routes
 	getFeeds(router)

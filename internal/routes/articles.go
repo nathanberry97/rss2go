@@ -36,7 +36,7 @@ func getArticles(router *gin.Engine) {
 			return
 		}
 
-		response := components.GenerateArticleList(articles)
+		response := components.GenerateArticleList(articles, nil)
 		c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(response))
 	})
 }
@@ -73,7 +73,7 @@ func getArticlesByFeedId(router *gin.Engine) {
 			return
 		}
 
-		response := components.GenerateArticleList(articles)
+		response := components.GenerateArticleList(articles, &id)
 		c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(response))
 	})
 }

@@ -38,7 +38,7 @@ func GetArticles(conn *sql.DB, page int, limit int) (schema.PaginationResponse, 
 		return schema.PaginationResponse{}, fmt.Errorf("failed to get total items: %w", err)
 	}
 
-	remainingItems := totalItems - (page * limit)
+	remainingItems := totalItems - (page + 1*limit)
 	if remainingItems <= 0 {
 		nextPage = -1
 	}
@@ -84,7 +84,7 @@ func GetArticlesByFeedId(conn *sql.DB, page int, limit int, id int) (schema.Pagi
 		return schema.PaginationResponse{}, fmt.Errorf("failed to get total items: %w", err)
 	}
 
-	remainingItems := totalItems - (page * limit)
+	remainingItems := totalItems - (page + 1*limit)
 	if remainingItems <= 0 {
 		nextPage = -1
 	}
