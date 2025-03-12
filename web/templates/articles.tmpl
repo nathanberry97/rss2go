@@ -12,11 +12,7 @@
     <main class=articles>
         <h1>{{ .title }}</h1>
 
-        <div id="articles"
-             hx-trigger="revealed"
-             hx-get="/partials/articles?page=0"
-             hx-swap="afterend">
-        </div>
+        {{ .query }}
 
         <button onclick="toTop()" id="toTop" class="toTop">↑</button>
     </main>

@@ -17,14 +17,10 @@
 
 * [ ] Add dockerfile to build and run the application
 
-* [ ] Add support for OPML (Inside of settings page)
-    - [ ] POST
-    - [ ] GET
-    - [ ] Frontend
-
 * [ ] Add loading animations
 
 * [ ] Refine scss and responsive design
+    - [ ] Add light theme and dark theme
 
 * [ ] Implement unit tests for the application
     - [ ] worker
@@ -32,11 +28,10 @@
     - [ ] services
     - [ ] utils
 
-* [ ] Read later
-  - [ ] POST
-  - [ ] GET
-  - [ ] DELETE
-  - [ ] Frontend
+* [ ] Add support for OPML (Inside of settings page)
+    - [ ] POST
+    - [ ] GET
+    - [ ] Frontend
 
 * [ ] Favourite articles
   - [ ] POST
@@ -45,6 +40,12 @@
   - [ ] Frontend
 
 ## In progress
+
+* [ ] Read later
+  - [ ] POST
+  - [ ] GET
+  - [ ] DELETE
+  - [ ] Frontend
 
 ## Completed
 
@@ -63,3 +64,4 @@
 * [X] Migrate over from `colly` to `gofeed` for rss parser
 * [X] GET articles by feed
 * [X] Create placeholder pages
+* [X] Clean up templates
