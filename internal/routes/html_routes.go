@@ -50,3 +50,45 @@ func articlesByFeedPage(router *gin.Engine) {
 		})
 	})
 }
+
+func articlesFavorite(router *gin.Engine) {
+	router.GET("/articles/favorites", func(c *gin.Context) {
+		title := c.DefaultQuery("title", "Favorites")
+		navbar := components.GenerateNavbar()
+		metadata := components.GenerateMetaData()
+
+		c.HTML(200, "placeholder.tmpl", gin.H{
+			"title":    title,
+			"navbar":   navbar,
+			"metadata": metadata,
+		})
+	})
+}
+
+func articlesReadLater(router *gin.Engine) {
+	router.GET("/articles/later", func(c *gin.Context) {
+		title := c.DefaultQuery("title", "Read Later")
+		navbar := components.GenerateNavbar()
+		metadata := components.GenerateMetaData()
+
+		c.HTML(200, "placeholder.tmpl", gin.H{
+			"title":    title,
+			"navbar":   navbar,
+			"metadata": metadata,
+		})
+	})
+}
+
+func settings(router *gin.Engine) {
+	router.GET("/settings", func(c *gin.Context) {
+		title := c.DefaultQuery("title", "Settings")
+		navbar := components.GenerateNavbar()
+		metadata := components.GenerateMetaData()
+
+		c.HTML(200, "placeholder.tmpl", gin.H{
+			"title":    title,
+			"navbar":   navbar,
+			"metadata": metadata,
+		})
+	})
+}

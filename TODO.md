@@ -17,7 +17,7 @@
 
 * [ ] Add dockerfile to build and run the application
 
-* [ ] Add support for OPML
+* [ ] Add support for OPML (Inside of settings page)
     - [ ] POST
     - [ ] GET
     - [ ] Frontend
@@ -37,19 +37,12 @@
   - [ ] GET
   - [ ] DELETE
   - [ ] Frontend
-  - UI icon bookmark
 
 * [ ] Favourite articles
   - [ ] POST
   - [ ] GET
   - [ ] DELETE
   - [ ] Frontend
-  - UI icon heart
-
-* [ ] Create placeholder pages
-  - [ ] Settings
-  - [ ] Favourites
-  - [ ] Read later
 
 ## In progress
 
@@ -69,3 +62,4 @@
 * [X] Improve scss and js into the project
 * [X] Migrate over from `colly` to `gofeed` for rss parser
 * [X] GET articles by feed
+* [X] Create placeholder pages

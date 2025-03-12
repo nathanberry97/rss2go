@@ -14,6 +14,9 @@ func InitialiseRouter() *gin.Engine {
 	articlesPage(router)
 	feedsPage(router)
 	articlesByFeedPage(router)
+	articlesFavorite(router)
+	articlesReadLater(router)
+	settings(router)
 
 	// Feed routes
 	getFeeds(router)

@@ -85,9 +85,27 @@ func GenerateNavbar() template.HTML {
                     </a>
                 </li>
                 <li>
+                    <a href="/articles/favorites">
+                        <img src="/static/images/icons/favorite.svg" alt="Favorites" width="20" height="20" class="feed-icon">
+                        Favorites
+                    </a>
+                </li>
+                <li>
+                    <a href="/articles/later">
+                        <img src="/static/images/icons/readlater.svg" alt="Read Later" width="20" height="20" class="feed-icon">
+                        Read Later
+                    </a>
+                </li>
+                <li>
                     <a href="/feeds">
                         <img src="/static/images/favicon.svg" alt="Feeds" width="20" height="20" class="feed-icon">
                         Feeds
+                    </a>
+                </li>
+                <li>
+                    <a href="/settings">
+                        <img src="/static/images/icons/settings.svg" alt="Settings" width="20" height="20" class="feed-icon">
+                        Settings
                     </a>
                 </li>
               </ul>
