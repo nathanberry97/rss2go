@@ -3,6 +3,14 @@ package schema
 import "database/sql"
 
 // Data models
+type QueryKey string
+
+const (
+	Articles          QueryKey = "articles"
+	ArticlesReadLater QueryKey = "articlesReadLater"
+	ArticlesByFeed    QueryKey = "articlesByFeed"
+)
+
 type RssItem struct {
 	Title   string `json:"title"`
 	Link    string `json:"link"`
@@ -19,14 +27,6 @@ type RssArticle struct {
 	FeedId int `json:"feed_id"`
 	RssItem
 }
-
-type FeedType string
-
-const (
-	FeedTypeRSS  FeedType = "rss"
-	FeedTypeAtom FeedType = "atom"
-	FeedTypeNone FeedType = ""
-)
 
 // Request bodies
 type RssPostBody struct {
