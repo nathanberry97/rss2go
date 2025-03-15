@@ -20,6 +20,14 @@ func GenerateArticleQuery(query schema.QueryKey, feedId *string) template.HTML {
              hx-swap="afterend">
         </div>
         `
+	case schema.ArticlesReadLater:
+		queryTemplate = `
+        <div id="articles"
+             hx-trigger="revealed"
+             hx-get="/partials/later?page=0"
+             hx-swap="afterend">
+        </div>
+        `
 	case schema.ArticlesByFeed:
 		queryTemplate = template.HTML(fmt.Sprintf(`
         <div id="articles"
@@ -46,7 +54,7 @@ func GenerateInputForm(endpoint, label string) template.HTML {
     `)
 }
 
-func GenerateArticleList(articles schema.PaginationResponse, feedId *int) template.HTML {
+func GenerateArticleList(articles schema.PaginationResponse, feedId *int, query schema.QueryKey) template.HTML {
 	articleItems := ""
 	var articlesHTML template.HTML
 
@@ -61,10 +69,14 @@ func GenerateArticleList(articles schema.PaginationResponse, feedId *int) templa
 
 	if articles.NextPage != -1 {
 		var nextPageURL string
-		if feedId != nil {
-			nextPageURL = fmt.Sprintf(`/partials/articles/%d?page=%d`, *feedId, articles.NextPage)
-		} else {
+
+		switch query {
+		case schema.Articles:
 			nextPageURL = fmt.Sprintf(`/partials/articles?page=%d`, articles.NextPage)
+		case schema.ArticlesReadLater:
+			nextPageURL = fmt.Sprintf(`/partials/later?page=%d`, articles.NextPage)
+		case schema.ArticlesByFeed:
+			nextPageURL = fmt.Sprintf(`/partials/articles/%d?page=%d`, *feedId, articles.NextPage)
 		}
 
 		articlesHTML += template.HTML(fmt.Sprintf(`

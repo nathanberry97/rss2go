@@ -34,7 +34,7 @@ func postFeed(router *gin.Engine) {
 		}
 
 		c.Header("HX-Trigger", "refreshFeed")
-		c.Status(http.StatusOK)
+		c.Status(http.StatusNoContent)
 	})
 }
 
@@ -74,6 +74,6 @@ func deleteFeed(router *gin.Engine) {
 		}
 
 		c.Header("HX-Trigger", "refreshFeed")
-		c.Status(http.StatusOK)
+		c.Status(http.StatusNoContent)
 	})
 }

@@ -6,8 +6,9 @@ import "database/sql"
 type QueryKey string
 
 const (
-	Articles       QueryKey = "articles"
-	ArticlesByFeed QueryKey = "articlesByFeed"
+	Articles          QueryKey = "articles"
+	ArticlesReadLater QueryKey = "articlesReadLater"
+	ArticlesByFeed    QueryKey = "articlesByFeed"
 )
 
 type RssItem struct {
@@ -26,14 +27,6 @@ type RssArticle struct {
 	FeedId int `json:"feed_id"`
 	RssItem
 }
-
-type FeedType string
-
-const (
-	FeedTypeRSS  FeedType = "rss"
-	FeedTypeAtom FeedType = "atom"
-	FeedTypeNone FeedType = ""
-)
 
 // Request bodies
 type RssPostBody struct {

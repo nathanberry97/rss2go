@@ -17,11 +17,6 @@
 
 * [ ] Add dockerfile to build and run the application
 
-* [ ] Add loading animations
-
-* [ ] Refine scss and responsive design
-    - [ ] Add light theme and dark theme
-
 * [ ] Implement unit tests for the application
     - [ ] worker
     - [ ] rss
@@ -33,6 +28,14 @@
     - [ ] GET
     - [ ] Frontend
 
+* [ ] Refine scss and responsive design
+    - [ ] Add scss compile into the build process and add hash
+    - [ ] Add light theme and dark theme
+    - [ ] Redo article layout
+    - [ ] Add Read Later button
+    - [ ] Add Favourite button
+    - [ ] Add loading animations
+
 * [ ] Favourite articles
   - [ ] POST
   - [ ] GET
@@ -40,12 +43,6 @@
   - [ ] Frontend
 
 ## In progress
-
-* [ ] Read later
-  - [ ] POST
-  - [ ] GET
-  - [ ] DELETE
-  - [ ] Frontend
 
 ## Completed
 
@@ -65,3 +62,4 @@
 * [X] GET articles by feed
 * [X] Create placeholder pages
 * [X] Clean up templates
+* [X] Read later

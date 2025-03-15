@@ -74,11 +74,13 @@ func articlesReadLater(router *gin.Engine) {
 		title := c.DefaultQuery("title", "Read Later")
 		navbar := components.GenerateNavbar()
 		metadata := components.GenerateMetaData()
+		query := components.GenerateArticleQuery(schema.ArticlesReadLater, nil)
 
-		c.HTML(200, "placeholder.tmpl", gin.H{
+		c.HTML(200, "articles.tmpl", gin.H{
 			"title":    title,
 			"navbar":   navbar,
 			"metadata": metadata,
+			"query":    query,
 		})
 	})
 }

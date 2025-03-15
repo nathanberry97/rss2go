@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/nathanberry97/rss2go/internal/components"
 	"github.com/nathanberry97/rss2go/internal/database"
+	"github.com/nathanberry97/rss2go/internal/schema"
 	"github.com/nathanberry97/rss2go/internal/services"
 )
 
@@ -36,7 +37,7 @@ func getArticles(router *gin.Engine) {
 			return
 		}
 
-		response := components.GenerateArticleList(articles, nil)
+		response := components.GenerateArticleList(articles, nil, schema.Articles)
 		c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(response))
 	})
 }
@@ -73,7 +74,7 @@ func getArticlesByFeedId(router *gin.Engine) {
 			return
 		}
 
-		response := components.GenerateArticleList(articles, &id)
+		response := components.GenerateArticleList(articles, &id, schema.ArticlesByFeed)
 		c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(response))
 	})
 }
