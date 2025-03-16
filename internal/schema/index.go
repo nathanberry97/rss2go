@@ -8,6 +8,7 @@ type QueryKey string
 const (
 	Articles          QueryKey = "articles"
 	ArticlesReadLater QueryKey = "articlesReadLater"
+	ArticlesFavourite QueryKey = "articlesFavourite"
 	ArticlesByFeed    QueryKey = "articlesByFeed"
 )
 

@@ -36,12 +36,6 @@
     - [ ] Add Favourite button
     - [ ] Add loading animations
 
-* [ ] Favourite articles
-  - [ ] POST
-  - [ ] GET
-  - [ ] DELETE
-  - [ ] Frontend
-
 ## In progress
 
 ## Completed
@@ -63,3 +57,4 @@
 * [X] Create placeholder pages
 * [X] Clean up templates
 * [X] Read later
+* [X] Favourite articles
