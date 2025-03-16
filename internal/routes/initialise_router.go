@@ -12,7 +12,7 @@ func InitialiseRouter() *gin.Engine {
 
 	// HTML routes
 	articlesByFeedPage(router)
-	articlesFavorite(router)
+	articlesFavourite(router)
 	articlesPage(router)
 	articlesReadLater(router)
 	feedsPage(router)
@@ -31,6 +31,11 @@ func InitialiseRouter() *gin.Engine {
 	deleteReadLater(router)
 	getReadLater(router)
 	postReadLater(router)
+
+	// Favourite routes
+	deleteFavourite(router)
+	getFavourites(router)
+	postFavourite(router)
 
 	return router
 }

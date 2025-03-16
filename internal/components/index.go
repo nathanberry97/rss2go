@@ -20,6 +20,14 @@ func GenerateArticleQuery(query schema.QueryKey, feedId *string) template.HTML {
              hx-swap="afterend">
         </div>
         `
+	case schema.ArticlesFavourite:
+		queryTemplate = `
+        <div id="articles"
+             hx-trigger="revealed"
+             hx-get="/partials/favourite?page=0"
+             hx-swap="afterend">
+        </div>
+        `
 	case schema.ArticlesReadLater:
 		queryTemplate = `
         <div id="articles"
@@ -73,6 +81,8 @@ func GenerateArticleList(articles schema.PaginationResponse, feedId *int, query 
 		switch query {
 		case schema.Articles:
 			nextPageURL = fmt.Sprintf(`/partials/articles?page=%d`, articles.NextPage)
+		case schema.ArticlesFavourite:
+			nextPageURL = fmt.Sprintf(`/partials/favourite?page=%d`, articles.NextPage)
 		case schema.ArticlesReadLater:
 			nextPageURL = fmt.Sprintf(`/partials/later?page=%d`, articles.NextPage)
 		case schema.ArticlesByFeed:
@@ -122,9 +132,9 @@ func GenerateNavbar() template.HTML {
                     </a>
                 </li>
                 <li>
-                    <a href="/articles/favorites">
-                        <img src="/static/images/icons/favorite.svg" alt="Favorites" width="20" height="20" class="feed-icon">
-                        Favorites
+                    <a href="/articles/favourites">
+                        <img src="/static/images/icons/favourite.svg" alt="Favourites" width="20" height="20" class="feed-icon">
+                        Favourites
                     </a>
                 </li>
                 <li>

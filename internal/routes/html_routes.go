@@ -55,16 +55,18 @@ func articlesByFeedPage(router *gin.Engine) {
 	})
 }
 
-func articlesFavorite(router *gin.Engine) {
-	router.GET("/articles/favorites", func(c *gin.Context) {
-		title := c.DefaultQuery("title", "Favorites")
+func articlesFavourite(router *gin.Engine) {
+	router.GET("/articles/favourites", func(c *gin.Context) {
+		title := c.DefaultQuery("title", "Favourites")
 		navbar := components.GenerateNavbar()
 		metadata := components.GenerateMetaData()
+		query := components.GenerateArticleQuery(schema.ArticlesFavourite, nil)
 
-		c.HTML(200, "placeholder.tmpl", gin.H{
+		c.HTML(200, "articles.tmpl", gin.H{
 			"title":    title,
 			"navbar":   navbar,
 			"metadata": metadata,
+			"query":    query,
 		})
 	})
 }

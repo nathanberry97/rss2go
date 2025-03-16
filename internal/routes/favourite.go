@@ -11,9 +11,9 @@ import (
 	"github.com/nathanberry97/rss2go/internal/services"
 )
 
-func postReadLater(router *gin.Engine) {
-	router.POST("/partials/later/:articleId", func(c *gin.Context) {
-		articleId := c.Param("articleId")
+func postFavourite(router *gin.Engine) {
+	router.POST("/partials/favourite/:id", func(c *gin.Context) {
+		articleId := c.Param("id")
 
 		dbConn := database.DatabaseConnection()
 		if dbConn == nil {
@@ -21,9 +21,9 @@ func postReadLater(router *gin.Engine) {
 			return
 		}
 
-		err := services.PostReadLater(dbConn, articleId)
+		err := services.PostFavourite(dbConn, articleId)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error posting Read Later article: " + err.Error()})
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error posting favourite article: " + err.Error()})
 			return
 		}
 
@@ -31,9 +31,9 @@ func postReadLater(router *gin.Engine) {
 	})
 }
 
-func deleteReadLater(router *gin.Engine) {
-	router.DELETE("/partials/later/:articleId", func(c *gin.Context) {
-		articleId := c.Param("articleId")
+func deleteFavourite(router *gin.Engine) {
+	router.DELETE("/partials/favourite/:id", func(c *gin.Context) {
+		articleId := c.Param("id")
 
 		dbConn := database.DatabaseConnection()
 		if dbConn == nil {
@@ -41,9 +41,9 @@ func deleteReadLater(router *gin.Engine) {
 			return
 		}
 
-		err := services.DeleteReadLater(dbConn, articleId)
+		err := services.DeleteFavourite(dbConn, articleId)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error deleting Read Later article: " + err.Error()})
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error deleting favourite article: " + err.Error()})
 			return
 		}
 
@@ -51,8 +51,8 @@ func deleteReadLater(router *gin.Engine) {
 	})
 }
 
-func getReadLater(router *gin.Engine) {
-	router.GET("/partials/later", func(c *gin.Context) {
+func getFavourites(router *gin.Engine) {
+	router.GET("/partials/favourite", func(c *gin.Context) {
 		page, err := strconv.Atoi(c.DefaultQuery("page", "0"))
 		if err != nil || page < 0 {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid page parameter"})
@@ -71,13 +71,13 @@ func getReadLater(router *gin.Engine) {
 			return
 		}
 
-		articles, err := services.GetReadLater(dbConn, page, limit)
+		articles, err := services.GetFavourites(dbConn, page, limit)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error getting Read Later article: " + err.Error()})
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error getting favourites article: " + err.Error()})
 			return
 		}
 
-		response := components.GenerateArticleList(articles, nil, schema.ArticlesReadLater)
+		response := components.GenerateArticleList(articles, nil, schema.ArticlesFavourite)
 		c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(response))
 	})
 }
