@@ -2,7 +2,7 @@ package routes
 
 import "github.com/gin-gonic/gin"
 
-func InitialiseRouter() *gin.Engine {
+func InitialiseRouter(cssFile string) *gin.Engine {
 	router := gin.Default()
 	router.Static("/static", "./web/static")
 	router.LoadHTMLGlob("./web/templates/*.tmpl")
@@ -11,12 +11,12 @@ func InitialiseRouter() *gin.Engine {
 	healthCheck(router)
 
 	// HTML routes
-	articlesByFeedPage(router)
-	articlesFavourite(router)
-	articlesPage(router)
-	articlesReadLater(router)
-	feedsPage(router)
-	settings(router)
+	articlesByFeedPage(router, cssFile)
+	articlesFavourite(router, cssFile)
+	articlesPage(router, cssFile)
+	articlesReadLater(router, cssFile)
+	feedsPage(router, cssFile)
+	settings(router, cssFile)
 
 	// Article routes
 	getArticles(router)

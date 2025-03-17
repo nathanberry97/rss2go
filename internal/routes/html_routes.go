@@ -6,12 +6,12 @@ import (
 	"github.com/nathanberry97/rss2go/internal/schema"
 )
 
-func feedsPage(router *gin.Engine) {
+func feedsPage(router *gin.Engine, cssFile string) {
 	router.GET("/feeds", func(c *gin.Context) {
 		title := "Feeds"
 		formHTML := components.GenerateInputForm("/partials/feed", "RSS Feed URL")
 		navbar := components.GenerateNavbar()
-		metadata := components.GenerateMetaData()
+		metadata := components.GenerateMetaData(cssFile)
 
 		c.HTML(200, "feeds.tmpl", gin.H{
 			"title":    title,
@@ -22,11 +22,11 @@ func feedsPage(router *gin.Engine) {
 	})
 }
 
-func articlesPage(router *gin.Engine) {
+func articlesPage(router *gin.Engine, cssFile string) {
 	router.GET("/", func(c *gin.Context) {
 		title := "Latest"
 		navbar := components.GenerateNavbar()
-		metadata := components.GenerateMetaData()
+		metadata := components.GenerateMetaData(cssFile)
 		query := components.GenerateArticleQuery(schema.Articles, nil)
 
 		c.HTML(200, "articles.tmpl", gin.H{
@@ -38,12 +38,12 @@ func articlesPage(router *gin.Engine) {
 	})
 }
 
-func articlesByFeedPage(router *gin.Engine) {
+func articlesByFeedPage(router *gin.Engine, cssFile string) {
 	router.GET("/articles/:feedId", func(c *gin.Context) {
 		feedId := c.Param("feedId")
 		title := c.DefaultQuery("title", "Feed")
 		navbar := components.GenerateNavbar()
-		metadata := components.GenerateMetaData()
+		metadata := components.GenerateMetaData(cssFile)
 		query := components.GenerateArticleQuery(schema.ArticlesByFeed, &feedId)
 
 		c.HTML(200, "articles.tmpl", gin.H{
@@ -55,11 +55,11 @@ func articlesByFeedPage(router *gin.Engine) {
 	})
 }
 
-func articlesFavourite(router *gin.Engine) {
+func articlesFavourite(router *gin.Engine, cssFile string) {
 	router.GET("/articles/favourites", func(c *gin.Context) {
 		title := c.DefaultQuery("title", "Favourites")
 		navbar := components.GenerateNavbar()
-		metadata := components.GenerateMetaData()
+		metadata := components.GenerateMetaData(cssFile)
 		query := components.GenerateArticleQuery(schema.ArticlesFavourite, nil)
 
 		c.HTML(200, "articles.tmpl", gin.H{
@@ -71,11 +71,11 @@ func articlesFavourite(router *gin.Engine) {
 	})
 }
 
-func articlesReadLater(router *gin.Engine) {
+func articlesReadLater(router *gin.Engine, cssFile string) {
 	router.GET("/articles/later", func(c *gin.Context) {
 		title := c.DefaultQuery("title", "Read Later")
 		navbar := components.GenerateNavbar()
-		metadata := components.GenerateMetaData()
+		metadata := components.GenerateMetaData(cssFile)
 		query := components.GenerateArticleQuery(schema.ArticlesReadLater, nil)
 
 		c.HTML(200, "articles.tmpl", gin.H{
@@ -87,11 +87,11 @@ func articlesReadLater(router *gin.Engine) {
 	})
 }
 
-func settings(router *gin.Engine) {
+func settings(router *gin.Engine, cssFile string) {
 	router.GET("/settings", func(c *gin.Context) {
 		title := c.DefaultQuery("title", "Settings")
 		navbar := components.GenerateNavbar()
-		metadata := components.GenerateMetaData()
+		metadata := components.GenerateMetaData(cssFile)
 
 		c.HTML(200, "placeholder.tmpl", gin.H{
 			"title":    title,

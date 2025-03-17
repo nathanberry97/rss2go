@@ -28,15 +28,15 @@
     - [ ] GET
     - [ ] Frontend
 
-* [ ] Refine scss and responsive design
-    - [ ] Add scss compile into the build process and add hash
-    - [ ] Add light theme and dark theme
-    - [ ] Redo article layout
-    - [ ] Add Read Later button
-    - [ ] Add Favourite button
-    - [ ] Add loading animations
-
 ## In progress
+
+* [ ] Refine scss and responsive design
+    - [X] Add scss compile into the build process and add hash
+    - [ ] Redo article layout
+        - [ ] Add Read Later button
+        - [ ] Add Favourite button
+    - [ ] Add loading animations
+    - [ ] Add light theme and dark theme
 
 ## Completed
 
