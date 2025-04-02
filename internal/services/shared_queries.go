@@ -33,3 +33,14 @@ func InsertArticles(conn *sql.DB, articles []schema.RssItem, feedID int64) error
 
 	return nil
 }
+
+func GetArticleName(conn *sql.DB, id string) (string, error) {
+	query := "SELECT name FROM feeds WHERE id = ?"
+
+	var name string
+	if err := conn.QueryRow(query, id).Scan(&name); err != nil {
+		return "", fmt.Errorf("failed to get feed name for feed id: %w", err)
+	}
+
+	return name, nil
+}

@@ -1,9 +1,13 @@
 package routes
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/nathanberry97/rss2go/internal/components"
+	"github.com/nathanberry97/rss2go/internal/database"
 	"github.com/nathanberry97/rss2go/internal/schema"
+	"github.com/nathanberry97/rss2go/internal/services"
 )
 
 func feedsPage(router *gin.Engine, cssFile string) {
@@ -41,7 +45,19 @@ func articlesPage(router *gin.Engine, cssFile string) {
 func articlesByFeedPage(router *gin.Engine, cssFile string) {
 	router.GET("/articles/:feedId", func(c *gin.Context) {
 		feedId := c.Param("feedId")
-		title := c.DefaultQuery("title", "Feed")
+
+		dbConn := database.DatabaseConnection()
+		if dbConn == nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Database connection failed"})
+			return
+		}
+
+		title, err := services.GetArticleName(dbConn, feedId)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Unable to get feed name"})
+			return
+		}
+
 		navbar := components.GenerateNavbar()
 		metadata := components.GenerateMetaData(cssFile)
 		query := components.GenerateArticleQuery(schema.ArticlesByFeed, &feedId)

@@ -13,9 +13,12 @@ const (
 )
 
 type RssItem struct {
+	Id      string `json:"id"`
 	Title   string `json:"title"`
 	Link    string `json:"link"`
 	PubDate string `json:"pub_date"`
+	Fav     bool   `json:"is_fav"`
+	Later   bool   `json:"is_read_later"`
 }
 
 type Task struct {
@@ -25,7 +28,8 @@ type Task struct {
 }
 
 type RssArticle struct {
-	FeedId int `json:"feed_id"`
+	FeedId   int    `json:"feed_id"`
+	FeedName string `json:"feed_name"`
 	RssItem
 }
 

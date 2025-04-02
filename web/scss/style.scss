@@ -302,22 +302,27 @@ h4 {
     margin-top: -10px;
     width: 100%;
     max-width: 100%;
+    margin-left: 100px;
 
     li {
+      border-radius: 5px;
+      border: 1px solid $colour-accent;
       display: flex;
-      align-items: center;
+      align-items: left;
+      flex-direction: column;
       font-weight: bold;
       list-style-type: none;
-      padding: 0px;
-      width: 100%;
+      padding: 10px;
+      width: 80%;
       gap: 10px;
 
       a {
         color: $colour-text-secondary;
         flex-grow: 1 1 auto;
         flex-shrink: 0;
-        min-width: 90%;
+        min-width: 100%;
         max-width: 0%;
+        padding-left: 5px;
         overflow: hidden;
         text-decoration: none;
         text-overflow: ellipsis;
@@ -328,14 +333,77 @@ h4 {
         }
       }
 
-      small {
+      .details {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding-top: 10px;
+        margin: 0 5px;
         color: $colour-accent;
-        font-weight: bold;
-        flex: 0 0 auto;
-        text-align: left;
-        white-space: nowrap;
-        min-width: 10%;
-        margin-left: 10px;
+
+        small:first-of-type {
+          flex: 1;
+          text-align: left;
+          font-weight: bold;
+          font-size: 16px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .buttons-container {
+          margin-left: 75px;
+          display: flex;
+          justify-content: space-between;
+          min-width: 325px;
+        }
+
+        .post {
+          flex: 0 0 120px;
+          background-color: $colour-bg-primary;
+          font-weight: bold;
+          font-size: 16px;
+          color: $colour-accent;
+          border-radius: 5px;
+          border: 1px solid $colour-bg-primary;
+          padding: 3px;
+          transition: background-color 0.3s ease, color 0.3s ease;
+          text-align: center;
+
+          &:hover {
+            background-color: $colour-accent;
+            color: $colour-text-secondary;
+          }
+        }
+
+        .delete {
+          flex: 0 0 120px;
+          background-color: $colour-accent;
+          font-weight: bold;
+          font-size: 16px;
+          color: $colour-text-secondary;
+          border-radius: 5px;
+          border: 1px solid $colour-bg-primary;
+          padding: 3px;
+          transition: background-color 0.3s ease, color 0.3s ease;
+          text-align: center;
+
+          &:hover {
+            background-color: $colour-bg-primary;
+            color: $colour-accent;
+          }
+        }
+
+        small:last-of-type {
+          flex: 1;
+          text-align: right;
+          font-weight: bold;
+          padding-right: 10px;
+          font-size: 16px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
       }
     }
   }
@@ -378,97 +446,14 @@ h4 {
  * 06. RESPONSIVE DESIGN
  * =====================
  */
-@media only screen and (max-width: 2000px) {
-  .articles {
-    ul {
-      font-size: 20px;
+@media only screen and (max-width: 2000px) {}
 
-      li {
-        gap: 10px;
+@media only screen and (max-width: 1750px) {}
 
-        a {
-          min-width: 85%;
-        }
+@media only screen and (max-width: 1500px) {}
 
-        small {
-          margin-left: 45px;
-        }
-      }
-    }
-  }
-}
+@media only screen and (max-width: 1250px) {}
 
-@media only screen and (max-width: 1750px) {
-  .articles {
-    ul {
-      li {
-        gap: 9px;
-
-        a {
-          min-width: 82.5%;
-        }
-
-        small {
-          margin-left: 47.5px;
-        }
-      }
-    }
-  }
-}
-
-@media only screen and (max-width: 1500px) {
-  .articles {
-    ul {
-      font-size: 18px;
-
-      li {
-
-        a {
-          min-width: 80%;
-        }
-
-        small {
-          margin-left: 50px;
-        }
-      }
-    }
-  }
-}
-
-@media only screen and (max-width: 1250px) {
-  .articles {
-    ul {
-      font-size: 16px;
-
-      li {
-        gap: 10px;
-
-        a {
-          min-width: 75%;
-        }
-
-        small {
-          margin-left: 60px;
-        }
-      }
-    }
-  }
-}
-
-@media only screen and (max-width: 1000px) {
-
-  // TODO need to implement hamburger navbar
-  .navbar {
-    visibility: hidden;
-  }
-
-  .articles {
-    margin-left: 50px;
-  }
-
-  .feed {
-    left: 100px;
-  }
-}
+@media only screen and (max-width: 1000px) {}
 
 @media only screen and (max-width: 800px) {}

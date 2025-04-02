@@ -65,11 +65,23 @@ func GenerateInputForm(endpoint, label string) template.HTML {
 func GenerateArticleList(articles schema.PaginationResponse, feedId *int, query schema.QueryKey) template.HTML {
 	articleItems := ""
 	var articlesHTML template.HTML
+	var tarFav, tarLater = "favourite", "readlater"
 
 	for _, article := range articles.Items {
 		articleItems += `<li>
 			<a href="` + article.Link + `" target="_blank">` + article.Title + `</a>
-            <small>` + article.PubDate + `</small>
+            <div class="details">
+                <small>` + article.FeedName + `</small>
+                <div class="buttons-container">
+                    <div id="` + tarFav + `_` + article.Id + `">
+                        ` + GenerateButton(`/partials/favourite/`+article.Id, "Favourite", tarFav+`_`+article.Id, article.Fav) + `
+                    </div>
+                    <div id="` + tarLater + `_` + article.Id + `">
+                        ` + GenerateButton(`/partials/later/`+article.Id, "Read Later", tarLater+`_`+article.Id, article.Later) + `
+                    </div>
+                </div>
+                <small>` + article.PubDate + `</small>
+            </div>
         </li><br>`
 	}
 
@@ -104,7 +116,7 @@ func GenerateFeedList(feeds []schema.RssFeed) template.HTML {
 	listItems := ""
 	for _, feed := range feeds {
 		listItems += `<li>
-			<a href="/articles/` + strconv.Itoa(feed.ID) + `?title=` + feed.Name + `">` + feed.Name + `</a>
+			<a href="/articles/` + strconv.Itoa(feed.ID) + `">` + feed.Name + `</a>
 			<button class="delete-btn"
                     hx-delete="/partials/feed/` + strconv.Itoa(feed.ID) + `"
                     hx-trigger="click"
@@ -174,4 +186,20 @@ func GenerateMetaData(cssFile string) template.HTML {
         <script src="/static/js/htmx.min.js"></script>
         <script src="/static/js/index.js"></script>
     `)
+}
+
+func GenerateButton(path, name, target string, del bool) string {
+	class, trigger := "post", "hx-post"
+	if del {
+		class, trigger = "delete", "hx-delete"
+	}
+
+	return fmt.Sprintf(`
+        <button class="%s"
+            %s="%s"
+            hx-target="#%s"
+            hx-swap="innerHTML">
+            %s
+        </button>
+    `, class, trigger, path, target, name)
 }
