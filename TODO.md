@@ -28,18 +28,11 @@
     - [ ] GET
     - [ ] Frontend
 
-## In progress
-
-* [ ] Add favourite and read later to feature to the frontend
-    - [X] Add scss compile into the build process and add hash
-    - [X] Query DB for article names
-    - [X] Redo article layout
-        - [X] Add Read Later button
-        - [X] Add Favourite button
-
-* [ ] Refine scss and responsive design
+* [ ] Responsive design
     - [ ] Refine scss file
     - [ ] Add loading animations
+
+## In progress
 
 ## Completed
 
@@ -61,3 +54,4 @@
 * [X] Clean up templates
 * [X] Read later
 * [X] Favourite articles
+* [X] Add favourite and read later to feature to the frontend

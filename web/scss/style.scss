@@ -286,12 +286,10 @@ h4 {
 .articles {
   flex-direction: row;
   height: 80%;
-  margin-left: 250px;
-  margin-right: auto;
-  margin-top: 0px;
+  margin: 0 auto 0 250px;
+  width: 100%;
   max-width: 85%;
   min-width: 600px;
-  width: 100%;
 
   h1 {
     margin-bottom: 50px;
@@ -299,34 +297,29 @@ h4 {
 
   ul {
     font-size: 22px;
-    margin-top: -10px;
+    margin: -10px 0 0 100px;
     width: 100%;
     max-width: 100%;
-    margin-left: 100px;
 
     li {
-      border-radius: 5px;
-      border: 1px solid $colour-accent;
       display: flex;
-      align-items: left;
       flex-direction: column;
-      font-weight: bold;
-      list-style-type: none;
-      padding: 10px;
+      align-items: left;
       width: 80%;
       gap: 10px;
+      padding: 10px;
+      font-weight: bold;
+      border: 1px solid $colour-accent;
+      border-radius: 5px;
+      list-style-type: none;
 
       a {
         color: $colour-text-secondary;
-        flex-grow: 1 1 auto;
-        flex-shrink: 0;
-        min-width: 100%;
-        max-width: 0%;
         padding-left: 5px;
-        overflow: hidden;
-        text-decoration: none;
-        text-overflow: ellipsis;
         white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-decoration: none;
 
         &:hover {
           text-decoration: underline;
@@ -341,34 +334,46 @@ h4 {
         margin: 0 5px;
         color: $colour-accent;
 
-        small:first-of-type {
+        small {
           flex: 1;
-          text-align: left;
           font-weight: bold;
           font-size: 16px;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
+
+          &:first-of-type {
+            text-align: left;
+          }
+
+          &:last-of-type {
+            text-align: right;
+            padding-right: 10px;
+          }
         }
 
         .buttons-container {
-          margin-left: 75px;
           display: flex;
           justify-content: space-between;
           min-width: 325px;
+          margin-left: 75px;
         }
 
-        .post {
+        .action-button {
           flex: 0 0 120px;
-          background-color: $colour-bg-primary;
           font-weight: bold;
           font-size: 16px;
-          color: $colour-accent;
           border-radius: 5px;
           border: 1px solid $colour-bg-primary;
           padding: 3px;
-          transition: background-color 0.3s ease, color 0.3s ease;
           text-align: center;
+          transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .post {
+          @extend .action-button;
+          background-color: $colour-bg-primary;
+          color: $colour-accent;
 
           &:hover {
             background-color: $colour-accent;
@@ -377,32 +382,14 @@ h4 {
         }
 
         .delete {
-          flex: 0 0 120px;
+          @extend .action-button;
           background-color: $colour-accent;
-          font-weight: bold;
-          font-size: 16px;
           color: $colour-text-secondary;
-          border-radius: 5px;
-          border: 1px solid $colour-bg-primary;
-          padding: 3px;
-          transition: background-color 0.3s ease, color 0.3s ease;
-          text-align: center;
 
           &:hover {
             background-color: $colour-bg-primary;
             color: $colour-accent;
           }
-        }
-
-        small:last-of-type {
-          flex: 1;
-          text-align: right;
-          font-weight: bold;
-          padding-right: 10px;
-          font-size: 16px;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
         }
       }
     }
