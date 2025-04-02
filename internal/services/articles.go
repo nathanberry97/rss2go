@@ -16,8 +16,11 @@ func GetArticles(conn *sql.DB, page int, limit int) (schema.PaginationResponse, 
 	offset, nextPage := page*limit, page+1
 
 	query := `
-        SELECT id, title, url, published_at
-        FROM articles
+        SELECT f.name, a.feed_id, a.id, a.title, a.url, a.published_at,
+            EXISTS (SELECT 1 FROM favourites fav WHERE fav.article_id = a.id) AS is_fav,
+            EXISTS (SELECT 1 FROM read_later rl WHERE rl.article_id = a.id) AS is_read_later
+        FROM articles a
+        JOIN feeds f ON a.feed_id = f.id
         ORDER BY published_at DESC
         LIMIT ? OFFSET ?
     `
@@ -27,7 +30,7 @@ func GetArticles(conn *sql.DB, page int, limit int) (schema.PaginationResponse, 
 	}
 	defer rows.Close()
 
-	articles, err := formatArticles(rows)
+	articles, err := formatArticles(rows, conn)
 	if err != nil {
 		return schema.PaginationResponse{}, fmt.Errorf("failed to format articles: %w", err)
 	}
@@ -60,9 +63,12 @@ func GetArticlesByFeedId(conn *sql.DB, page int, limit int, id int) (schema.Pagi
 	offset, nextPage := page*limit, page+1
 
 	query := `
-        SELECT id, title, url, published_at
-        FROM articles
-        WHERE feed_id = ?
+        SELECT f.name, a.feed_id, a.id, a.title, a.url, a.published_at,
+            EXISTS (SELECT 1 FROM favourites fav WHERE fav.article_id = a.id) AS is_fav,
+            EXISTS (SELECT 1 FROM read_later rl WHERE rl.article_id = a.id) AS is_read_later
+        FROM articles a
+        JOIN feeds f ON a.feed_id = f.id
+        WHERE f.id = ?
         ORDER BY published_at DESC
         LIMIT ? OFFSET ?
     `
@@ -73,7 +79,7 @@ func GetArticlesByFeedId(conn *sql.DB, page int, limit int, id int) (schema.Pagi
 	}
 	defer rows.Close()
 
-	articles, err := formatArticles(rows)
+	articles, err := formatArticles(rows, conn)
 	if err != nil {
 		return schema.PaginationResponse{}, fmt.Errorf("failed to format articles: %w", err)
 	}
@@ -99,12 +105,12 @@ func GetArticlesByFeedId(conn *sql.DB, page int, limit int, id int) (schema.Pagi
 	return response, nil
 }
 
-func formatArticles(rows *sql.Rows) ([]schema.RssArticle, error) {
+func formatArticles(rows *sql.Rows, conn *sql.DB) ([]schema.RssArticle, error) {
 	var articles []schema.RssArticle
 
 	for rows.Next() {
 		var article schema.RssArticle
-		if err := rows.Scan(&article.FeedId, &article.Title, &article.Link, &article.PubDate); err != nil {
+		if err := rows.Scan(&article.FeedName, &article.FeedId, &article.Id, &article.Title, &article.Link, &article.PubDate, &article.Fav, &article.Later); err != nil {
 			return []schema.RssArticle{}, fmt.Errorf("failed to scan row: %w", err)
 		}
 

@@ -36,9 +36,12 @@ func GetReadLater(conn *sql.DB, page int, limit int) (schema.PaginationResponse,
 
 	offset, nextPage := page*limit, page+1
 	query := `
-        SELECT id, title, url, published_at
-        FROM articles
-        WHERE id IN (SELECT article_id FROM read_later)
+        SELECT f.name, a.feed_id, a.id, a.title, a.url, a.published_at,
+            EXISTS (SELECT 1 FROM favourites fav WHERE fav.article_id = a.id) AS is_fav,
+            EXISTS (SELECT 1 FROM read_later rl WHERE rl.article_id = a.id) AS is_read_later
+        FROM articles a
+        JOIN feeds f ON a.feed_id = f.id
+        WHERE a.id IN (SELECT article_id FROM read_later)
         ORDER BY published_at DESC
         LIMIT ? OFFSET ?
     `
@@ -49,7 +52,7 @@ func GetReadLater(conn *sql.DB, page int, limit int) (schema.PaginationResponse,
 	}
 	defer rows.Close()
 
-	articles, err := formatArticles(rows)
+	articles, err := formatArticles(rows, conn)
 	if err != nil {
 		return schema.PaginationResponse{}, fmt.Errorf("failed to format articles: %w", err)
 	}

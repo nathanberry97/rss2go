@@ -286,12 +286,10 @@ h4 {
 .articles {
   flex-direction: row;
   height: 80%;
-  margin-left: 250px;
-  margin-right: auto;
-  margin-top: 0px;
+  margin: 0 auto 0 250px;
+  width: 100%;
   max-width: 85%;
   min-width: 600px;
-  width: 100%;
 
   h1 {
     margin-bottom: 50px;
@@ -299,43 +297,100 @@ h4 {
 
   ul {
     font-size: 22px;
-    margin-top: -10px;
+    margin: -10px 0 0 100px;
     width: 100%;
     max-width: 100%;
 
     li {
       display: flex;
-      align-items: center;
-      font-weight: bold;
-      list-style-type: none;
-      padding: 0px;
-      width: 100%;
+      flex-direction: column;
+      align-items: left;
+      width: 80%;
       gap: 10px;
+      padding: 10px;
+      font-weight: bold;
+      border: 1px solid $colour-accent;
+      border-radius: 5px;
+      list-style-type: none;
 
       a {
         color: $colour-text-secondary;
-        flex-grow: 1 1 auto;
-        flex-shrink: 0;
-        min-width: 90%;
-        max-width: 0%;
-        overflow: hidden;
-        text-decoration: none;
-        text-overflow: ellipsis;
+        padding-left: 5px;
         white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-decoration: none;
 
         &:hover {
           text-decoration: underline;
         }
       }
 
-      small {
+      .details {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding-top: 10px;
+        margin: 0 5px;
         color: $colour-accent;
-        font-weight: bold;
-        flex: 0 0 auto;
-        text-align: left;
-        white-space: nowrap;
-        min-width: 10%;
-        margin-left: 10px;
+
+        small {
+          flex: 1;
+          font-weight: bold;
+          font-size: 16px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+
+          &:first-of-type {
+            text-align: left;
+          }
+
+          &:last-of-type {
+            text-align: right;
+            padding-right: 10px;
+          }
+        }
+
+        .buttons-container {
+          display: flex;
+          justify-content: space-between;
+          min-width: 325px;
+          margin-left: 75px;
+        }
+
+        .action-button {
+          flex: 0 0 120px;
+          font-weight: bold;
+          font-size: 16px;
+          border-radius: 5px;
+          border: 1px solid $colour-bg-primary;
+          padding: 3px;
+          text-align: center;
+          transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .post {
+          @extend .action-button;
+          background-color: $colour-bg-primary;
+          color: $colour-accent;
+
+          &:hover {
+            background-color: $colour-accent;
+            color: $colour-text-secondary;
+          }
+        }
+
+        .delete {
+          @extend .action-button;
+          background-color: $colour-accent;
+          color: $colour-text-secondary;
+
+          &:hover {
+            background-color: $colour-bg-primary;
+            color: $colour-accent;
+          }
+        }
       }
     }
   }
@@ -378,97 +433,14 @@ h4 {
  * 06. RESPONSIVE DESIGN
  * =====================
  */
-@media only screen and (max-width: 2000px) {
-  .articles {
-    ul {
-      font-size: 20px;
+@media only screen and (max-width: 2000px) {}
 
-      li {
-        gap: 10px;
+@media only screen and (max-width: 1750px) {}
 
-        a {
-          min-width: 85%;
-        }
+@media only screen and (max-width: 1500px) {}
 
-        small {
-          margin-left: 45px;
-        }
-      }
-    }
-  }
-}
+@media only screen and (max-width: 1250px) {}
 
-@media only screen and (max-width: 1750px) {
-  .articles {
-    ul {
-      li {
-        gap: 9px;
-
-        a {
-          min-width: 82.5%;
-        }
-
-        small {
-          margin-left: 47.5px;
-        }
-      }
-    }
-  }
-}
-
-@media only screen and (max-width: 1500px) {
-  .articles {
-    ul {
-      font-size: 18px;
-
-      li {
-
-        a {
-          min-width: 80%;
-        }
-
-        small {
-          margin-left: 50px;
-        }
-      }
-    }
-  }
-}
-
-@media only screen and (max-width: 1250px) {
-  .articles {
-    ul {
-      font-size: 16px;
-
-      li {
-        gap: 10px;
-
-        a {
-          min-width: 75%;
-        }
-
-        small {
-          margin-left: 60px;
-        }
-      }
-    }
-  }
-}
-
-@media only screen and (max-width: 1000px) {
-
-  // TODO need to implement hamburger navbar
-  .navbar {
-    visibility: hidden;
-  }
-
-  .articles {
-    margin-left: 50px;
-  }
-
-  .feed {
-    left: 100px;
-  }
-}
+@media only screen and (max-width: 1000px) {}
 
 @media only screen and (max-width: 800px) {}

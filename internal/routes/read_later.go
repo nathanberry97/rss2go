@@ -27,7 +27,8 @@ func postReadLater(router *gin.Engine) {
 			return
 		}
 
-		c.Status(http.StatusNoContent)
+		response := components.GenerateButton(`/partials/later/`+articleId, "Read Later", `readlater_`+articleId, true)
+		c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(response))
 	})
 }
 
@@ -47,7 +48,8 @@ func deleteReadLater(router *gin.Engine) {
 			return
 		}
 
-		c.Status(http.StatusNoContent)
+		response := components.GenerateButton(`/partials/later/`+articleId, "Read Later", `readlater_`+articleId, false)
+		c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(response))
 	})
 }
 
