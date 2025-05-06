@@ -52,7 +52,7 @@ func GetReadLater(conn *sql.DB, page int, limit int) (schema.PaginationResponse,
 	}
 	defer rows.Close()
 
-	articles, err := formatArticles(rows, conn)
+	articles, err := formatArticles(rows)
 	if err != nil {
 		return schema.PaginationResponse{}, fmt.Errorf("failed to format articles: %w", err)
 	}

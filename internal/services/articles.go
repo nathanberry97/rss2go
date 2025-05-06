@@ -30,7 +30,7 @@ func GetArticles(conn *sql.DB, page int, limit int) (schema.PaginationResponse, 
 	}
 	defer rows.Close()
 
-	articles, err := formatArticles(rows, conn)
+	articles, err := formatArticles(rows)
 	if err != nil {
 		return schema.PaginationResponse{}, fmt.Errorf("failed to format articles: %w", err)
 	}
@@ -79,7 +79,7 @@ func GetArticlesByFeedId(conn *sql.DB, page int, limit int, id int) (schema.Pagi
 	}
 	defer rows.Close()
 
-	articles, err := formatArticles(rows, conn)
+	articles, err := formatArticles(rows)
 	if err != nil {
 		return schema.PaginationResponse{}, fmt.Errorf("failed to format articles: %w", err)
 	}
@@ -105,7 +105,7 @@ func GetArticlesByFeedId(conn *sql.DB, page int, limit int, id int) (schema.Pagi
 	return response, nil
 }
 
-func formatArticles(rows *sql.Rows, conn *sql.DB) ([]schema.RssArticle, error) {
+func formatArticles(rows *sql.Rows) ([]schema.RssArticle, error) {
 	var articles []schema.RssArticle
 
 	for rows.Next() {

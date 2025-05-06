@@ -6,16 +6,9 @@
   - [ ] Create site
   - [ ] Host site in AWS or Github pages?
 
-* [ ] Upload to docker hub and release pipeline
-    - [ ] Works on v1.0.0 branches
-    - [ ] Pushes the build to docker hub
-    - [ ] Creates a release within the repo itself
-
 * [ ] Add better error handling
     - [ ] Backend to return HTML to the frontend
     - [ ] Frontend to show the error in the UI
-
-* [ ] Add dockerfile to build and run the application
 
 * [ ] Implement unit tests for the application
     - [ ] worker
@@ -23,16 +16,23 @@
     - [ ] services
     - [ ] utils
 
+* [ ] Upload to docker hub and release pipeline
+    - [ ] Works on v1.0.0 branches
+    - [ ] Pushes the build to docker hub
+    - [ ] Creates a release within the repo itself
+
+* [ ] Add dockerfile to build and run the application
+
 * [ ] Add support for OPML (Inside of settings page)
     - [ ] POST
     - [ ] GET
     - [ ] Frontend
 
+## In progress
+
 * [ ] Responsive design
     - [ ] Refine scss file
     - [ ] Add loading animations
-
-## In progress
 
 ## Completed
 
