@@ -27,7 +27,7 @@ func postFavourite(router *gin.Engine) {
 			return
 		}
 
-		response := components.GenerateButton(`/partials/favourite/`+articleId, "Favourite", `favourite_`+articleId, true)
+		response := components.GenerateArticleButton(`/partials/favourite/`+articleId, "Favourite", `favourite_`+articleId, true)
 		c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(response))
 	})
 }
@@ -48,7 +48,7 @@ func deleteFavourite(router *gin.Engine) {
 			return
 		}
 
-		response := components.GenerateButton(`/partials/favourite/`+articleId, "Favourite", `favourite_`+articleId, false)
+		response := components.GenerateArticleButton(`/partials/favourite/`+articleId, "Favourite", `favourite_`+articleId, false)
 		c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(response))
 	})
 }

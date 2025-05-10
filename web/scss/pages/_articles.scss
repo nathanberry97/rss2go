@@ -1,0 +1,145 @@
+@use '../abstracts/variables' as *;
+
+.articles {
+  flex-direction: row;
+  height: 80%;
+  margin: 0 auto 0 250px;
+  width: 100%;
+  max-width: 85%;
+  min-width: 600px;
+
+  &__header {
+    margin-bottom: 50px;
+  }
+
+  &__list {
+    font-size: 22px;
+    margin: -10px 0 0 100px;
+    width: 90%;
+    max-width: 100%;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    gap: 10px;
+    padding: 10px;
+    font-weight: bold;
+    border: 1px solid $colour-accent;
+    border-radius: 5px;
+    list-style-type: none;
+  }
+
+  &__link {
+    color: $colour-text-secondary;
+    padding-left: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__details {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding-top: 10px;
+    margin: 0 5px;
+    color: $colour-accent;
+  }
+
+  &__details-text {
+    flex: 1;
+    font-weight: bold;
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &:first-of-type {
+      text-align: left;
+    }
+
+    &:last-of-type {
+      text-align: right;
+      padding-right: 10px;
+    }
+  }
+
+  &__details-buttons {
+    display: flex;
+    justify-content: space-between;
+    min-width: 525px;
+    margin-left: 75px;
+  }
+
+  &__btn {
+    flex: 0 0 120px;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid $colour-bg-primary;
+    padding: 3px;
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    &--post {
+      background-color: $colour-bg-primary;
+      color: $colour-accent;
+
+      &:hover {
+        background-color: $colour-accent;
+        color: $colour-text-secondary;
+      }
+    }
+
+    &--delete {
+      background-color: $colour-accent;
+      color: $colour-text-secondary;
+
+      &:hover {
+        background-color: $colour-bg-primary;
+        color: $colour-accent;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 2000px) {
+  .articles {
+    &__list {
+      width: 85%;
+    }
+  }
+}
+
+@media only screen and (max-width: 1750px) {}
+
+@media only screen and (max-width: 1500px) {
+  .articles {
+    &__list {
+      width: 80%;
+    }
+
+    &__details-buttons {
+      min-width: 350px;
+    }
+  }
+}
+
+@media only screen and (max-width: 1250px) {
+  .articles {
+    &__details-buttons {
+      min-width: 300px;
+    }
+  }
+}
+
+@media only screen and (max-width: 1000px) {}
+
+@media only screen and (max-width: 800px) {}

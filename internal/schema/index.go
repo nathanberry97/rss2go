@@ -33,6 +33,13 @@ type RssArticle struct {
 	RssItem
 }
 
+type NavbarItem struct {
+	Href   string
+	ImgSrc string
+	Alt    string
+	Label  string
+}
+
 // Request bodies
 type RssPostBody struct {
 	URL string `form:"url" json:"url"`

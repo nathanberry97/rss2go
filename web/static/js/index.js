@@ -2,7 +2,7 @@
  * The following code handles allowing users to get to the top of the screen
  */
 window.onscroll = function() {
-    const toTopButton = document.getElementById("toTop");
+    const toTopButton = document.getElementById("toTopBtn");
 
     if (document.documentElement.scrollTop > 100 || document.body.scrollTop > 100) {
         toTopButton.classList.add("show");
