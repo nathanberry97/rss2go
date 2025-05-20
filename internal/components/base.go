@@ -9,17 +9,18 @@ import (
 
 func GenerateNavbar() template.HTML {
 	navbarItems := []schema.NavbarItem{
-		{Href: "/", ImgSrc: "/static/images/icons/latest.svg", Alt: "Latest", Label: "Latest"},
-		{Href: "/articles/favourites", ImgSrc: "/static/images/icons/favourite.svg", Alt: "Favourites", Label: "Favourites"},
-		{Href: "/articles/later", ImgSrc: "/static/images/icons/readlater.svg", Alt: "Read Later", Label: "Read Later"},
-		{Href: "/feeds", ImgSrc: "/static/images/favicon.svg", Alt: "Feeds", Label: "Feeds"},
-		{Href: "/settings", ImgSrc: "/static/images/icons/settings.svg", Alt: "Settings", Label: "Settings"},
+		{Href: "/", Label: "Latest"},
+		{Href: "/articles/favourites", Label: "Favourites"},
+		{Href: "/articles/later", Label: "Read Later"},
+		{Href: "/feeds", Label: "Feeds"},
 	}
 
 	navbarHTML := `<div class="navbar">
-        <div class="navbar__logo">
-            rss<span class="navbar__logo-number">2</span>go
-        </div>
+		<div class="navbar__header">
+			<div class="navbar__logo">
+				rss<span class="navbar__logo-number">2</span>go
+			</div>
+		</div>
         <nav class="navbar__navigation">
             <ul class="navbar__list">`
 
@@ -27,10 +28,9 @@ func GenerateNavbar() template.HTML {
 		navbarHTML += fmt.Sprintf(`
             <li class="navbar__item">
                 <a class="navbar__link" href="%s">
-                    <img class="navbar__icon" src="%s" alt="%s">
                     %s
                 </a>
-            </li>`, item.Href, item.ImgSrc, item.Alt, item.Label)
+            </li>`, item.Href, item.Label)
 	}
 
 	navbarHTML += `

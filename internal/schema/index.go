@@ -34,10 +34,8 @@ type RssArticle struct {
 }
 
 type NavbarItem struct {
-	Href   string
-	ImgSrc string
-	Alt    string
-	Label  string
+	Href  string
+	Label string
 }
 
 // Request bodies

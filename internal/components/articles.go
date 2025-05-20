@@ -55,20 +55,15 @@ func GenerateArticleList(articles schema.PaginationResponse, feedId *int, query 
 
 	for _, article := range articles.Items {
 		articleItems += `<li class="articles__item">
-			<a class="articles__link" href="` + article.Link + `" target="_blank">` + article.Title + `</a>
-            <div class="articles__details">
-                <small class="articles__details-text">` + article.FeedName + `</small>
-                <div class="articles__details-buttons">
-                    <div id="` + tarFav + `_` + article.Id + `">
-                        ` + GenerateArticleButton(`/partials/favourite/`+article.Id, "Favourite", tarFav+`_`+article.Id, article.Fav) + `
-                    </div>
-                    <div id="` + tarLater + `_` + article.Id + `">
-                        ` + GenerateArticleButton(`/partials/later/`+article.Id, "Read Later", tarLater+`_`+article.Id, article.Later) + `
-                    </div>
-                </div>
-                <small class="articles__details-text">` + article.PubDate + `</small>
-            </div>
-        </li><br>`
+			<a class="articles__link articles__details-text articles__details-text--article" href="` + article.Link + `" target="_blank">` + article.Title + `</a>
+			<div id="` + tarFav + `_` + article.Id + `" class="articles__btn-container">
+				` + GenerateArticleButton(`/partials/favourite/`+article.Id, "Favourite", tarFav+`_`+article.Id, article.Fav) + `
+			</div>
+			<div id="` + tarLater + `_` + article.Id + `" class="articles__btn-container">
+				` + GenerateArticleButton(`/partials/later/`+article.Id, "Read Later", tarLater+`_`+article.Id, article.Later) + `
+			</div>
+			<span class="articles__details-text articles__details-text--date">` + article.PubDate + `</span>
+		</li>`
 	}
 
 	articlesHTML = template.HTML(`<ul class="articles__list">` + articleItems + `</ul>`)

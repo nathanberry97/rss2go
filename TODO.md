@@ -2,10 +2,6 @@
 
 ## Todo
 
-* [ ] Documentation site (probably be its own git repo)
-  - [ ] Create site
-  - [ ] Host site in AWS or Github pages?
-
 * [ ] Add better error handling
     - [ ] Backend to return HTML to the frontend
     - [ ] Frontend to show the error in the UI
@@ -23,16 +19,18 @@
 
 * [ ] Add dockerfile to build and run the application
 
-* [ ] Add support for OPML (Inside of settings page)
+* [ ] Add support for OPML (Inside of feeds page)
     - [ ] POST
     - [ ] GET
     - [ ] Frontend
 
+* [ ] Refactor current project
+    - [ ] SQL shared query structure
+
 ## In progress
 
-* [ ] Responsive design
+* [ ] Responsive design BEM
     - [ ] Refine scss file
-    - [ ] Add loading animations
 
 ## Completed
 
