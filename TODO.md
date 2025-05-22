@@ -2,15 +2,21 @@
 
 ## Todo
 
-* [ ] Add better error handling
-    - [ ] Backend to return HTML to the frontend
-    - [ ] Frontend to show the error in the UI
-
 * [ ] Implement unit tests for the application
     - [ ] worker
     - [ ] rss
     - [ ] services
     - [ ] utils
+
+* [ ] Add better error handling
+    - [ ] Backend to return HTML to the frontend
+    - [ ] Frontend to show the error in the UI
+
+* [ ] Date to show the minutes or hours or days or months or years the article was published
+
+* [ ] Latest only returns the latest articles from the past 7 days
+
+> The tasks above are a nice to have but not required for the MVP
 
 * [ ] Upload to docker hub and release pipeline
     - [ ] Works on v1.0.0 branches

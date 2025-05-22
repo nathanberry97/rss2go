@@ -20,6 +20,9 @@ func GenerateNavbar() template.HTML {
 			<div class="navbar__logo">
 				rss<span class="navbar__logo-number">2</span>go
 			</div>
+			<button class="navbar__hamburger" aria-label="Toggle menu">
+				<img src="/static/images/icons/menu.svg" class="navbar__hamburger-icon" alt="Menu">
+			</button>
 		</div>
         <nav class="navbar__navigation">
             <ul class="navbar__list">`

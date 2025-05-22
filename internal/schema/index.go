@@ -51,8 +51,8 @@ type RssFeed struct {
 }
 
 type RssArticleResponse struct {
-	TotalItems int         `json:"total_items"`
-	Items      interface{} `json:"items"`
+	TotalItems int `json:"total_items"`
+	Items      any `json:"items"`
 }
 
 type PaginationResponse struct {
