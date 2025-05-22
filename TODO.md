@@ -2,35 +2,36 @@
 
 ## Todo
 
-* [ ] Documentation site (probably be its own git repo)
-  - [ ] Create site
-  - [ ] Host site in AWS or Github pages?
-
-* [ ] Upload to docker hub and release pipeline
-    - [ ] Works on v1.0.0 branches
-    - [ ] Pushes the build to docker hub
-    - [ ] Creates a release within the repo itself
-
-* [ ] Add better error handling
-    - [ ] Backend to return HTML to the frontend
-    - [ ] Frontend to show the error in the UI
-
-* [ ] Add dockerfile to build and run the application
-
 * [ ] Implement unit tests for the application
     - [ ] worker
     - [ ] rss
     - [ ] services
     - [ ] utils
 
-* [ ] Add support for OPML (Inside of settings page)
+* [ ] Add better error handling
+    - [ ] Backend to return HTML to the frontend
+    - [ ] Frontend to show the error in the UI
+
+* [ ] Date to show the minutes or hours or days or months or years the article was published
+
+* [ ] Latest only returns the latest articles from the past 7 days
+
+> The tasks above are a nice to have but not required for the MVP
+
+* [ ] Upload to docker hub and release pipeline
+    - [ ] Works on v1.0.0 branches
+    - [ ] Pushes the build to docker hub
+    - [ ] Creates a release within the repo itself
+
+* [ ] Add dockerfile to build and run the application
+
+* [ ] Add support for OPML (Inside of feeds page)
     - [ ] POST
     - [ ] GET
     - [ ] Frontend
 
-* [ ] Responsive design
-    - [ ] Refine scss file
-    - [ ] Add loading animations
+* [ ] Refactor current project
+    - [ ] SQL shared query structure
 
 ## In progress
 
@@ -55,3 +56,4 @@
 * [X] Read later
 * [X] Favourite articles
 * [X] Add favourite and read later to feature to the frontend
+* [X] Responsive design BEM

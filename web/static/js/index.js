@@ -2,7 +2,7 @@
  * The following code handles allowing users to get to the top of the screen
  */
 window.onscroll = function() {
-    const toTopButton = document.getElementById("toTop");
+    const toTopButton = document.getElementById("toTopBtn");
 
     if (document.documentElement.scrollTop > 100 || document.body.scrollTop > 100) {
         toTopButton.classList.add("show");
@@ -28,3 +28,24 @@ function toTop() {
 function clearInput() {
     document.getElementById("url").value = "";
 }
+
+/**
+ * Handle hamburger menu
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    const hamburger = document.querySelector(".navbar__hamburger");
+    const navigation = document.querySelector(".navbar__navigation");
+    const navLinks = document.querySelectorAll(".navbar__link");
+
+    if (hamburger && navigation) {
+        hamburger.addEventListener("click", () => {
+            navigation.classList.toggle("open");
+        });
+    }
+
+    navLinks.forEach(link => {
+        link.addEventListener("click", () => {
+            navigation.classList.remove("open");
+        });
+    });
+});

@@ -1,0 +1,178 @@
+@use '../abstracts/variables' as *;
+
+.feed {
+  padding-top: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  height: 80%;
+  margin: 0 auto;
+  max-width: 500px;
+  width: 90%;
+  align-items: flex-start;
+  text-align: left;
+  position: relative;
+
+  &__header {
+    margin-bottom: 5px;
+    text-align: left;
+    align-self: flex-start;
+    font-size: 45px;
+
+    @media only screen and (max-width: 1500px) {
+      font-size: 40px;
+    }
+
+    @media only screen and (max-width: 800px) {
+      margin-left: 0;
+      font-size: 35px;
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 600px;
+    max-width: 600px;
+
+    &-group {
+      position: relative;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    @media only screen and (max-width: 800px) {
+      min-width: 100%;
+      max-width: 100%;
+    }
+  }
+
+  &__input {
+    width: 100%;
+    padding-right: 80px;
+    background-color: $colour-bg-primary;
+    border-radius: 5px;
+    border: 1.5px solid $colour-accent;
+    color: $colour-text-primary;
+    font-size: 16px;
+    font-family: $font-family-base;
+    height: 40px;
+    padding: 5px 12px;
+    box-sizing: border-box;
+
+    &:focus {
+      color: $colour-text-secondary;
+      outline: none;
+    }
+  }
+
+  &__submit {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    background-color: $colour-bg-primary;
+    color: $colour-bg-primary;
+    border: 1.5px solid $colour-accent;
+    border-radius: 0 5px 5px 0;
+    border-left: none;
+    padding: 0 15px;
+    font-family: $font-family-base;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+
+    &:focus {
+      outline: none;
+    }
+
+    &-icon {
+      width: 20px;
+      height: 20px;
+      transition: transform 0.2s ease-in-out;
+
+      &:hover {
+        filter: invert(1);
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  &__list {
+    font-size: 20px;
+    list-style: none;
+    margin-top: -10px;
+    padding: 0;
+    width: 100%;
+  }
+
+  &__item {
+    width: 100%;
+    min-width: 600px;
+    max-width: 600px;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 92.5% 7.5%;
+    align-items: center;
+    font-weight: bold;
+    gap: 10px;
+    list-style-type: none;
+    padding: 5px;
+  }
+
+  &__link {
+    color: $colour-text-secondary;
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    @media only screen and (max-width: 800px) {
+      font-size: 18px;
+    }
+  }
+
+  &__delete-btn {
+    align-items: center;
+    background-color: transparent;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    display: flex;
+    height: 32px;
+    justify-content: center;
+    padding: 6px;
+    transition: background-color 0.3s ease, border-radius 0.3s ease, transform 0.2s ease;
+    width: 32px;
+
+    &:hover {
+      background-color: $colour-accent;
+      transform: scale(1.1);
+    }
+
+    @media only screen and (max-width: 800px) {
+      display: none;
+    }
+  }
+
+  &__delete-icon {
+    content: url('/static/images/icons/delete.svg');
+    height: 20px;
+    transition: transform 0.2s ease, content 0.3s ease;
+    width: 20px;
+
+    &:hover {
+      content: url('/static/images/icons/delete-hover.svg');
+    }
+  }
+
+  @media only screen and (max-width: 1250px) {
+    max-width: 600px;
+  }
+}

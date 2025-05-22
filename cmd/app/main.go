@@ -30,7 +30,7 @@ func main() {
 	go worker.ScheduleFeedUpdates(5)
 
 	// Compile SCSS
-	cssFile, err := scss.CompileSCSS("web/scss/style.scss", "web/static/css/")
+	cssFile, err := scss.CompileSCSS("web/scss/main.scss", "web/static/css/")
 	if err != nil {
 		log.Fatal(err)
 	}

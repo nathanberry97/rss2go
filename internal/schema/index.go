@@ -33,6 +33,11 @@ type RssArticle struct {
 	RssItem
 }
 
+type NavbarItem struct {
+	Href  string
+	Label string
+}
+
 // Request bodies
 type RssPostBody struct {
 	URL string `form:"url" json:"url"`
@@ -46,8 +51,8 @@ type RssFeed struct {
 }
 
 type RssArticleResponse struct {
-	TotalItems int         `json:"total_items"`
-	Items      interface{} `json:"items"`
+	TotalItems int `json:"total_items"`
+	Items      any `json:"items"`
 }
 
 type PaginationResponse struct {

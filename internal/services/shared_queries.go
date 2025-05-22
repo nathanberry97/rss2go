@@ -14,7 +14,7 @@ func InsertArticles(conn *sql.DB, articles []schema.RssItem, feedID int64) error
 	}
 
 	queryPlaceholders := make([]string, 0, len(articles))
-	queryArgs := make([]interface{}, 0, len(articles)*4)
+	queryArgs := make([]any, 0, len(articles)*4)
 
 	for _, article := range articles {
 		queryPlaceholders = append(queryPlaceholders, "(?, ?, ?, ?)")

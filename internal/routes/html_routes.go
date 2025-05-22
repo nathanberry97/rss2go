@@ -13,11 +13,11 @@ import (
 func feedsPage(router *gin.Engine, cssFile string) {
 	router.GET("/feeds", func(c *gin.Context) {
 		title := "Feeds"
-		formHTML := components.GenerateInputForm("/partials/feed", "RSS Feed URL")
+		formHTML := components.GenerateFeedInputForm("/partials/feed", "RSS Feed URL")
 		navbar := components.GenerateNavbar()
 		metadata := components.GenerateMetaData(cssFile)
 
-		c.HTML(200, "feeds.tmpl", gin.H{
+		c.HTML(200, "feed.tmpl", gin.H{
 			"title":    title,
 			"form":     formHTML,
 			"navbar":   navbar,

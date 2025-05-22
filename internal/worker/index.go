@@ -31,7 +31,7 @@ func runFeedUpdate(workers int) {
 
 	for w := 1; w <= workers; w++ {
 		wg.Add(1)
-		go worker(w, jobs, &wg)
+		go worker(jobs, &wg)
 	}
 
 	conn := database.DatabaseConnection()
@@ -54,7 +54,7 @@ func runFeedUpdate(workers int) {
 	wg.Wait()
 }
 
-func worker(id int, jobs <-chan schema.Task, wg *sync.WaitGroup) {
+func worker(jobs <-chan schema.Task, wg *sync.WaitGroup) {
 	defer wg.Done()
 
 	for job := range jobs {
