@@ -35,9 +35,6 @@
 
 ## In progress
 
-* [ ] Responsive design BEM
-    - [ ] Refine scss file
-
 ## Completed
 
 * [X] Add linting pipeline and precommit
@@ -59,3 +56,4 @@
 * [X] Read later
 * [X] Favourite articles
 * [X] Add favourite and read later to feature to the frontend
+* [X] Responsive design BEM
