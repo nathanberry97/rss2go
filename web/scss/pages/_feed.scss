@@ -7,8 +7,8 @@
   gap: 30px;
   height: 80%;
   margin: 0 auto;
-  max-width: 100%;
-  min-width: 600px;
+  max-width: 500px;
+  width: 90%;
   align-items: flex-start;
   text-align: left;
   position: relative;
@@ -17,17 +17,34 @@
     margin-bottom: 5px;
     text-align: left;
     align-self: flex-start;
+    font-size: 45px;
+
+    @media only screen and (max-width: 1500px) {
+      font-size: 40px;
+    }
+
+    @media only screen and (max-width: 800px) {
+      margin-left: 0;
+      font-size: 35px;
+    }
   }
 
   &__form {
     display: flex;
     flex-direction: column;
-    max-width: 500px;
     width: 100%;
+    min-width: 600px;
+    max-width: 600px;
 
     &-group {
       position: relative;
       width: 100%;
+      box-sizing: border-box;
+    }
+
+    @media only screen and (max-width: 800px) {
+      min-width: 100%;
+      max-width: 100%;
     }
   }
 
@@ -86,27 +103,26 @@
     list-style: none;
     margin-top: -10px;
     padding: 0;
-    max-width: 500px;
     width: 100%;
   }
 
   &__item {
+    width: 100%;
+    min-width: 600px;
+    max-width: 600px;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 92.5% 7.5%;
     align-items: center;
-    display: flex;
     font-weight: bold;
     gap: 10px;
     list-style-type: none;
     padding: 5px;
-    width: 100%;
-    justify-content: space-between;
-    flex-grow: 1;
   }
 
   &__link {
     color: $colour-text-secondary;
     display: inline-block;
-    flex-grow: 1;
-    flex: 1;
     max-width: 100%;
     overflow: hidden;
     text-decoration: none;
@@ -116,11 +132,14 @@
     &:hover {
       text-decoration: underline;
     }
+
+    @media only screen and (max-width: 800px) {
+      font-size: 18px;
+    }
   }
 
   &__delete-btn {
     align-items: center;
-    margin-left: 185px;
     background-color: transparent;
     border-radius: 50%;
     border: 2px solid transparent;
@@ -136,6 +155,10 @@
       background-color: $colour-accent;
       transform: scale(1.1);
     }
+
+    @media only screen and (max-width: 800px) {
+      display: none;
+    }
   }
 
   &__delete-icon {
@@ -149,7 +172,7 @@
     }
   }
 
-  @media only screen and (max-width: 1500px) {
-    left: 100px;
+  @media only screen and (max-width: 1250px) {
+    max-width: 600px;
   }
 }

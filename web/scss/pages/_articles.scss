@@ -3,13 +3,28 @@
 .articles {
   padding-top: 50px;
   height: 80%;
-  margin: 0 auto 0 auto;
-  width: 100%;
+  width: 90%;
+  margin: 0 auto;
 
   &__header {
     margin-left: 50px;
     font-size: 45px;
     margin-bottom: 40px;
+
+    @media only screen and (max-width: 1500px) {
+      margin-bottom: 35px;
+      font-size: 40px;
+    }
+
+    @media only screen and (max-width: 1250px) {
+      margin-bottom: 20px;
+    }
+
+    @media only screen and (max-width: 800px) {
+      margin-left: 0;
+      margin-bottom: 20px;
+      font-size: 35px;
+    }
   }
 
   &__list {
@@ -18,6 +33,19 @@
     padding: 0;
     list-style: none;
     margin-left: 75px;
+
+    @media only screen and (max-width: 2000px) {
+      width: 90%;
+    }
+
+    @media only screen and (max-width: 1250px) {
+      width: 85%;
+    }
+
+    @media only screen and (max-width: 800px) {
+      width: 85%;
+      margin-left: 0;
+    }
   }
 
   &__item {
@@ -29,6 +57,23 @@
     font-weight: bold;
     border-radius: 5px;
     list-style-type: none;
+
+    @media only screen and (max-width: 2000px) {
+      grid-template-columns: 65% 13.3% 13.3% 13.3%;
+    }
+
+    @media only screen and (max-width: 1500px) {
+      grid-template-columns: 62.5% 12.5% 12.5% 12.5%;
+    }
+
+    @media only screen and (max-width: 1250px) {
+      grid-template-columns: 80% 0% 0% 20%;
+    }
+
+    @media only screen and (max-width: 800px) {
+      grid-template-columns: 1fr;
+      row-gap: 3px;
+    }
   }
 
   &__link {
@@ -64,6 +109,14 @@
       padding-right: 10px;
       color: $colour-accent;
     }
+
+    @media only screen and (max-width: 1500px) {
+      font-size: 18px;
+    }
+
+    @media only screen and (max-width: 800px) {
+      font-size: 16px;
+    }
   }
 
   &__btn {
@@ -94,74 +147,13 @@
         color: $colour-accent;
       }
     }
-  }
 
-  @media only screen and (max-width: 2000px) {
-    &__item {
-      grid-template-columns: 65% 13.3% 13.3% 13.3%;
-    }
-
-    &__list {
-      width: 90%;
-    }
-  }
-
-  @media only screen and (max-width: 1500px) {
-    &__header {
-      margin-bottom: 35px;
-      font-size: 40px;
-    }
-
-    &__item {
-      grid-template-columns: 62.5% 12.5% 12.5% 12.5%;
-    }
-
-    &__details-text {
+    @media only screen and (max-width: 1500px) {
       font-size: 18px;
     }
 
-    &__btn {
-      font-size: 18px;
-    }
-  }
-
-  @media only screen and (max-width: 1250px) {
-    &__header {
-      margin-bottom: 20px;
-    }
-
-    &__item {
-      grid-template-columns: 80% 0% 0% 20%;
-    }
-
-    &__list {
-      width: 85%;
-    }
-
-    &__btn {
+    @media only screen and (max-width: 1250px) {
       display: none;
-    }
-  }
-
-  @media only screen and (max-width: 800px) {
-    &__header {
-      margin-left: 0px;
-      margin-bottom: 20px;
-      font-size: 35px;
-    }
-
-    &__item {
-      grid-template-columns: 1fr;
-      row-gap: 3px;
-    }
-
-    &__list {
-      width: 85%;
-      margin-left: 0px;
-    }
-
-    &__details-text {
-      font-size: 16px;
     }
   }
 }
