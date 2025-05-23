@@ -63,7 +63,7 @@ func GetFavourites(conn *sql.DB, page int, limit int) (schema.PaginationResponse
 		return schema.PaginationResponse{}, fmt.Errorf("failed to get total items: %w", err)
 	}
 
-	remainingItems := totalItems - (page + 1*limit)
+	remainingItems := totalItems - ((page + 1) * limit)
 	if remainingItems <= 0 {
 		nextPage = -1
 	}

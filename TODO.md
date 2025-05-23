@@ -2,6 +2,11 @@
 
 ## Todo
 
+* [ ] Upload to docker hub and release pipeline
+    - [ ] Works on v1.0.0 branches
+    - [ ] Pushes the build to docker hub
+    - [ ] Creates a release within the repo itself
+
 * [ ] Implement unit tests for the application
     - [ ] worker
     - [ ] rss
@@ -12,26 +17,15 @@
     - [ ] Backend to return HTML to the frontend
     - [ ] Frontend to show the error in the UI
 
-* [ ] Date to show the minutes or hours or days or months or years the article was published
-
-* [ ] Latest only returns the latest articles from the past 7 days
-
-> The tasks above are a nice to have but not required for the MVP
-
-* [ ] Upload to docker hub and release pipeline
-    - [ ] Works on v1.0.0 branches
-    - [ ] Pushes the build to docker hub
-    - [ ] Creates a release within the repo itself
-
 * [ ] Add dockerfile to build and run the application
 
-* [ ] Add support for OPML (Inside of feeds page)
-    - [ ] POST
+* [ ] Add support for download OPML
     - [ ] GET
     - [ ] Frontend
 
-* [ ] Refactor current project
-    - [ ] SQL shared query structure
+* [ ] Add support for upload OPML
+    - [ ] POST
+    - [ ] Frontend
 
 ## In progress
 
@@ -57,3 +51,6 @@
 * [X] Favourite articles
 * [X] Add favourite and read later to feature to the frontend
 * [X] Responsive design BEM
+* [X] Latest only returns the latest articles from the past 30 days
+* [X] Date to show the minutes, hours, days, months, years the article was published
+* [X] Refactor current project

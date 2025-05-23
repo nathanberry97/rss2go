@@ -2,7 +2,6 @@ package schema
 
 import "database/sql"
 
-// Data models
 type QueryKey string
 
 const (
@@ -12,6 +11,7 @@ const (
 	ArticlesByFeed    QueryKey = "articlesByFeed"
 )
 
+// Data models
 type RssItem struct {
 	Id      string `json:"id"`
 	Title   string `json:"title"`

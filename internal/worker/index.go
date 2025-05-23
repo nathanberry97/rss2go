@@ -14,7 +14,7 @@ import (
 func ScheduleFeedUpdates(workers int) {
 	go runFeedUpdate(workers)
 
-	ticker := time.NewTicker(time.Hour)
+	ticker := time.NewTicker(time.Hour / 2)
 	defer ticker.Stop()
 
 	for {
