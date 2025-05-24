@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"io"
 	"net/http"
 	"strconv"
 
@@ -75,5 +76,39 @@ func deleteFeed(router *gin.Engine) {
 
 		c.Header("HX-Trigger", "refreshFeed")
 		c.Status(http.StatusNoContent)
+	})
+}
+
+func postFeedOpml(router *gin.Engine) {
+	router.POST("/partials/feed/opml", func(c *gin.Context) {
+		dbConn := database.DatabaseConnection()
+		defer dbConn.Close()
+
+		fileHeader, err := c.FormFile("avatar")
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error cannot find file: " + err.Error()})
+			return
+		}
+
+		file, err := fileHeader.Open()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error cannot open file: " + err.Error()})
+			return
+		}
+		defer file.Close()
+
+		content, err := io.ReadAll(file)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error cannot read content of file: " + err.Error()})
+			return
+		}
+
+		err = services.PostFeedOpml(dbConn, content)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error cannot post OPML content: " + err.Error()})
+			return
+		}
+
+		c.Status(http.StatusOK)
 	})
 }

@@ -7,6 +7,8 @@
     - [ ] Pushes the build to docker hub
     - [ ] Creates a release within the repo itself
 
+* [ ] Add dockerfile to build and run the application
+
 * [ ] Implement unit tests for the application
     - [ ] worker
     - [ ] rss
@@ -17,17 +19,15 @@
     - [ ] Backend to return HTML to the frontend
     - [ ] Frontend to show the error in the UI
 
-* [ ] Add dockerfile to build and run the application
-
 * [ ] Add support for download OPML
     - [ ] GET
     - [ ] Frontend
 
+## In progress
+
 * [ ] Add support for upload OPML
     - [ ] POST
     - [ ] Frontend
-
-## In progress
 
 ## Completed
 

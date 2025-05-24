@@ -14,6 +14,7 @@ func feedsPage(router *gin.Engine, cssFile string) {
 	router.GET("/feeds", func(c *gin.Context) {
 		title := "Feeds"
 		formHTML := components.GenerateFeedInputForm("/partials/feed", "RSS Feed URL")
+		opmlButton := components.GenerateOPMLButton("/partials/feed/opml")
 		navbar := components.GenerateNavbar()
 		metadata := components.GenerateMetaData(cssFile)
 
@@ -22,6 +23,7 @@ func feedsPage(router *gin.Engine, cssFile string) {
 			"form":     formHTML,
 			"navbar":   navbar,
 			"metadata": metadata,
+			"opml":     opmlButton,
 		})
 	})
 }

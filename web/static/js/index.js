@@ -26,7 +26,11 @@ function toTop() {
  * Function to clear forms
  */
 function clearInput() {
-    document.getElementById("url").value = "";
+    const urlInput = document.getElementById("url");
+    const fileInput = document.getElementById("avatarInput");
+
+    if (urlInput) urlInput.value = "";
+    if (fileInput) fileInput.value = "";
 }
 
 /**

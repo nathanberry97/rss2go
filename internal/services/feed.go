@@ -75,3 +75,16 @@ func DeleteFeed(conn *sql.DB, id int) error {
 
 	return nil
 }
+
+func PostFeedOpml(conn *sql.DB, opmlBody []byte) error {
+	/**
+	 * TODO:
+	 *  - validate opml file
+	 *  - parse opml file
+	 *  - insert feed urls into DB
+	 */
+
+	fmt.Println(string(opmlBody))
+
+	return nil
+}
