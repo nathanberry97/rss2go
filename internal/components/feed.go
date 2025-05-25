@@ -34,7 +34,7 @@ func GenerateOPMLButton(endpoint string) template.HTML {
 			<div class="feed__form-group">
 				<input
 					type="file"
-					class="feed__input feed__input--file"
+					class="feed__input feed__input-file"
 					id="avatarInput"
 					name="avatar"
 					required
