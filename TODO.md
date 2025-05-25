@@ -9,19 +9,16 @@
 
 * [ ] Add dockerfile to build and run the application
 
+* [ ] Refine ui elements
+    - [ ] Loading element when uploading OPML
+    - [ ] Display error messages through ui elements
+    - [ ] Improve responsive design
+
 * [ ] Implement unit tests for the application
     - [ ] worker
     - [ ] rss
     - [ ] services
     - [ ] utils
-
-* [ ] Add better error handling
-    - [ ] Backend to return HTML to the frontend
-    - [ ] Frontend to show the error in the UI
-
-* [ ] Add support for download OPML
-    - [ ] GET
-    - [ ] Frontend add loading animation for both GET and POST
 
 ## In progress
 
@@ -51,3 +48,4 @@
 * [X] Date to show the minutes, hours, days, months, years the article was published
 * [X] Refactor current project
 * [X] Add support for upload OPML
+* [X] Add support for download OPML

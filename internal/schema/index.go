@@ -62,10 +62,14 @@ type RssPostBody struct {
 }
 
 // Response Structures
-type RssFeed struct {
-	ID   int    `json:"id"`
+type OpmlFeed struct {
 	URL  string `json:"url"`
 	Name string `json:"name"`
+}
+
+type RssFeed struct {
+	ID int `json:"id"`
+	OpmlFeed
 }
 
 type RssArticleResponse struct {

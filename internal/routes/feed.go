@@ -113,3 +113,21 @@ func postFeedOpml(router *gin.Engine) {
 		c.Status(http.StatusNoContent)
 	})
 }
+
+func getFeedOpml(router *gin.Engine) {
+	router.GET("/partials/feed/opml", func(c *gin.Context) {
+		dbConn := database.DatabaseConnection()
+		defer dbConn.Close()
+
+		c.Header("Content-Disposition", `attachment; filename="rss2go.xml"`)
+		c.Header("Content-Type", "application/xml")
+
+		xmlContent, err := services.GetFeedsOpml(dbConn)
+		if err != nil {
+			c.String(http.StatusInternalServerError, "Failed to generate OPML")
+			return
+		}
+
+		c.Data(http.StatusOK, "application/xml", xmlContent)
+	})
+}

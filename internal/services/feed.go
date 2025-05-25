@@ -127,3 +127,42 @@ func PostFeedOpml(conn *sql.DB, opmlData []byte) error {
 	fmt.Printf("Successfully imported feeds with articles\n")
 	return nil
 }
+
+func GetFeedsOpml(conn *sql.DB) ([]byte, error) {
+	query := "SELECT name, url FROM feeds"
+	rows, err := conn.Query(query)
+	if err != nil {
+		return nil, fmt.Errorf("error querying database: %w", err)
+	}
+	defer rows.Close()
+
+	var feeds []schema.OpmlFeed
+	for rows.Next() {
+		var feed schema.OpmlFeed
+		if err := rows.Scan(&feed.Name, &feed.URL); err != nil {
+			return nil, fmt.Errorf("error scanning row: %w", err)
+		}
+		feeds = append(feeds, feed)
+	}
+
+	var b strings.Builder
+	b.WriteString(`<?xml version="1.0" encoding="UTF-8"?>` + "\n\n")
+	b.WriteString(`<opml version="2.0">` + "\n")
+	b.WriteString("  <head>\n")
+	b.WriteString("    <title>rss2go Subscriptions</title>\n")
+	b.WriteString("  </head>\n")
+	b.WriteString("  <body>\n")
+	b.WriteString(`    <outline text="rss2go" title="rss2go">` + "\n")
+
+	for _, feed := range feeds {
+		feedType := inferFeedType(feed.URL)
+		fmt.Fprintf(&b, `      <outline text="%s" type="%s" xmlUrl="%s" />`+"\n",
+			xmlEscape(feed.Name), feedType, xmlEscape(feed.URL))
+	}
+
+	b.WriteString("    </outline>\n")
+	b.WriteString("  </body>\n")
+	b.WriteString("</opml>\n")
+
+	return []byte(b.String()), nil
+}
