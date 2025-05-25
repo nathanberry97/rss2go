@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<opml version="2.0">
+  <head>
+    <title>rss2go sample opml</title>
+    <ownerName>rss2go</ownerName>
+  </head>
+  <body>
+    <outline text="Technology" title="Technology">
+      <outline text="AWS" type="rss" xmlUrl="https://aws.amazon.com/blogs/aws/feed/" />
+      <outline text="Microsoft" type="rss" xmlUrl="https://devblogs.microsoft.com/landing" />
+      <outline text="Cloudflare" type="rss" xmlUrl="https://blog.cloudflare.com/rss" />
+      <outline text="Go Blog" type="atom" xmlUrl="http://blog.golang.org/feed.atom" />
+      <outline text="Framework" type="rss" xmlUrl="https://frame.work/gb/en/blog.rss" />
+      <outline text="BBC" type="rss" xmlUrl="http://feeds.bbci.co.uk/news/technology/rss.xml" />
+      <outline text="Technology in government" type="atom" xmlUrl="https://technology.blog.gov.uk/feed/" />
+    </outline>
+    <outline text="Personal Blogs" title="Personal Blogs">
+      <outline text="Nathan Berry" type="rss" xmlUrl="https://nathanberry.co.uk/feed.xml" />
+      <outline text="David Heinemeier Hansson" type="atom" xmlUrl="https://world.hey.com/dhh/feed.atom" />
+      <outline text="Coding Horror" type="rss" xmlUrl="https://blog.codinghorror.com/rss" />
+    </outline>
+  </body>
+</opml>

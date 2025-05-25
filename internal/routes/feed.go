@@ -109,6 +109,7 @@ func postFeedOpml(router *gin.Engine) {
 			return
 		}
 
-		c.Status(http.StatusOK)
+		c.Header("HX-Trigger", "refreshFeed")
+		c.Status(http.StatusNoContent)
 	})
 }

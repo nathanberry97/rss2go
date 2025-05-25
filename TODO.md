@@ -21,13 +21,9 @@
 
 * [ ] Add support for download OPML
     - [ ] GET
-    - [ ] Frontend
+    - [ ] Frontend add loading animation for both GET and POST
 
 ## In progress
-
-* [ ] Add support for upload OPML
-    - [ ] POST
-    - [ ] Frontend
 
 ## Completed
 
@@ -54,3 +50,4 @@
 * [X] Latest only returns the latest articles from the past 30 days
 * [X] Date to show the minutes, hours, days, months, years the article was published
 * [X] Refactor current project
+* [X] Add support for upload OPML

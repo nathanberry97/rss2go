@@ -1,6 +1,9 @@
 package schema
 
-import "database/sql"
+import (
+	"database/sql"
+	"encoding/xml"
+)
 
 type QueryKey string
 
@@ -12,6 +15,21 @@ const (
 )
 
 // Data models
+type OpmlOutline struct {
+	XMLName  xml.Name      `xml:"outline"`
+	Text     string        `xml:"text,attr"`
+	Title    string        `xml:"title,attr"`
+	Type     string        `xml:"type,attr"`
+	XMLURL   string        `xml:"xmlUrl,attr"`
+	Outlines []OpmlOutline `xml:"outline"`
+}
+
+type OPML struct {
+	Body struct {
+		Outlines []OpmlOutline `xml:"outline"`
+	} `xml:"body"`
+}
+
 type RssItem struct {
 	Id      string `json:"id"`
 	Title   string `json:"title"`
