@@ -19,7 +19,7 @@ func GetArticles(conn *sql.DB, page int, limit int) (schema.PaginationResponse, 
             EXISTS (SELECT 1 FROM read_later rl WHERE rl.article_id = a.id) AS is_read_later
         FROM articles a
         JOIN feeds f ON a.feed_id = f.id
-		WHERE a.published_at >= datetime('now', '-30 days')
+		WHERE a.published_at >= datetime('now', '-31 days')
         ORDER BY published_at DESC
         LIMIT ? OFFSET ?
     `

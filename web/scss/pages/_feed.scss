@@ -143,6 +143,10 @@
     &:hover {
       background-color: $colour-bg-secondary;
     }
+
+    &--margin {
+      margin-bottom: 10px;
+    }
   }
 
   &__list {

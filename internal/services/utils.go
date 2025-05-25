@@ -3,6 +3,8 @@ package services
 import (
 	"database/sql"
 	"fmt"
+	"html"
+	"strings"
 	"time"
 
 	"github.com/nathanberry97/rss2go/internal/schema"
@@ -56,4 +58,15 @@ func extractFeedUrls(outlines []schema.OpmlOutline) []string {
 		}
 	}
 	return urls
+}
+
+func xmlEscape(s string) string {
+	return html.EscapeString(s)
+}
+
+func inferFeedType(url string) string {
+	if strings.Contains(url, ".atom") || strings.Contains(url, "/atom") || strings.Contains(url, "format=atom") {
+		return "atom"
+	}
+	return "rss"
 }

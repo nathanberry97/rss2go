@@ -46,10 +46,8 @@ func GenerateOPMLButton(endpoint string) template.HTML {
 		   	<button class="feed__action-btn" type="submit">Import OPML</button>
 		</form>
 
-		<button class="feed__action-btn"
-				hx-get="` + endpoint + `"
-				hx-trigger="click"
-				hx-swap="none">
+		<button class="feed__action-btn feed__action-btn--margin"
+				onclick="window.location.href='/partials/feed/opml'">
 				Export OPML
 		</button>
 	`)
