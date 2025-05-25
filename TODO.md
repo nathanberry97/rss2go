@@ -19,11 +19,13 @@
     - [ ] Backend to return HTML to the frontend
     - [ ] Frontend to show the error in the UI
 
-* [ ] Add support for download OPML
-    - [ ] GET
-    - [ ] Frontend add loading animation for both GET and POST
-
 ## In progress
+
+* [ ] Add support for download OPML
+    - [ ] Backend
+    - [ ] Frontend
+        - [X] GET button
+        - [ ] add loading animation for both GET and POST
 
 ## Completed
 

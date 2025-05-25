@@ -24,7 +24,7 @@ func GenerateOPMLButton(endpoint string) template.HTML {
 	return template.HTML(`
 		<h2 class="feed__subheader" >OPML import & export</h2>
 		<form
-			class="feed__form"
+			class="feed__form feed__form-opml"
 			hx-post="` + endpoint + `"
 			hx-encoding="multipart/form-data"
 			hx-swap="none"
@@ -43,8 +43,15 @@ func GenerateOPMLButton(endpoint string) template.HTML {
 					<img class="feed__submit-icon" src="/static/images/icons/search.svg" alt="Search">
 				</button>
 			</div>
-		   	<button class="feed__submit-file" type="submit">Import OPML</button>
+		   	<button class="feed__action-btn" type="submit">Import OPML</button>
 		</form>
+
+		<button class="feed__action-btn"
+				hx-get="` + endpoint + `"
+				hx-trigger="click"
+				hx-swap="none">
+				Export OPML
+		</button>
 	`)
 }
 

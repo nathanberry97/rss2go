@@ -48,6 +48,10 @@
     min-width: 600px;
     max-width: 600px;
 
+    &-opml {
+      margin-bottom: -30px;
+    }
+
     &-group {
       position: relative;
       width: 100%;
@@ -122,22 +126,22 @@
         transform: scale(1.1);
       }
     }
+  }
 
-    &-file {
-      margin-top: 10px;
-      margin-bottom: 10px;
-      background-color: $colour-accent;
-      color: $colour-text-primary;
-      border: none;
-      border-radius: 5px;
-      width: 20%;
-      cursor: pointer;
-      padding: 7.5px;
-      transition: background-color 0.3s ease, border-radius 0.3s ease, transform 0.2s ease;
+  &__action-btn {
+    margin-top: 10px;
+    background-color: $colour-accent;
+    color: $colour-text-primary;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 150px;
+    cursor: pointer;
+    padding: 7.5px;
+    transition: background-color 0.3s ease, border-radius 0.3s ease, transform 0.2s ease;
 
-      &:hover {
-        background-color: $colour-bg-secondary;
-      }
+    &:hover {
+      background-color: $colour-bg-secondary;
     }
   }
 
