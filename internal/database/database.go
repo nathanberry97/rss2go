@@ -16,6 +16,9 @@ func DatabaseConnection() *sql.DB {
 		log.Fatalf("Unable to connect to SQLite database: %v\n", err)
 	}
 
+	conn.SetMaxOpenConns(1)
+	conn.SetMaxIdleConns(1)
+
 	err = conn.Ping()
 	if err != nil {
 		log.Fatalf("Failed to ping SQLite database: %v\n", err)

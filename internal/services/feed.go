@@ -1,8 +1,12 @@
 package services
 
 import (
+	"bytes"
 	"database/sql"
+	"encoding/xml"
 	"fmt"
+	"strings"
+	"sync"
 
 	"github.com/nathanberry97/rss2go/internal/rss"
 	"github.com/nathanberry97/rss2go/internal/schema"
@@ -73,5 +77,53 @@ func DeleteFeed(conn *sql.DB, id int) error {
 		return fmt.Errorf("error deleting feed: %w", err)
 	}
 
+	return nil
+}
+
+func PostFeedOpml(conn *sql.DB, opmlData []byte) error {
+	var opml schema.OPML
+	err := xml.NewDecoder(bytes.NewReader(opmlData)).Decode(&opml)
+	if err != nil {
+		return fmt.Errorf("failed to parse OPML file: %w", err)
+	}
+
+	feedUrls := extractFeedUrls(opml.Body.Outlines)
+
+	var wg sync.WaitGroup
+	errChan := make(chan error, len(feedUrls))
+
+	const maxConcurrency = 10
+	semaphore := make(chan struct{}, maxConcurrency)
+
+	for _, url := range feedUrls {
+		url := strings.TrimSpace(url)
+		if url == "" {
+			continue
+		}
+
+		wg.Add(1)
+		go func(feedURL string) {
+			defer wg.Done()
+			semaphore <- struct{}{}        // acquire slot
+			defer func() { <-semaphore }() // release slot
+
+			if err := PostFeed(conn, schema.RssPostBody{URL: feedURL}); err != nil {
+				if !strings.Contains(err.Error(), "UNIQUE constraint failed: feeds.url") {
+					errChan <- fmt.Errorf("failed to add %s: %w", feedURL, err)
+					return
+				}
+				fmt.Printf("Skipping duplicate feed: %s\n", feedURL)
+			}
+		}(url)
+	}
+
+	wg.Wait()
+	close(errChan)
+
+	for err := range errChan {
+		return err
+	}
+
+	fmt.Printf("Successfully imported feeds with articles\n")
 	return nil
 }

@@ -20,6 +20,34 @@ func GenerateFeedInputForm(endpoint, label string) template.HTML {
     `)
 }
 
+func GenerateOPMLButton(endpoint string) template.HTML {
+	return template.HTML(`
+		<h2 class="feed__subheader" >OPML import & export</h2>
+		<form
+			class="feed__form"
+			hx-post="` + endpoint + `"
+			hx-encoding="multipart/form-data"
+			hx-swap="none"
+  			hx-trigger="submit"
+			hx-on::after-request="clearInput()"
+		>
+			<div class="feed__form-group">
+				<input
+					type="file"
+					class="feed__input feed__input-file"
+					id="avatarInput"
+					name="avatar"
+					required
+				>
+				<button class="feed__submit" type="button" onclick="document.getElementById('avatarInput').click()">
+					<img class="feed__submit-icon" src="/static/images/icons/search.svg" alt="Search">
+				</button>
+			</div>
+		   	<button class="feed__submit-file" type="submit">Import OPML</button>
+		</form>
+	`)
+}
+
 func GenerateFeedList(feeds []schema.RssFeed) template.HTML {
 	listItems := ""
 	for _, feed := range feeds {

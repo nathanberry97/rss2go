@@ -26,6 +26,7 @@ func InitialiseRouter(cssFile string) *gin.Engine {
 	deleteFeed(router)
 	getFeeds(router)
 	postFeed(router)
+	postFeedOpml(router)
 
 	// Read later routes
 	deleteReadLater(router)

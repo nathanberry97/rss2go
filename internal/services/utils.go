@@ -44,3 +44,16 @@ func formatArticles(rows *sql.Rows) ([]schema.RssArticle, error) {
 
 	return articles, nil
 }
+
+func extractFeedUrls(outlines []schema.OpmlOutline) []string {
+	var urls []string
+	for _, outline := range outlines {
+		if outline.XMLURL != "" {
+			urls = append(urls, outline.XMLURL)
+		}
+		if len(outline.Outlines) > 0 {
+			urls = append(urls, extractFeedUrls(outline.Outlines)...)
+		}
+	}
+	return urls
+}
