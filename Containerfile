@@ -10,7 +10,7 @@ RUN apt-get update && \
 
 WORKDIR /app
 
-# Install Go dependencies early for better caching
+# Install Go dependencies
 COPY go.mod go.sum ./
 RUN go mod download
 
