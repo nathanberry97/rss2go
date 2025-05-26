@@ -2,20 +2,16 @@ package main
 
 import (
 	"log"
-	"os"
 
 	"github.com/nathanberry97/rss2go/internal/database"
 	"github.com/nathanberry97/rss2go/internal/routes"
 	"github.com/nathanberry97/rss2go/internal/scss"
-	"github.com/nathanberry97/rss2go/internal/utils"
 	"github.com/nathanberry97/rss2go/internal/worker"
 )
 
 func main() {
 	// Set environment variables
-	utils.SetEnv(".env")
-	port := os.Getenv("PORT")
-	hostName := os.Getenv("HOST_NAME")
+	port := "8080"
 
 	// Set up the database
 	db := database.DatabaseConnection()
@@ -37,5 +33,5 @@ func main() {
 
 	// Start the server
 	router := routes.InitialiseRouter(cssFile)
-	router.Run(hostName + ":" + port)
+	router.Run(":" + port)
 }

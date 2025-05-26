@@ -18,10 +18,6 @@ build: ## Build rss2go api
 run: build ## Build and run rss2go api
 	@./bin/app
 
-.PHONY: seed
-seed: ## Seed rss2go database
-	@./scripts/seed.sh
-
 .PHONY: test
 test: ## Test backend for rss2go app
 	@go test internal/utils/*.go -v
@@ -29,3 +25,12 @@ test: ## Test backend for rss2go app
 .PHONY: clean
 clean: ## Clean up build artifacts
 	@rm -rf bin
+
+.PHONY: container
+container: ## Run a local containised version of the application
+	@podman build --tag rss2go .
+	@podman run --name rss2go -dit \
+  	 -p 8000:8080 \
+  	 --restart=always \
+	 --replace \
+	 rss2go

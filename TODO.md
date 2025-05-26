@@ -2,13 +2,6 @@
 
 ## Todo
 
-* [ ] Upload to docker hub and release pipeline
-    - [ ] Works on v1.0.0 branches
-    - [ ] Pushes the build to docker hub
-    - [ ] Creates a release within the repo itself
-
-* [ ] Add dockerfile to build and run the application
-
 * [ ] Refine ui elements
     - [ ] Loading element when uploading OPML
     - [ ] Display error messages through ui elements
@@ -19,6 +12,14 @@
     - [ ] rss
     - [ ] services
     - [ ] utils
+
+* [ ] Update README.md
+    - [ ] Allow for DB file to be mounted in the run command on docs
+
+* [ ] Upload to docker hub and release pipeline
+    - [ ] Works on v1.0.0 branches
+    - [ ] Pushes the build to docker hub
+    - [ ] Creates a release within the repo itself
 
 ## In progress
 
@@ -49,3 +50,4 @@
 * [X] Refactor current project
 * [X] Add support for upload OPML
 * [X] Add support for download OPML
+* [X] Add dockerfile to build and run the application
