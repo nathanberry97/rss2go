@@ -111,23 +111,29 @@ the following to save into an XML file to upload:
 ## API Endpoints
 
 ```txt
-GET    /
-GET    /health-check
-GET    /articles/{feedId}
-GET    /articles/favourites
-GET    /articles/later
-GET    /feeds
-GET    /partials/articles
-GET    /partials/articles/{id}
-GET    /partials/feed
-POST   /partials/feed
-DELETE /partials/feed/{id}
-GET    /partials/feed/opml
-POST   /partials/feed/opml
-GET    /partials/later
-POST   /partials/later/{articleId}
-DELETE /partials/later/{articleId}
-GET    /partials/favourite
-POST   /partials/favourite/{id}
-DELETE /partials/favourite/{id}
+# HTML Pages
+
+GET    /                           # Articles homepage
+GET    /feeds                      # View all feeds
+GET    /articles/favourites        # Favourite articles
+GET    /articles/later             # Read-later articles
+GET    /articles/{feedId}          # Articles by feed ID
+
+# HTMX Partials
+
+GET    /partials/articles          # All articles (partial)
+GET    /partials/articles/{id}     # All feed articles (partial)
+GET    /partials/favourite         # Favourite list (partial)
+GET    /partials/later             # Read-later list (partial)
+GET    /partials/feed              # Feed form (partial)
+GET    /partials/feed/opml         # OPML import form
+
+POST   /partials/favourite/{id}    # Mark article as favourite
+POST   /partials/later/{articleId} # Save article for later
+POST   /partials/feed              # Add new feed
+POST   /partials/feed/opml         # Upload OPML file
+
+DELETE /partials/favourite/{id}    # Remove from favourite
+DELETE /partials/later/{articleId} # Remove from read-later
+DELETE /partials/feed/{id}         # Delete feed
 ```
