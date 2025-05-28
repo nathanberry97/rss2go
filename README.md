@@ -2,7 +2,7 @@
 
 ![rss2go](./assets/rss2go.png)
 
-> rss2go is a lightweight, self-hosted RSS reader built with Go
+> rss2go is a self-hosted RSS reader built with Go
 
 ## Getting started
 
