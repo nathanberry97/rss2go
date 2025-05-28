@@ -104,17 +104,3 @@ func articlesReadLater(router *gin.Engine, cssFile string) {
 		})
 	})
 }
-
-func settings(router *gin.Engine, cssFile string) {
-	router.GET("/settings", func(c *gin.Context) {
-		title := c.DefaultQuery("title", "Settings")
-		navbar := components.GenerateNavbar()
-		metadata := components.GenerateMetaData(cssFile)
-
-		c.HTML(200, "placeholder.tmpl", gin.H{
-			"title":    title,
-			"navbar":   navbar,
-			"metadata": metadata,
-		})
-	})
-}

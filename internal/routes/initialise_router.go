@@ -16,7 +16,6 @@ func InitialiseRouter(cssFile string) *gin.Engine {
 	articlesPage(router, cssFile)
 	articlesReadLater(router, cssFile)
 	feedsPage(router, cssFile)
-	settings(router, cssFile)
 
 	// Article routes
 	getArticles(router)
