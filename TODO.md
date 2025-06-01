@@ -15,10 +15,6 @@
 
 ## In progress
 
-* [ ] Upload to docker hub and release pipeline
-    - [ ] Pushes the build to docker hub
-    - [ ] Creates a release within the repo itself
-
 ## Completed
 
 * [X] Add linting pipeline and precommit
@@ -48,3 +44,4 @@
 * [X] Add support for download OPML
 * [X] Add dockerfile to build and run the application
 * [X] Update README.md
+* [X] Upload to docker hub and release pipeline
