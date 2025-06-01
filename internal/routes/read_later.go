@@ -12,8 +12,8 @@ import (
 )
 
 func postReadLater(router *gin.Engine) {
-	router.POST("/partials/later/:articleId", func(c *gin.Context) {
-		articleId := c.Param("articleId")
+	router.POST("/partials/later/:id", func(c *gin.Context) {
+		articleId := c.Param("id")
 
 		dbConn := database.DatabaseConnection()
 		if dbConn == nil {
@@ -33,8 +33,8 @@ func postReadLater(router *gin.Engine) {
 }
 
 func deleteReadLater(router *gin.Engine) {
-	router.DELETE("/partials/later/:articleId", func(c *gin.Context) {
-		articleId := c.Param("articleId")
+	router.DELETE("/partials/later/:id", func(c *gin.Context) {
+		articleId := c.Param("id")
 
 		dbConn := database.DatabaseConnection()
 		if dbConn == nil {

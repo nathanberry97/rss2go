@@ -1,7 +1,9 @@
 ---
 name: Publish rss2go
 
-on: workflow_dispatch
+on:
+    push:
+        branches: [main]
 
 jobs:
     publish:

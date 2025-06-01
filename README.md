@@ -17,6 +17,12 @@ make run
 
 Which will allow you to access the website on `localhost:8080`.
 
+Or if you have `podman` installed you can run the following command:
+
+```
+make container
+```
+
 ## Overview
 
 Folder structure:
@@ -131,11 +137,11 @@ GET    /partials/feed              # Feed form (partial)
 GET    /partials/feed/opml         # OPML import form
 
 POST   /partials/favourite/{id}    # Mark article as favourite
-POST   /partials/later/{articleId} # Save article for later
+POST   /partials/later/{id}        # Save article for later
 POST   /partials/feed              # Add new feed
 POST   /partials/feed/opml         # Upload OPML file
 
 DELETE /partials/favourite/{id}    # Remove from favourite
-DELETE /partials/later/{articleId} # Remove from read-later
+DELETE /partials/later/{id}        # Remove from read-later
 DELETE /partials/feed/{id}         # Delete feed
 ```
