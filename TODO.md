@@ -13,14 +13,6 @@
     - [ ] services
     - [ ] utils
 
-* [ ] Update README.md
-    - [ ] Allow for DB file to be mounted in the run command on docs
-
-* [ ] Upload to docker hub and release pipeline
-    - [ ] Works on v1.0.0 branches
-    - [ ] Pushes the build to docker hub
-    - [ ] Creates a release within the repo itself
-
 ## In progress
 
 ## Completed
@@ -51,3 +43,5 @@
 * [X] Add support for upload OPML
 * [X] Add support for download OPML
 * [X] Add dockerfile to build and run the application
+* [X] Update README.md
+* [X] Upload to docker hub and release pipeline
