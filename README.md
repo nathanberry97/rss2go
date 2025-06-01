@@ -4,6 +4,8 @@
 
 > rss2go is a self-hosted RSS reader built with Go
 
+- [Link to docker hub](https://hub.docker.com/repository/docker/nathanberry97/rss2go/general)
+
 ## Getting started
 
 If you want to run the application locally ensure you have `sass` and `go`

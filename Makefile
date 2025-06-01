@@ -28,9 +28,12 @@ clean: ## Clean up build artifacts
 
 .PHONY: container
 container: ## Run a local containised version of the application
+	@mkdir -p ~/.config/rss2go
+	@touch ~/.config/rss2go/rss.db
 	@podman build --tag rss2go .
 	@podman run --name rss2go -dit \
   	 -p 8000:8080 \
+	 -v ~/.config/rss2go/rss.db:/app/internal/database/rss.db:Z \
   	 --restart=always \
 	 --replace \
 	 rss2go
