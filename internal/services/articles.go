@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
+	"github.com/nathanberry97/rss2go/internal/queries"
 	"github.com/nathanberry97/rss2go/internal/schema"
 )
 
@@ -13,16 +14,7 @@ func GetArticles(conn *sql.DB, page int, limit int) (schema.PaginationResponse, 
 	}
 	offset, nextPage := page*limit, page+1
 
-	query := `
-        SELECT f.name, a.feed_id, a.id, a.title, a.url, a.published_at,
-            EXISTS (SELECT 1 FROM favourites fav WHERE fav.article_id = a.id) AS is_fav,
-            EXISTS (SELECT 1 FROM read_later rl WHERE rl.article_id = a.id) AS is_read_later
-        FROM articles a
-        JOIN feeds f ON a.feed_id = f.id
-		WHERE a.published_at >= datetime('now', '-31 days')
-        ORDER BY published_at DESC
-        LIMIT ? OFFSET ?
-    `
+	query := queries.GetArticlesRecent()
 	rows, err := conn.Query(query, limit, offset)
 	if err != nil {
 		return schema.PaginationResponse{}, fmt.Errorf("failed to execute query: %w", err)
@@ -34,7 +26,7 @@ func GetArticles(conn *sql.DB, page int, limit int) (schema.PaginationResponse, 
 		return schema.PaginationResponse{}, fmt.Errorf("failed to format articles: %w", err)
 	}
 
-	countQuery := "SELECT COUNT(*) FROM articles WHERE published_at >= datetime('now', '-30 days')"
+	countQuery := queries.GetTotalArticlesRecent()
 	var totalItems int
 	if err := conn.QueryRow(countQuery).Scan(&totalItems); err != nil {
 		return schema.PaginationResponse{}, fmt.Errorf("failed to get total items: %w", err)
@@ -61,16 +53,7 @@ func GetArticlesByFeedId(conn *sql.DB, page int, limit int, id int) (schema.Pagi
 	}
 	offset, nextPage := page*limit, page+1
 
-	query := `
-        SELECT f.name, a.feed_id, a.id, a.title, a.url, a.published_at,
-            EXISTS (SELECT 1 FROM favourites fav WHERE fav.article_id = a.id) AS is_fav,
-            EXISTS (SELECT 1 FROM read_later rl WHERE rl.article_id = a.id) AS is_read_later
-        FROM articles a
-        JOIN feeds f ON a.feed_id = f.id
-        WHERE f.id = ?
-        ORDER BY published_at DESC
-        LIMIT ? OFFSET ?
-    `
+	query := queries.GetArticlesByFeed()
 
 	rows, err := conn.Query(query, id, limit, offset)
 	if err != nil {
@@ -83,7 +66,7 @@ func GetArticlesByFeedId(conn *sql.DB, page int, limit int, id int) (schema.Pagi
 		return schema.PaginationResponse{}, fmt.Errorf("failed to format articles: %w", err)
 	}
 
-	countQuery := "SELECT COUNT(*) FROM articles WHERE feed_id = ?"
+	countQuery := queries.GetTotalArticlesByFeed()
 	var totalItems int
 	if err := conn.QueryRow(countQuery, id).Scan(&totalItems); err != nil {
 		return schema.PaginationResponse{}, fmt.Errorf("failed to get total items: %w", err)
@@ -102,4 +85,23 @@ func GetArticlesByFeedId(conn *sql.DB, page int, limit int, id int) (schema.Pagi
 	}
 
 	return response, nil
+}
+
+func InsertArticles(conn *sql.DB, articles []schema.RssItem, feedID int64) error {
+	if len(articles) == 0 {
+		return nil
+	}
+
+	query := queries.InsertArticlesQuery(len(articles))
+
+	args := make([]any, 0, len(articles)*4)
+	for _, article := range articles {
+		args = append(args, feedID, article.Title, article.Link, article.PubDate)
+	}
+
+	_, err := conn.Exec(query, args...)
+	if err != nil {
+		return fmt.Errorf("failed to batch insert articles: %w", err)
+	}
+	return nil
 }
