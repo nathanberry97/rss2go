@@ -41,7 +41,7 @@ func PostFeed(conn *sql.DB, postBody schema.RssPostBody) error {
 	var name string
 	var articles []schema.RssItem
 
-	name, articles, err := rss.FeedHandler(postBody.URL)
+	name, articles, err := rss.FeedHandler(strings.TrimSpace(postBody.URL))
 	if err != nil {
 		fmt.Println(err)
 		return fmt.Errorf("Error while parsing feed: %w", err)
