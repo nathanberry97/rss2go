@@ -1,11 +1,19 @@
 package routes
 
-import "github.com/gin-gonic/gin"
+import (
+	"html/template"
+
+	"github.com/gin-gonic/gin"
+)
 
 func InitialiseRouter(cssFile string) *gin.Engine {
 	router := gin.Default()
 	router.Static("/static", "./web/static")
-	router.LoadHTMLGlob("./web/templates/*.tmpl")
+	router.SetHTMLTemplate(template.Must(template.ParseFiles(
+		"web/templates/base.tmpl",
+		"web/templates/feed/feed.tmpl",
+		"web/templates/articles/articles.tmpl",
+	)))
 
 	// Health check
 	healthCheck(router)

@@ -56,6 +56,10 @@ type NavbarItem struct {
 	Label string
 }
 
+type Metadata struct {
+	CssFile string
+}
+
 // Request bodies
 type RssPostBody struct {
 	URL string `form:"url" json:"url"`

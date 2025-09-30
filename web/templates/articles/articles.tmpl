@@ -1,0 +1,9 @@
+{{ define "articles_content" }}
+<main class=articles>
+    <h1 class=articles__header>{{ .title }}</h1>
+
+    {{ .query }}
+
+    <button onclick="toTop()" id="toTopBtn" class="btn__to-top">↑</button>
+</main>
+{{ end }}

@@ -15,12 +15,13 @@ func feedsPage(router *gin.Engine, cssFile string) {
 		title := "Feeds"
 		formHTML := components.GenerateFeedInputForm("/partials/feed", "RSS Feed URL")
 		opmlButton := components.GenerateOPMLButton("/partials/feed/opml")
-		navbar := components.GenerateNavbar()
-		metadata := components.GenerateMetaData(cssFile)
+		metadata, _ := components.GenerateMetaData(cssFile)
+		navbar, _ := components.GenerateNavbar()
 
-		c.HTML(200, "feed.tmpl", gin.H{
+		c.HTML(200, "base.tmpl", gin.H{
 			"title":    title,
 			"form":     formHTML,
+			"feed":     true,
 			"navbar":   navbar,
 			"metadata": metadata,
 			"opml":     opmlButton,
@@ -31,14 +32,15 @@ func feedsPage(router *gin.Engine, cssFile string) {
 func articlesPage(router *gin.Engine, cssFile string) {
 	router.GET("/", func(c *gin.Context) {
 		title := "Latest"
-		navbar := components.GenerateNavbar()
-		metadata := components.GenerateMetaData(cssFile)
+		metadata, _ := components.GenerateMetaData(cssFile)
 		query := components.GenerateArticleQuery(schema.Articles, nil)
+		navbar, _ := components.GenerateNavbar()
 
-		c.HTML(200, "articles.tmpl", gin.H{
+		c.HTML(200, "base.tmpl", gin.H{
 			"title":    title,
 			"navbar":   navbar,
 			"metadata": metadata,
+			"articles": true,
 			"query":    query,
 		})
 	})
@@ -60,14 +62,15 @@ func articlesByFeedPage(router *gin.Engine, cssFile string) {
 			return
 		}
 
-		navbar := components.GenerateNavbar()
-		metadata := components.GenerateMetaData(cssFile)
+		navbar, _ := components.GenerateNavbar()
+		metadata, _ := components.GenerateMetaData(cssFile)
 		query := components.GenerateArticleQuery(schema.ArticlesByFeed, &feedId)
 
-		c.HTML(200, "articles.tmpl", gin.H{
+		c.HTML(200, "base.tmpl", gin.H{
 			"title":    title,
 			"navbar":   navbar,
 			"metadata": metadata,
+			"articles": true,
 			"query":    query,
 		})
 	})
@@ -76,14 +79,15 @@ func articlesByFeedPage(router *gin.Engine, cssFile string) {
 func articlesFavourite(router *gin.Engine, cssFile string) {
 	router.GET("/articles/favourites", func(c *gin.Context) {
 		title := c.DefaultQuery("title", "Favourites")
-		navbar := components.GenerateNavbar()
-		metadata := components.GenerateMetaData(cssFile)
+		navbar, _ := components.GenerateNavbar()
+		metadata, _ := components.GenerateMetaData(cssFile)
 		query := components.GenerateArticleQuery(schema.ArticlesFavourite, nil)
 
-		c.HTML(200, "articles.tmpl", gin.H{
+		c.HTML(200, "base.tmpl", gin.H{
 			"title":    title,
 			"navbar":   navbar,
 			"metadata": metadata,
+			"articles": true,
 			"query":    query,
 		})
 	})
@@ -92,14 +96,15 @@ func articlesFavourite(router *gin.Engine, cssFile string) {
 func articlesReadLater(router *gin.Engine, cssFile string) {
 	router.GET("/articles/later", func(c *gin.Context) {
 		title := c.DefaultQuery("title", "Read Later")
-		navbar := components.GenerateNavbar()
-		metadata := components.GenerateMetaData(cssFile)
+		navbar, _ := components.GenerateNavbar()
+		metadata, _ := components.GenerateMetaData(cssFile)
 		query := components.GenerateArticleQuery(schema.ArticlesReadLater, nil)
 
-		c.HTML(200, "articles.tmpl", gin.H{
+		c.HTML(200, "base.tmpl", gin.H{
 			"title":    title,
 			"navbar":   navbar,
 			"metadata": metadata,
+			"articles": true,
 			"query":    query,
 		})
 	})

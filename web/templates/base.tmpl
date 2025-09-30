@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{ .metadata }}
+</head>
+
+<body>
+  {{ .navbar }}
+
+  {{ if .feed }}
+    {{ block "feed_content" . }}{{ end }}
+  {{ end }}
+
+  {{ if .articles }}
+    {{ block "articles_content" . }}{{ end }}
+  {{ end }}
+</body>
+</html>
