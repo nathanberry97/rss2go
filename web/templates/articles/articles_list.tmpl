@@ -1,0 +1,14 @@
+{{ define "articles_list" }}
+<ul class="articles__list">
+    {{ range .Items }}
+    {{ end }}
+</ul>
+
+{{ if ne .NextPage -1 }}
+    <div id="articles"
+         hx-trigger="revealed"
+         hx-get="{{ .NextPageUrl }}"
+         hx-swap="afterend">
+    </div>
+{{ end }}
+{{ end }}

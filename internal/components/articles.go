@@ -8,44 +8,26 @@ import (
 )
 
 func GenerateArticleQuery(query schema.QueryKey, feedId *string) template.HTML {
-	var queryTemplate template.HTML
+	var path string
 
 	switch query {
 	case schema.Articles:
-		queryTemplate = `
-        <div id="articles"
-             hx-trigger="revealed"
-             hx-get="/partials/articles?page=0"
-             hx-swap="afterend">
-        </div>
-        `
+		path = "/partials/articles?page=0"
 	case schema.ArticlesFavourite:
-		queryTemplate = `
-        <div id="articles"
-             hx-trigger="revealed"
-             hx-get="/partials/favourite?page=0"
-             hx-swap="afterend">
-        </div>
-        `
+		path = "partials/favourite?page=0"
 	case schema.ArticlesReadLater:
-		queryTemplate = `
-        <div id="articles"
-             hx-trigger="revealed"
-             hx-get="/partials/later?page=0"
-             hx-swap="afterend">
-        </div>
-        `
+		path = "/partials/later?page=0"
 	case schema.ArticlesByFeed:
-		queryTemplate = template.HTML(fmt.Sprintf(`
-        <div id="articles"
-             hx-trigger="revealed"
-             hx-get="/partials/articles/%s?page=0"
-             hx-swap="afterend">
-        </div>
-        `, *feedId))
+		path = fmt.Sprintf("partials/articles/%s?page=0", *feedId)
 	}
 
-	return template.HTML(queryTemplate)
+	return template.HTML(fmt.Sprintf(`
+		<div id="articles"
+			 hx-trigger="revealed"
+			 hx-get="%s"
+			 hx-swap="afterend">
+		</div>
+	`, path))
 }
 
 func GenerateArticleList(articles schema.PaginationResponse, feedId *int, query schema.QueryKey) template.HTML {
