@@ -7,7 +7,6 @@
            {{ .Title }}
         </a>
 
-        <!-- Favourite button -->
         <div id="favourite_{{ .Id }}" class="articles__btn-container">
             <button class="articles__btn {{ if .Fav }}articles__btn--delete{{ else }}articles__btn--post{{ end }}"
                     {{ if .Fav }}hx-delete{{ else }}hx-post{{ end }}="/partials/favourite/{{ .Id }}"
@@ -17,7 +16,6 @@
             </button>
         </div>
 
-        <!-- Read Later button -->
         <div id="readlater_{{ .Id }}" class="articles__btn-container">
             <button class="articles__btn {{ if .Later }}articles__btn--delete{{ else }}articles__btn--post{{ end }}"
                     {{ if .Later }}hx-delete{{ else }}hx-post{{ end }}="/partials/later/{{ .Id }}"
