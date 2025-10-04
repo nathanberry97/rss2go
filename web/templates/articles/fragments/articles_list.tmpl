@@ -1,0 +1,42 @@
+{{ define "articles_list" }}
+<ul class="articles__list">
+    {{ range .Items }}
+    <li class="articles__item">
+		<a class="articles__link articles__details-text articles__details-text--article"
+           href="{{ .Link }}" target="_blank">
+           {{ .Title }}
+        </a>
+
+        <div id="favourite_{{ .Id }}" class="articles__btn-container">
+            <button class="articles__btn {{ if .Fav }}articles__btn--delete{{ else }}articles__btn--post{{ end }}"
+                    {{ if .Fav }}hx-delete{{ else }}hx-post{{ end }}="/partials/favourite/{{ .Id }}"
+                    hx-target="#favourite_{{ .Id }}"
+                    hx-swap="innerHTML">
+                Favourite
+            </button>
+        </div>
+
+        <div id="readlater_{{ .Id }}" class="articles__btn-container">
+            <button class="articles__btn {{ if .Later }}articles__btn--delete{{ else }}articles__btn--post{{ end }}"
+                    {{ if .Later }}hx-delete{{ else }}hx-post{{ end }}="/partials/later/{{ .Id }}"
+                    hx-target="#readlater_{{ .Id }}"
+                    hx-swap="innerHTML">
+                Read Later
+            </button>
+        </div>
+
+        <span class="articles__details-text articles__details-text--date">
+            {{ .PubDate }}
+        </span>
+    </li>
+    {{ end }}
+</ul>
+
+{{ if ne .NextPage -1 }}
+    <div id="articles"
+         hx-trigger="revealed"
+         hx-get="{{ .NextPageURL }}"
+         hx-swap="afterend">
+    </div>
+{{ end }}
+{{ end }}

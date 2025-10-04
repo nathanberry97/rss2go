@@ -1,0 +1,18 @@
+{{ define "feed_content" }}
+<main class="feed">
+    <h1 class="feed__header">{{ .title }}</h1>
+
+    {{ .form }}
+
+    <div id="feed-refresh"
+         hx-trigger="load, refreshFeed from:body"
+         hx-get="/partials/feed"
+         hx-swap="innerHTML">
+        {{ .feedList }}
+    </div>
+
+    {{ .opml }}
+
+    <button onclick="toTop()" id="toTopBtn" class="btn__to-top">↑</button>
+</main>
+{{ end }}

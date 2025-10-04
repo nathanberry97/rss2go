@@ -4,11 +4,12 @@ import (
 	"database/sql"
 	"fmt"
 
+	"github.com/nathanberry97/rss2go/internal/queries"
 	"github.com/nathanberry97/rss2go/internal/schema"
 )
 
 func PostReadLater(conn *sql.DB, id string) error {
-	query := "INSERT INTO read_later (article_id) VALUES (?)"
+	query := queries.InsertReadLater()
 
 	_, err := conn.Exec(query, id)
 	if err != nil {
@@ -19,7 +20,7 @@ func PostReadLater(conn *sql.DB, id string) error {
 }
 
 func DeleteReadLater(conn *sql.DB, id string) error {
-	query := "DELETE FROM read_later WHERE article_id = ?"
+	query := queries.DeleteReadLater()
 
 	_, err := conn.Exec(query, id)
 	if err != nil {
@@ -35,16 +36,7 @@ func GetReadLater(conn *sql.DB, page int, limit int) (schema.PaginationResponse,
 	}
 
 	offset, nextPage := page*limit, page+1
-	query := `
-        SELECT f.name, a.feed_id, a.id, a.title, a.url, a.published_at,
-            EXISTS (SELECT 1 FROM favourites fav WHERE fav.article_id = a.id) AS is_fav,
-            EXISTS (SELECT 1 FROM read_later rl WHERE rl.article_id = a.id) AS is_read_later
-        FROM articles a
-        JOIN feeds f ON a.feed_id = f.id
-        WHERE a.id IN (SELECT article_id FROM read_later)
-        ORDER BY published_at DESC
-        LIMIT ? OFFSET ?
-    `
+	query := queries.GetArticlesReadLater()
 
 	rows, err := conn.Query(query, limit, offset)
 	if err != nil {
@@ -57,7 +49,7 @@ func GetReadLater(conn *sql.DB, page int, limit int) (schema.PaginationResponse,
 		return schema.PaginationResponse{}, fmt.Errorf("failed to format articles: %w", err)
 	}
 
-	countQuery := "SELECT COUNT(*) FROM read_later"
+	countQuery := queries.GetTotalArticlesReadLater()
 	var totalItems int
 	if err := conn.QueryRow(countQuery).Scan(&totalItems); err != nil {
 		return schema.PaginationResponse{}, fmt.Errorf("failed to get total items: %w", err)

@@ -50,7 +50,7 @@ func getFeeds(router *gin.Engine) {
 			return
 		}
 
-		updatedFeedListHtml := components.GenerateFeedList(feeds)
+		updatedFeedListHtml, _ := components.GenerateFeedList(feeds)
 
 		c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(updatedFeedListHtml))
 	})
