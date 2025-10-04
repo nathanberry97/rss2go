@@ -1,0 +1,8 @@
+{{ define "article_button" }}
+<button class="articles__btn {{if .Delete }}articles__btn--delete{{ else }}articles__btn--post{{ end }}"
+    {{ if .Delete }}hx-delete{{ else }}hx-post{{ end }}="{{ .Path }}"
+    hx-target="#{{ .Target }}"
+    hx-swap="innerHTML">
+  {{ .Name }}
+</button>
+{{ end }}

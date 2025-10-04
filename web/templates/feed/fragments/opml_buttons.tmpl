@@ -1,0 +1,31 @@
+{{ define "opml_buttons" }}
+<h2 class="feed__subheader">OPML import & export</h2>
+
+<form
+    class="feed__form feed__form-opml"
+    hx-post="{{ .Endpoint }}"
+    hx-encoding="multipart/form-data"
+    hx-swap="none"
+    hx-trigger="submit"
+    hx-on::after-request="clearInput()"
+>
+    <div class="feed__form-group">
+        <input
+            type="file"
+            class="feed__input feed__input-file"
+            id="avatarInput"
+            name="avatar"
+            required
+        >
+        <button class="feed__submit" type="button" onclick="document.getElementById('avatarInput').click()">
+            <img class="feed__submit-icon" src="/static/images/icons/search.svg" alt="Search">
+        </button>
+    </div>
+    <button class="feed__action-btn" type="submit">Import OPML</button>
+</form>
+
+<button class="feed__action-btn feed__action-btn--margin"
+        onclick="window.location.href='/partials/feed/opml'">
+    Export OPML
+</button>
+{{ end }}

@@ -60,6 +60,30 @@ type Metadata struct {
 	CssFile string
 }
 
+type ArticleBtn struct {
+	Path   string
+	Name   string
+	Target string
+	Delete bool
+}
+
+type FeedInputForm struct {
+	Endpoint string
+	Label    string
+}
+
+type OPMLFeedBtn struct {
+	Endpoint string
+}
+
+type RssFeeds struct {
+	Items []RssFeed
+}
+
+type ArticleQuery struct {
+	Path string
+}
+
 // Request bodies
 type RssPostBody struct {
 	URL string `form:"url" json:"url"`

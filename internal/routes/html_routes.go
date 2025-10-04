@@ -13,8 +13,8 @@ import (
 func feedsPage(router *gin.Engine, cssFile string) {
 	router.GET("/feeds", func(c *gin.Context) {
 		title := "Feeds"
-		formHTML := components.GenerateFeedInputForm("/partials/feed", "RSS Feed URL")
-		opmlButton := components.GenerateOPMLButton("/partials/feed/opml")
+		formHTML, _ := components.GenerateFeedInputForm("/partials/feed", "RSS Feed URL")
+		opmlButton, _ := components.GenerateOPMLButton("/partials/feed/opml")
 		metadata, _ := components.GenerateMetaData(cssFile)
 		navbar, _ := components.GenerateNavbar()
 
@@ -33,7 +33,7 @@ func articlesPage(router *gin.Engine, cssFile string) {
 	router.GET("/", func(c *gin.Context) {
 		title := "Latest"
 		metadata, _ := components.GenerateMetaData(cssFile)
-		query := components.GenerateArticleQuery(schema.Articles, nil)
+		query, _ := components.GenerateArticleQuery(schema.Articles, nil)
 		navbar, _ := components.GenerateNavbar()
 
 		c.HTML(200, "base.tmpl", gin.H{
@@ -64,7 +64,7 @@ func articlesByFeedPage(router *gin.Engine, cssFile string) {
 
 		navbar, _ := components.GenerateNavbar()
 		metadata, _ := components.GenerateMetaData(cssFile)
-		query := components.GenerateArticleQuery(schema.ArticlesByFeed, &feedId)
+		query, _ := components.GenerateArticleQuery(schema.ArticlesByFeed, &feedId)
 
 		c.HTML(200, "base.tmpl", gin.H{
 			"title":    title,
@@ -81,7 +81,7 @@ func articlesFavourite(router *gin.Engine, cssFile string) {
 		title := c.DefaultQuery("title", "Favourites")
 		navbar, _ := components.GenerateNavbar()
 		metadata, _ := components.GenerateMetaData(cssFile)
-		query := components.GenerateArticleQuery(schema.ArticlesFavourite, nil)
+		query, _ := components.GenerateArticleQuery(schema.ArticlesFavourite, nil)
 
 		c.HTML(200, "base.tmpl", gin.H{
 			"title":    title,
@@ -98,7 +98,7 @@ func articlesReadLater(router *gin.Engine, cssFile string) {
 		title := c.DefaultQuery("title", "Read Later")
 		navbar, _ := components.GenerateNavbar()
 		metadata, _ := components.GenerateMetaData(cssFile)
-		query := components.GenerateArticleQuery(schema.ArticlesReadLater, nil)
+		query, _ := components.GenerateArticleQuery(schema.ArticlesReadLater, nil)
 
 		c.HTML(200, "base.tmpl", gin.H{
 			"title":    title,

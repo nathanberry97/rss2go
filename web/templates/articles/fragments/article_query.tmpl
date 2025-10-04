@@ -1,0 +1,7 @@
+{{ define "article_query" }}
+<div id="articles"
+     hx-trigger="revealed"
+     hx-get="{{ .Path }}"
+     hx-swap="afterend">
+</div>
+{{ end }}

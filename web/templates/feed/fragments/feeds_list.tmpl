@@ -1,0 +1,16 @@
+{{ define "feeds_list" }}
+<ul class="feed__list">
+    {{ range .Items }}
+    <li class="feed__item">
+        <a class="feed__link" href="/articles/{{ .ID }}">{{ .Name }}</a>
+        <button class="feed__delete-btn"
+                hx-delete="/partials/feed/{{ .ID }}"
+                hx-trigger="click"
+                hx-swap="none"
+                data-feed-id="{{ .ID }}">
+            <img class="feed__delete-icon" src="/static/images/icons/delete.svg" alt="Delete">
+        </button>
+    </li>
+    {{ end }}
+</ul>
+{{ end }}
