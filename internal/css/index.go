@@ -1,24 +1,16 @@
-package scss
+package css
 
 import (
 	"crypto/sha256"
 	"fmt"
 	"io"
 	"os"
-	"os/exec"
 	"path/filepath"
 )
 
-func CompileSCSS(inputPath, outputDir string) (string, error) {
-	tempOutput := filepath.Join(outputDir, "style.tmp.css")
-	fmt.Println(inputPath)
-	fmt.Println(tempOutput)
-
-	cmd := exec.Command("sass", inputPath, tempOutput, "--no-source-map")
-	if err := cmd.Run(); err != nil {
-		return "", fmt.Errorf("SCSS compilation failed: %v", err)
-	}
-
+// TODO - this is to just hash css file as then I can make the docker image much smaller
+func HashCSSFile(outputDir, tempCSSFile string) (string, error) {
+	tempOutput := filepath.Join(outputDir, tempCSSFile)
 	file, err := os.Open(tempOutput)
 	if err != nil {
 		return "", fmt.Errorf("Failed to open temporary output file %s: %v", tempOutput, err)

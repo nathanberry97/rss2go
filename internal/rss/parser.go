@@ -6,7 +6,6 @@ import (
 
 	"github.com/mmcdole/gofeed"
 	"github.com/nathanberry97/rss2go/internal/schema"
-	"github.com/nathanberry97/rss2go/internal/utils"
 )
 
 func FeedHandler(url string) (string, []schema.RssItem, error) {
@@ -47,11 +46,21 @@ func parsePubDate(pubDate string) (string, error) {
 	}
 
 	for _, format := range formats {
-		formattedDate, err := utils.FormatDate(pubDate, format, time.DateTime)
+		formattedDate, err := formatDate(pubDate, format, time.DateTime)
 		if err == nil {
 			return formattedDate, nil
 		}
 	}
 
 	return "", fmt.Errorf("Unable to process pubDate")
+}
+
+func formatDate(dateStr, inputFormat, outputFormat string) (string, error) {
+	t, err := time.Parse(inputFormat, dateStr)
+
+	if err != nil {
+		return "", fmt.Errorf("Failed to parse time: %w", err)
+	}
+
+	return t.Format(outputFormat), nil
 }
