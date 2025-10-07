@@ -79,17 +79,9 @@ func formatTime(dateStr, inputFormat string) (string, error) {
 	duration := time.Since(t)
 
 	switch {
-	case duration < time.Minute:
-		return "just now", nil
-	case duration < time.Hour:
-		mins := int(duration.Minutes())
-		if mins == 1 {
-			return "1 minute ago", nil
-		}
-		return fmt.Sprintf("%d minutes ago", mins), nil
 	case duration < 24*time.Hour:
 		hours := int(duration.Hours())
-		if hours == 1 {
+		if hours <= 1 {
 			return "1 hour ago", nil
 		}
 		return fmt.Sprintf("%d hours ago", hours), nil
