@@ -81,6 +81,7 @@ func DeleteFeed(conn *sql.DB, id int) error {
 	return nil
 }
 
+// TODO improve function - Can I use parts of the background job function?
 func PostFeedOpml(conn *sql.DB, opmlData []byte) error {
 	var opml schema.OPML
 	err := xml.NewDecoder(bytes.NewReader(opmlData)).Decode(&opml)
@@ -129,6 +130,7 @@ func PostFeedOpml(conn *sql.DB, opmlData []byte) error {
 	return nil
 }
 
+// TODO improve function - I want the bottom adding to a template
 func GetFeedsOpml(conn *sql.DB) ([]byte, error) {
 	query := queries.GetFeedsOpml()
 	rows, err := conn.Query(query)
