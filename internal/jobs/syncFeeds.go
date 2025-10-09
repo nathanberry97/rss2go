@@ -1,4 +1,4 @@
-package worker
+package jobs
 
 import (
 	"fmt"
@@ -11,17 +11,14 @@ import (
 	"github.com/nathanberry97/rss2go/internal/services"
 )
 
-func ScheduleFeedUpdates(workers int) {
+func SyncFeeds(workers int) {
 	go runFeedUpdate(workers)
 
-	ticker := time.NewTicker(time.Hour / 2)
+	ticker := time.NewTicker(time.Hour)
 	defer ticker.Stop()
 
-	for {
-		select {
-		case <-ticker.C:
-			runFeedUpdate(workers)
-		}
+	for range ticker.C {
+		runFeedUpdate(workers)
 	}
 }
 

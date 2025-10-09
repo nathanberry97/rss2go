@@ -1,23 +1,15 @@
-package scss
+package css
 
 import (
 	"crypto/sha256"
 	"fmt"
 	"io"
 	"os"
-	"os/exec"
 	"path/filepath"
 )
 
-func CompileSCSS(inputPath, outputDir string) (string, error) {
-	tempOutput := filepath.Join(outputDir, "style.tmp.css")
-	fmt.Println(inputPath)
-	fmt.Println(tempOutput)
-
-	cmd := exec.Command("sass", inputPath, tempOutput, "--no-source-map")
-	if err := cmd.Run(); err != nil {
-		return "", fmt.Errorf("SCSS compilation failed: %v", err)
-	}
+func HashCSSFile(outputDir, tempCSSFile string) (string, error) {
+	tempOutput := filepath.Join(outputDir, tempCSSFile)
 
 	file, err := os.Open(tempOutput)
 	if err != nil {
@@ -29,8 +21,8 @@ func CompileSCSS(inputPath, outputDir string) (string, error) {
 	if _, err := io.Copy(hasher, file); err != nil {
 		return "", fmt.Errorf("Failed to copy contents of %s to hasher: %v", tempOutput, err)
 	}
-	hash := fmt.Sprintf("%x", hasher.Sum(nil))[:8]
 
+	hash := fmt.Sprintf("%x", hasher.Sum(nil))[:8]
 	hashedFilename := fmt.Sprintf("style-%s.css", hash)
 	finalOutput := filepath.Join(outputDir, hashedFilename)
 

@@ -163,7 +163,7 @@
     max-width: 600px;
     box-sizing: border-box;
     display: grid;
-    grid-template-columns: 92.5% 7.5%;
+    grid-template-columns: 1fr auto;
     align-items: center;
     font-weight: bold;
     gap: 10px;
@@ -175,6 +175,7 @@
     color: $colour-text-secondary;
     display: inline-block;
     max-width: 100%;
+    min-width: 0;
     overflow: hidden;
     text-decoration: none;
     text-overflow: ellipsis;
@@ -185,7 +186,7 @@
     }
 
     @media only screen and (max-width: 800px) {
-      font-size: 18px;
+      font-size: 16px;
     }
   }
 

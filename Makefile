@@ -12,7 +12,8 @@ setup: ## Install pre-commit hooks
 .PHONY: build
 build: ## Build rss2go api
 	@rm -rf web/static/css/* || true
-	@go build -o bin/app cmd/app/main.go
+	@sass web/scss/main.scss web/static/css/style.tmp.css --no-source-map
+	@CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o bin/app cmd/app/main.go
 
 .PHONY: run
 run: build ## Build and run rss2go api

@@ -1,0 +1,14 @@
+{{ define "feeds_opml" }}
+<opml version="2.0">
+  <head>
+    <title>rss2go Subscriptions</title>
+  </head>
+  <body>
+    <outline text="rss2go" title="rss2go">
+{{ range . }}
+      <outline text="{{ .Name }}" type="{{ .Type }}" xmlUrl="{{ .URL }}" />
+{{ end }}
+    </outline>
+  </body>
+</opml>
+{{ end }}

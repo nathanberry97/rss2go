@@ -1,13 +1,11 @@
 package services
 
 import (
-	"bytes"
 	"database/sql"
-	"encoding/xml"
 	"fmt"
 	"strings"
-	"sync"
 
+	"github.com/nathanberry97/rss2go/internal/components"
 	"github.com/nathanberry97/rss2go/internal/queries"
 	"github.com/nathanberry97/rss2go/internal/rss"
 	"github.com/nathanberry97/rss2go/internal/schema"
@@ -82,50 +80,21 @@ func DeleteFeed(conn *sql.DB, id int) error {
 }
 
 func PostFeedOpml(conn *sql.DB, opmlData []byte) error {
-	var opml schema.OPML
-	err := xml.NewDecoder(bytes.NewReader(opmlData)).Decode(&opml)
+	opml, err := parseOpml(opmlData)
 	if err != nil {
-		return fmt.Errorf("failed to parse OPML file: %w", err)
-	}
-
-	feedUrls := extractFeedUrls(opml.Body.Outlines)
-
-	var wg sync.WaitGroup
-	errChan := make(chan error, len(feedUrls))
-
-	const maxConcurrency = 10
-	semaphore := make(chan struct{}, maxConcurrency)
-
-	for _, url := range feedUrls {
-		url := strings.TrimSpace(url)
-		if url == "" {
-			continue
-		}
-
-		wg.Add(1)
-		go func(feedURL string) {
-			defer wg.Done()
-			semaphore <- struct{}{}        // acquire slot
-			defer func() { <-semaphore }() // release slot
-
-			if err := PostFeed(conn, schema.RssPostBody{URL: feedURL}); err != nil {
-				if !strings.Contains(err.Error(), "UNIQUE constraint failed: feeds.url") {
-					errChan <- fmt.Errorf("failed to add %s: %w", feedURL, err)
-					return
-				}
-				fmt.Printf("Skipping duplicate feed: %s\n", feedURL)
-			}
-		}(url)
-	}
-
-	wg.Wait()
-	close(errChan)
-
-	for err := range errChan {
 		return err
 	}
 
-	fmt.Printf("Successfully imported feeds with articles\n")
+	feedUrls := extractFeedUrls(opml.Body.Outlines)
+	if len(feedUrls) == 0 {
+		return fmt.Errorf("no feed URLs found in OPML file")
+	}
+
+	if err := importFeedsConcurrently(conn, feedUrls); err != nil {
+		return err
+	}
+
+	fmt.Println("Successfully imported feeds with articles")
 	return nil
 }
 
@@ -143,27 +112,13 @@ func GetFeedsOpml(conn *sql.DB) ([]byte, error) {
 		if err := rows.Scan(&feed.Name, &feed.URL); err != nil {
 			return nil, fmt.Errorf("error scanning row: %w", err)
 		}
+		feed.Type = inferFeedType(feed.URL)
 		feeds = append(feeds, feed)
 	}
 
-	var b strings.Builder
-	b.WriteString(`<?xml version="1.0" encoding="UTF-8"?>` + "\n\n")
-	b.WriteString(`<opml version="2.0">` + "\n")
-	b.WriteString("  <head>\n")
-	b.WriteString("    <title>rss2go Subscriptions</title>\n")
-	b.WriteString("  </head>\n")
-	b.WriteString("  <body>\n")
-	b.WriteString(`    <outline text="rss2go" title="rss2go">` + "\n")
-
-	for _, feed := range feeds {
-		feedType := inferFeedType(feed.URL)
-		fmt.Fprintf(&b, `      <outline text="%s" type="%s" xmlUrl="%s" />`+"\n",
-			xmlEscape(feed.Name), feedType, xmlEscape(feed.URL))
-	}
-
-	b.WriteString("    </outline>\n")
-	b.WriteString("  </body>\n")
-	b.WriteString("</opml>\n")
-
-	return []byte(b.String()), nil
+	return components.RenderRSSTemplate(
+		"web/templates/feed/fragments/opml.tmpl",
+		"feeds_opml",
+		feeds,
+	)
 }
