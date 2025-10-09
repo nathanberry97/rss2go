@@ -93,6 +93,7 @@ type RssPostBody struct {
 type OpmlFeed struct {
 	URL  string `json:"url"`
 	Name string `json:"name"`
+	Type string
 }
 
 type RssFeed struct {

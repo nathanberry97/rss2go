@@ -1,10 +1,12 @@
 package services
 
 import (
+	"bytes"
 	"database/sql"
+	"encoding/xml"
 	"fmt"
-	"html"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/nathanberry97/rss2go/internal/schema"
@@ -59,10 +61,6 @@ func extractFeedUrls(outlines []schema.OpmlOutline) []string {
 	return urls
 }
 
-func xmlEscape(s string) string {
-	return html.EscapeString(s)
-}
-
 func inferFeedType(url string) string {
 	if strings.Contains(url, ".atom") || strings.Contains(url, "/atom") || strings.Contains(url, "format=atom") {
 		return "atom"
@@ -104,4 +102,59 @@ func formatTime(dateStr, inputFormat string) (string, error) {
 		}
 		return fmt.Sprintf("%d years ago", years), nil
 	}
+}
+
+func parseOpml(data []byte) (*schema.OPML, error) {
+	var opml schema.OPML
+	if err := xml.NewDecoder(bytes.NewReader(data)).Decode(&opml); err != nil {
+		return nil, fmt.Errorf("failed to parse OPML file: %w", err)
+	}
+	return &opml, nil
+}
+
+func importFeedsConcurrently(conn *sql.DB, feedUrls []string) error {
+	const maxConcurrency = 10
+
+	var wg sync.WaitGroup
+	errChan := make(chan error, len(feedUrls))
+	semaphore := make(chan struct{}, maxConcurrency)
+
+	for _, u := range feedUrls {
+		url := strings.TrimSpace(u)
+		if url == "" {
+			continue
+		}
+
+		wg.Add(1)
+		go func(feedURL string) {
+			defer wg.Done()
+			semaphore <- struct{}{}        // acquire slot
+			defer func() { <-semaphore }() // release slot
+
+			if err := importSingleFeed(conn, feedURL); err != nil {
+				errChan <- err
+			}
+		}(url)
+	}
+
+	wg.Wait()
+	close(errChan)
+
+	for err := range errChan {
+		return err
+	}
+
+	return nil
+}
+
+func importSingleFeed(conn *sql.DB, feedURL string) error {
+	err := PostFeed(conn, schema.RssPostBody{URL: feedURL})
+	if err != nil {
+		if strings.Contains(err.Error(), "UNIQUE constraint failed: feeds.url") {
+			fmt.Printf("Skipping duplicate feed: %s\n", feedURL)
+			return nil
+		}
+		return fmt.Errorf("failed to add %s: %w", feedURL, err)
+	}
+	return nil
 }

@@ -40,9 +40,11 @@ func FeedHandler(url string) (string, []schema.RssItem, error) {
 
 func parsePubDate(pubDate string) (string, error) {
 	formats := []string{
+		time.DateTime,
 		time.RFC1123,
 		time.RFC1123Z,
 		time.RFC3339,
+		time.RFC3339Nano,
 	}
 
 	for _, format := range formats {
@@ -52,15 +54,13 @@ func parsePubDate(pubDate string) (string, error) {
 		}
 	}
 
-	return "", fmt.Errorf("Unable to process pubDate")
+	return "", fmt.Errorf("Unable to process PubDate")
 }
 
 func formatDate(dateStr, inputFormat, outputFormat string) (string, error) {
 	t, err := time.Parse(inputFormat, dateStr)
-
 	if err != nil {
-		return "", fmt.Errorf("Failed to parse time: %w", err)
+		return "", err
 	}
-
 	return t.Format(outputFormat), nil
 }

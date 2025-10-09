@@ -98,26 +98,47 @@ the following to save into an XML file to upload:
   </head>
   <body>
     <outline text="rss2go" title="rss2go">
+
       <outline text="WIRED" type="rss" xmlUrl="https://www.wired.com/feed/rss" />
+
       <outline text="Linux.com" type="rss" xmlUrl="https://www.linux.com/feed/" />
+
       <outline text="Coding Horror" type="rss" xmlUrl="https://blog.codinghorror.com/rss" />
+
       <outline text="BBC News" type="rss" xmlUrl="http://feeds.bbci.co.uk/news/technology/rss.xml" />
+
       <outline text="Technology in government" type="rss" xmlUrl="https://technology.blog.gov.uk/feed/" />
+
       <outline text="Docker" type="rss" xmlUrl="https://www.docker.com/blog/feed/" />
+
       <outline text="Stack Overflow Blog" type="rss" xmlUrl="https://stackoverflow.blog/feed/" />
+
       <outline text="Framework Blog" type="rss" xmlUrl="https://frame.work/gb/en/blog.rss" />
+
       <outline text="The GitHub Blog" type="rss" xmlUrl="https://github.blog/feed/" />
+
       <outline text="The Verge" type="rss" xmlUrl="https://www.theverge.com/rss/index.xml" />
+
       <outline text="David Heinemeier Hansson" type="atom" xmlUrl="https://world.hey.com/dhh/feed.atom" />
+
       <outline text="Hacker News: Front Page" type="rss" xmlUrl="https://hnrss.org/frontpage" />
+
       <outline text="AWS News Blog" type="rss" xmlUrl="https://aws.amazon.com/blogs/aws/feed/" />
+
       <outline text="The Go Blog" type="atom" xmlUrl="http://blog.golang.org/feed.atom" />
+
       <outline text="Nathan Berry" type="rss" xmlUrl="https://nathanberry.co.uk/feed.xml" />
+
       <outline text="Diomidis D. Spinellis Web Log" type="rss" xmlUrl="https://www.spinellis.gr/blog/dds-blog-rss.xml" />
+
       <outline text="Dan Bartlett: coach, writer, engineer &amp; founder" type="rss" xmlUrl="https://danbartlett.co.uk/index.xml" />
+
       <outline text="Jason Fried" type="atom" xmlUrl="https://world.hey.com/jason/feed.atom" />
+
       <outline text="NASA" type="rss" xmlUrl="https://www.nasa.gov/feed/" />
+
       <outline text="Kris Tun" type="rss" xmlUrl="https://kristun.dev/rss.xml" />
+
     </outline>
   </body>
 </opml>
