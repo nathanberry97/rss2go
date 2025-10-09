@@ -99,13 +99,7 @@ the following to save into an XML file to upload:
   <body>
     <outline text="rss2go" title="rss2go">
 
-      <outline text="WIRED" type="rss" xmlUrl="https://www.wired.com/feed/rss" />
-
-      <outline text="Linux.com" type="rss" xmlUrl="https://www.linux.com/feed/" />
-
       <outline text="Coding Horror" type="rss" xmlUrl="https://blog.codinghorror.com/rss" />
-
-      <outline text="BBC News" type="rss" xmlUrl="http://feeds.bbci.co.uk/news/technology/rss.xml" />
 
       <outline text="Technology in government" type="rss" xmlUrl="https://technology.blog.gov.uk/feed/" />
 
@@ -114,10 +108,6 @@ the following to save into an XML file to upload:
       <outline text="Stack Overflow Blog" type="rss" xmlUrl="https://stackoverflow.blog/feed/" />
 
       <outline text="Framework Blog" type="rss" xmlUrl="https://frame.work/gb/en/blog.rss" />
-
-      <outline text="The GitHub Blog" type="rss" xmlUrl="https://github.blog/feed/" />
-
-      <outline text="The Verge" type="rss" xmlUrl="https://www.theverge.com/rss/index.xml" />
 
       <outline text="David Heinemeier Hansson" type="atom" xmlUrl="https://world.hey.com/dhh/feed.atom" />
 
@@ -138,6 +128,8 @@ the following to save into an XML file to upload:
       <outline text="NASA" type="rss" xmlUrl="https://www.nasa.gov/feed/" />
 
       <outline text="Kris Tun" type="rss" xmlUrl="https://kristun.dev/rss.xml" />
+
+      <outline text="The GitHub Blog" type="rss" xmlUrl="https://github.blog/feed/" />
 
     </outline>
   </body>

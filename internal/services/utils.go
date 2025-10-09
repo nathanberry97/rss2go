@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"encoding/xml"
 	"fmt"
+	"html"
 	"strings"
 	"sync"
 	"time"
@@ -31,6 +32,8 @@ func formatArticles(rows *sql.Rows) ([]schema.RssArticle, error) {
 		if err := rows.Scan(&article.FeedName, &article.FeedId, &article.Id, &article.Title, &article.Link, &article.PubDate, &article.Fav, &article.Later); err != nil {
 			return []schema.RssArticle{}, fmt.Errorf("failed to scan row: %w", err)
 		}
+
+		article.Title = html.UnescapeString(article.Title)
 
 		formatPubDate, err := formatTime(article.PubDate, time.RFC3339)
 		if err != nil {
