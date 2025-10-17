@@ -9,10 +9,16 @@
 
   {{ if .feed }}
     {{ block "feed_content" . }}{{ end }}
+    {{ block "error_popup" . }}{{end}}
   {{ end }}
 
   {{ if .articles }}
     {{ block "articles_content" . }}{{ end }}
+    {{ block "error_popup" . }}{{end}}
+  {{ end }}
+
+  {{ if .error }}
+    {{ block "error_404" . }}{{ end }}
   {{ end }}
 </body>
 </html>

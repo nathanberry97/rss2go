@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -17,13 +18,14 @@ func postFavourite(router *gin.Engine) {
 
 		dbConn := database.DatabaseConnection()
 		if dbConn == nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Database connection failed"})
+			c.String(http.StatusInternalServerError, "Error: Database connection failed")
 			return
 		}
 
 		err := services.PostFavourite(dbConn, articleId)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error posting favourite article: " + err.Error()})
+			fmt.Printf("Error=%s", err.Error())
+			c.String(http.StatusInternalServerError, "Error: Post favourite article failed")
 			return
 		}
 
@@ -38,13 +40,14 @@ func deleteFavourite(router *gin.Engine) {
 
 		dbConn := database.DatabaseConnection()
 		if dbConn == nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Database connection failed"})
+			c.String(http.StatusInternalServerError, "Error: Database connection failed")
 			return
 		}
 
 		err := services.DeleteFavourite(dbConn, articleId)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error deleting favourite article: " + err.Error()})
+			fmt.Printf("Error=%s", err.Error())
+			c.String(http.StatusInternalServerError, "Error: Delete favourite article failed")
 			return
 		}
 
@@ -57,25 +60,26 @@ func getFavourites(router *gin.Engine) {
 	router.GET("/partials/favourite", func(c *gin.Context) {
 		page, err := strconv.Atoi(c.DefaultQuery("page", "0"))
 		if err != nil || page < 0 {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid page parameter"})
+			c.String(http.StatusBadRequest, "Error: Invalid page parameter")
 			return
 		}
 
 		limit, err := strconv.Atoi(c.DefaultQuery("limit", "50"))
 		if err != nil || limit <= 0 {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid limit parameter"})
+			c.String(http.StatusBadRequest, "Error: Invalid limit parameter")
 			return
 		}
 
 		dbConn := database.DatabaseConnection()
 		if dbConn == nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Database connection failed"})
+			c.String(http.StatusInternalServerError, "Error: Database connection failed")
 			return
 		}
 
 		articles, err := services.GetFavourites(dbConn, page, limit)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error getting favourites article: " + err.Error()})
+			fmt.Printf("Error=%s", err.Error())
+			c.String(http.StatusInternalServerError, "Error: Failed to fetch favourite articles")
 			return
 		}
 

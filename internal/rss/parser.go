@@ -22,8 +22,8 @@ func FeedHandler(url string) (string, []schema.RssItem, error) {
 	for _, item := range feed.Items {
 		formattedDate, err := parsePubDate(item.Published)
 		if err != nil {
-			fmt.Printf("failed to parse pubDate: %v\n", err)
-			continue
+			fmt.Printf("Failed to parse pubDate: %v\n", err)
+			return "", nil, err
 		}
 
 		article := schema.RssItem{

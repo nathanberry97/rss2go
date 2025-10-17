@@ -2,7 +2,7 @@
 
 ![rss2go](./.assets/rss2go.png)
 
-> rss2go is a self-hosted RSS reader built with Go
+> rss2go is a self-hosted RSS Feed aggregator built with Go
 
 - [Link to docker hub](https://hub.docker.com/repository/docker/nathanberry97/rss2go/general)
 
@@ -117,8 +117,6 @@ the following to save into an XML file to upload:
 
       <outline text="The Go Blog" type="atom" xmlUrl="http://blog.golang.org/feed.atom" />
 
-      <outline text="Nathan Berry" type="rss" xmlUrl="https://nathanberry.co.uk/feed.xml" />
-
       <outline text="Diomidis D. Spinellis Web Log" type="rss" xmlUrl="https://www.spinellis.gr/blog/dds-blog-rss.xml" />
 
       <outline text="Dan Bartlett: coach, writer, engineer &amp; founder" type="rss" xmlUrl="https://danbartlett.co.uk/index.xml" />
@@ -130,6 +128,20 @@ the following to save into an XML file to upload:
       <outline text="Kris Tun" type="rss" xmlUrl="https://kristun.dev/rss.xml" />
 
       <outline text="The GitHub Blog" type="rss" xmlUrl="https://github.blog/feed/" />
+
+      <outline text="Roman Zipp" type="rss" xmlUrl="https://romanzipp.com/rss" />
+
+      <outline text="The Proton Blog" type="rss" xmlUrl="https://proton.me/blog/feed" />
+
+      <outline text="Boot.dev Blog" type="rss" xmlUrl="https://blog.boot.dev/index.xml" />
+
+      <outline text="Oskar Wickström" type="rss" xmlUrl="https://wickstrom.tech/feed.xml" />
+
+      <outline text="Mitchell Hashimoto" type="rss" xmlUrl="https://mitchellh.com/feed.xml" />
+
+      <outline text="BBC News" type="rss" xmlUrl="http://feeds.bbci.co.uk/news/technology/rss.xml" />
+
+      <outline text="Nathan Berry" type="rss" xmlUrl="https://nathanberry.co.uk/feed.xml" />
 
     </outline>
   </body>

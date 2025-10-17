@@ -13,6 +13,8 @@ func InitialiseRouter(cssFile string) *gin.Engine {
 		"web/templates/base.tmpl",
 		"web/templates/feed/feed.tmpl",
 		"web/templates/articles/articles.tmpl",
+		"web/templates/error/error.tmpl",
+		"web/templates/error/fragments/error_popup.tmpl",
 	)))
 
 	// Health check
@@ -24,6 +26,7 @@ func InitialiseRouter(cssFile string) *gin.Engine {
 	articlesPage(router, cssFile)
 	articlesReadLater(router, cssFile)
 	feedsPage(router, cssFile)
+	errorPageNotFound(router, cssFile)
 
 	// Article routes
 	getArticles(router)
