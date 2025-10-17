@@ -94,3 +94,18 @@ func articlesReadLater(router *gin.Engine, cssFile string) {
 		})
 	})
 }
+
+func errorPageNotFound(router *gin.Engine, cssFile string) {
+	router.NoRoute(func(c *gin.Context) {
+		title := "404 - Page Not Found"
+		metadata, _ := components.GenerateMetaData(cssFile)
+		navbar, _ := components.GenerateNavbar()
+
+		c.HTML(404, "base.tmpl", gin.H{
+			"title":    title,
+			"navbar":   navbar,
+			"metadata": metadata,
+			"error":    true,
+		})
+	})
+}

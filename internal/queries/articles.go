@@ -21,10 +21,14 @@ func GetTotalArticlesByFeed() string {
 	return buildArticleTotalQuery("articles", `feed_id = ?`)
 }
 
+func GetArticleNameById() string {
+	return "SELECT name FROM feeds WHERE id = ?"
+}
+
 func InsertArticlesQuery(num int) string {
 	placeholders := make([]string, num)
 
-	for i := 0; i < num; i++ {
+	for i := range placeholders {
 		placeholders[i] = "(?, ?, ?, ?)"
 	}
 

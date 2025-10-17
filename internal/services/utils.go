@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/nathanberry97/rss2go/internal/database"
+	"github.com/nathanberry97/rss2go/internal/queries"
 	"github.com/nathanberry97/rss2go/internal/schema"
 )
 
@@ -20,7 +21,7 @@ func GetArticleName(id string) (string, error) {
 		return "", fmt.Errorf("Database connection failed")
 	}
 
-	query := "SELECT name FROM feeds WHERE id = ?"
+	query := queries.GetArticleNameById()
 
 	var name string
 	if err := conn.QueryRow(query, id).Scan(&name); err != nil {
