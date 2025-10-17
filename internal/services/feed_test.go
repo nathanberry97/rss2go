@@ -1,7 +1,6 @@
 package services
 
 import (
-	"strings"
 	"testing"
 
 	"github.com/nathanberry97/rss2go/internal/schema"
@@ -12,19 +11,7 @@ func TestPostFeedOpml_ParseValidation(t *testing.T) {
 		name     string
 		opmlData []byte
 		wantErr  bool
-		skipMsg  string
 	}{
-		{
-			name: "valid OPML",
-			opmlData: []byte(`<?xml version="1.0" encoding="UTF-8"?>
-<opml version="1.0">
-  <body>
-    <outline text="Test Feed" xmlUrl="https://example.com/feed.xml"/>
-  </body>
-</opml>`),
-			wantErr: false,
-			skipMsg: "requires network access and database",
-		},
 		{
 			name:     "invalid XML",
 			opmlData: []byte(`not valid xml`),
@@ -43,9 +30,6 @@ func TestPostFeedOpml_ParseValidation(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if tt.skipMsg != "" {
-				t.Skip(tt.skipMsg)
-			}
 			err := PostFeedOpml(nil, tt.opmlData)
 			hasErr := err != nil
 			if hasErr != tt.wantErr {
@@ -56,6 +40,9 @@ func TestPostFeedOpml_ParseValidation(t *testing.T) {
 }
 
 func TestImportSingleFeed(t *testing.T) {
+	db := setupTestDB(t)
+	defer db.Close()
+
 	tests := []struct {
 		name    string
 		feedURL string
@@ -75,14 +62,19 @@ func TestImportSingleFeed(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if strings.TrimSpace(tt.feedURL) == "" {
-				t.Skip("URL validation test - requires actual feed parsing which needs network/DB")
+			err := importSingleFeed(db, tt.feedURL)
+			hasErr := err != nil
+			if hasErr != tt.wantErr {
+				t.Errorf("importSingleFeed() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
 	}
 }
 
 func TestPostFeed_Validation(t *testing.T) {
+	db := setupTestDB(t)
+	defer db.Close()
+
 	tests := []struct {
 		name     string
 		postBody schema.RssPostBody
@@ -106,8 +98,10 @@ func TestPostFeed_Validation(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if strings.TrimSpace(tt.postBody.URL) == "" {
-				t.Skip("URL validation test - requires actual feed parsing")
+			err := PostFeed(db, tt.postBody)
+			hasErr := err != nil
+			if hasErr != tt.wantErr {
+				t.Errorf("PostFeed() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
 	}

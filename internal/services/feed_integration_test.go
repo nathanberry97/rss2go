@@ -1,6 +1,8 @@
 package services
 
 import (
+	"os"
+	"path/filepath"
 	"testing"
 )
 
@@ -125,6 +127,43 @@ func TestGetFeedsOpml_Integration(t *testing.T) {
 	db := setupTestDB(t)
 	defer db.Close()
 
+	// Create a temporary OPML template for testing
+	tempDir := t.TempDir()
+	tmplContent := `{{ define "feeds_opml" }}
+<opml version="1.0">
+  <body>
+    {{ range . }}
+    <outline text="{{ .Name }}" xmlUrl="{{ .URL }}" type="{{ .Type }}"/>
+    {{ end }}
+  </body>
+</opml>
+{{ end }}`
+
+	// Create nested directory structure
+	tmplDir := filepath.Join(tempDir, "web", "templates", "feed", "fragments")
+	err := os.MkdirAll(tmplDir, 0755)
+	if err != nil {
+		t.Fatalf("Failed to create template directory: %v", err)
+	}
+
+	tmplPath := filepath.Join(tmplDir, "opml.tmpl")
+	err = os.WriteFile(tmplPath, []byte(tmplContent), 0644)
+	if err != nil {
+		t.Fatalf("Failed to create test template: %v", err)
+	}
+
+	// Change to temp directory for the test
+	oldWd, err := os.Getwd()
+	if err != nil {
+		t.Fatalf("Failed to get working directory: %v", err)
+	}
+	defer os.Chdir(oldWd)
+
+	err = os.Chdir(tempDir)
+	if err != nil {
+		t.Fatalf("Failed to change working directory: %v", err)
+	}
+
 	// Insert test feeds
 	feeds := []struct {
 		name string
@@ -146,8 +185,8 @@ func TestGetFeedsOpml_Integration(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name:    "export feeds to OPML - skipped (needs template file)",
-			wantErr: true, // Will fail without template file
+			name:    "export feeds to OPML",
+			wantErr: false,
 		},
 	}
 
@@ -170,14 +209,32 @@ func TestGetFeedsOpml_Integration(t *testing.T) {
 					t.Errorf("GetFeedsOpml() result doesn't start with XML declaration")
 				}
 
-				// Just verify we got some output
-				if len(resultStr) > 0 {
-					// Note: Full OPML structure validation would be more complex
-					_ = feeds // Use variable to avoid unused warning
+				// Verify the OPML contains our test feeds
+				for _, feed := range feeds {
+					if !contains(resultStr, feed.name) {
+						t.Errorf("GetFeedsOpml() result doesn't contain feed name: %s", feed.name)
+					}
+					if !contains(resultStr, feed.url) {
+						t.Errorf("GetFeedsOpml() result doesn't contain feed URL: %s", feed.url)
+					}
 				}
 			}
 		})
 	}
+}
+
+// Helper function to check if string contains substring
+func contains(s, substr string) bool {
+	return len(s) >= len(substr) && (s == substr || len(s) > len(substr) && (s[:len(substr)] == substr || s[len(s)-len(substr):] == substr || containsMiddle(s, substr)))
+}
+
+func containsMiddle(s, substr string) bool {
+	for i := 0; i <= len(s)-len(substr); i++ {
+		if s[i:i+len(substr)] == substr {
+			return true
+		}
+	}
+	return false
 }
 
 func TestFormatArticles_Integration(t *testing.T) {

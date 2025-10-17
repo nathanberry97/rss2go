@@ -238,24 +238,92 @@ func TestParseOpml(t *testing.T) {
 }
 
 func TestFormatArticles(t *testing.T) {
+	db := setupTestDB(t)
+	defer db.Close()
+
 	tests := []struct {
-		name    string
-		setup   func() *sql.Rows
-		wantErr bool
+		name         string
+		setup        func() *sql.Rows
+		wantErr      bool
+		wantArticles int
 	}{
 		{
 			name: "empty result set",
 			setup: func() *sql.Rows {
-				return nil
+				// Return an empty result set
+				rows, err := db.Query("SELECT f.name, a.feed_id, a.id, a.title, a.url, a.published_at, 0 AS is_fav, 0 AS is_read_later FROM articles a JOIN feeds f ON a.feed_id = f.id WHERE 1=0")
+				if err != nil {
+					t.Fatalf("Failed to create empty result set: %v", err)
+				}
+				return rows
 			},
-			wantErr: false,
+			wantErr:      false,
+			wantArticles: 0,
+		},
+		{
+			name: "valid result set with articles",
+			setup: func() *sql.Rows {
+				// Insert test data
+				_, err := db.Exec("INSERT INTO feeds (name, url) VALUES (?, ?)", "Test Feed", "https://example.com/feed.xml")
+				if err != nil {
+					t.Fatalf("Failed to insert test feed: %v", err)
+				}
+
+				_, err = db.Exec("INSERT INTO articles (feed_id, title, url, published_at) VALUES (?, ?, ?, datetime('now', '-1 hour'))", 1, "Test Article", "https://example.com/article1")
+				if err != nil {
+					t.Fatalf("Failed to insert test article: %v", err)
+				}
+
+				rows, err := db.Query(`
+					SELECT f.name, a.feed_id, a.id, a.title, a.url, a.published_at,
+						0 AS is_fav, 0 AS is_read_later
+					FROM articles a
+					JOIN feeds f ON a.feed_id = f.id
+				`)
+				if err != nil {
+					t.Fatalf("Failed to query articles: %v", err)
+				}
+				return rows
+			},
+			wantErr:      false,
+			wantArticles: 1,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if tt.setup != nil && tt.setup() == nil && !tt.wantErr {
-				t.Skip("Skipping test that requires database mock")
+			rows := tt.setup()
+			if rows != nil {
+				defer rows.Close()
+			}
+
+			articles, err := formatArticles(rows)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("formatArticles() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+
+			if len(articles) != tt.wantArticles {
+				t.Errorf("formatArticles() returned %d articles, want %d", len(articles), tt.wantArticles)
+			}
+
+			// For non-empty results, verify the article structure
+			if tt.wantArticles > 0 {
+				for _, article := range articles {
+					if article.FeedName == "" {
+						t.Errorf("formatArticles() article has empty FeedName")
+					}
+					if article.Title == "" {
+						t.Errorf("formatArticles() article has empty Title")
+					}
+					if article.PubDate == "" {
+						t.Errorf("formatArticles() article has empty PubDate")
+					}
+					// Check that the time is formatted as relative time
+					if article.PubDate != "1 hour ago" {
+						t.Logf("formatArticles() PubDate = %s (expected relative time format)", article.PubDate)
+					}
+				}
 			}
 		})
 	}
