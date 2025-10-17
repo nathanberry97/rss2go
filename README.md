@@ -1,5 +1,8 @@
 # rss2go
 
+![linting](https://github.com/nathanberry97/rss2go/actions/workflows/lintingPipeline.yml/badge.svg)
+![publish](https://github.com/nathanberry97/rss2go/actions/workflows/publishPipeline.yml/badge.svg)
+
 ![rss2go](./.assets/rss2go.png)
 
 > rss2go is a self-hosted RSS Feed aggregator built with Go
