@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -15,19 +16,19 @@ func getArticles(router *gin.Engine) {
 	router.GET("/partials/articles", func(c *gin.Context) {
 		page, err := strconv.Atoi(c.DefaultQuery("page", "0"))
 		if err != nil || page < 0 {
-			c.String(http.StatusBadRequest, "Invalid page parameter")
+			c.String(http.StatusBadRequest, "Error: Invalid page parameter")
 			return
 		}
 
 		limit, err := strconv.Atoi(c.DefaultQuery("limit", "50"))
 		if err != nil || limit <= 0 {
-			c.String(http.StatusBadRequest, "Invalid limit parameter")
+			c.String(http.StatusBadRequest, "Error: Invalid limit parameter")
 			return
 		}
 
 		dbConn := database.DatabaseConnection()
 		if dbConn == nil {
-			c.String(http.StatusInternalServerError, "Database connection failed")
+			c.String(http.StatusInternalServerError, "Error: Database connection failed")
 			return
 		}
 
@@ -52,25 +53,26 @@ func getArticlesByFeedId(router *gin.Engine) {
 
 		page, err := strconv.Atoi(c.DefaultQuery("page", "0"))
 		if err != nil || page < 0 {
-			c.String(http.StatusBadRequest, "Invalid page parameter")
+			c.String(http.StatusBadRequest, "Error: Invalid page parameter")
 			return
 		}
 
 		limit, err := strconv.Atoi(c.DefaultQuery("limit", "50"))
 		if err != nil || limit <= 0 {
-			c.String(http.StatusBadRequest, "Invalid limit parameter")
+			c.String(http.StatusBadRequest, "Error: Invalid limit parameter")
 			return
 		}
 
 		dbConn := database.DatabaseConnection()
 		if dbConn == nil {
-			c.String(http.StatusInternalServerError, "Database connection failed")
+			c.String(http.StatusInternalServerError, "Error: Database connection failed")
 			return
 		}
 
 		articles, err := services.GetArticlesByFeedId(dbConn, page, limit, id)
 		if err != nil {
-			c.String(http.StatusInternalServerError, err.Error())
+			fmt.Printf("Error=%s", err.Error())
+			c.String(http.StatusInternalServerError, "Error: Failed to fetch articles by ID")
 			return
 		}
 

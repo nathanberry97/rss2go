@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"fmt"
 	"io"
 	"net/http"
 	"strconv"
@@ -17,12 +18,13 @@ func postFeed(router *gin.Engine) {
 	router.POST("/partials/feed", func(c *gin.Context) {
 		var rssPostBody schema.RssPostBody
 		if err := c.ShouldBind(&rssPostBody); err != nil {
-			c.String(http.StatusBadRequest, err.Error())
+			fmt.Printf("Error=%s", err.Error())
+			c.String(http.StatusBadRequest, "Error: Failed to bind URL")
 			return
 		}
 
 		if strings.TrimSpace(rssPostBody.URL) == "" {
-			c.String(http.StatusBadRequest, "URL provided is Invalid: Blank URL")
+			c.String(http.StatusBadRequest, "Error: URL provided is Invalid Blank URL")
 			return
 		}
 
@@ -31,7 +33,8 @@ func postFeed(router *gin.Engine) {
 
 		err := services.PostFeed(dbConn, rssPostBody)
 		if err != nil {
-			c.String(http.StatusInternalServerError, err.Error())
+			fmt.Printf("Error=%s", err.Error())
+			c.String(http.StatusInternalServerError, "Error: Failed to post RSS feed")
 			return
 		}
 
@@ -47,7 +50,8 @@ func getFeeds(router *gin.Engine) {
 
 		feeds, err := services.GetFeeds(dbConn)
 		if err != nil {
-			c.String(http.StatusInternalServerError, err.Error())
+			fmt.Printf("Error=%s", err.Error())
+			c.String(http.StatusInternalServerError, "Error: Failed to fetch feeds")
 			return
 		}
 
@@ -62,7 +66,8 @@ func deleteFeed(router *gin.Engine) {
 		idParam := c.Param("id")
 		id, err := strconv.Atoi(idParam)
 		if err != nil {
-			c.String(http.StatusBadRequest, err.Error())
+			fmt.Printf("Error=%s", err.Error())
+			c.String(http.StatusBadRequest, "Error: Invalid RSS feed id")
 			return
 		}
 
@@ -71,7 +76,8 @@ func deleteFeed(router *gin.Engine) {
 
 		err = services.DeleteFeed(dbConn, id)
 		if err != nil {
-			c.String(http.StatusInternalServerError, err.Error())
+			fmt.Printf("Error=%s", err.Error())
+			c.String(http.StatusInternalServerError, "Error: Failed to delete RSS feed")
 			return
 		}
 
@@ -87,26 +93,30 @@ func postFeedOpml(router *gin.Engine) {
 
 		fileHeader, err := c.FormFile("avatar")
 		if err != nil {
-			c.String(http.StatusInternalServerError, err.Error())
+			fmt.Printf("Error=%s", err.Error())
+			c.String(http.StatusInternalServerError, "Error: Failed to extract file header")
 			return
 		}
 
 		file, err := fileHeader.Open()
 		if err != nil {
-			c.String(http.StatusInternalServerError, err.Error())
+			fmt.Printf("Error=%s", err.Error())
+			c.String(http.StatusInternalServerError, "Error: Failed to open file")
 			return
 		}
 		defer file.Close()
 
 		content, err := io.ReadAll(file)
 		if err != nil {
-			c.String(http.StatusInternalServerError, err.Error())
+			fmt.Printf("Error=%s", err.Error())
+			c.String(http.StatusInternalServerError, "Error: Failed to read file")
 			return
 		}
 
 		err = services.PostFeedOpml(dbConn, content)
 		if err != nil {
-			c.String(http.StatusInternalServerError, err.Error())
+			fmt.Printf("Error=%s", err.Error())
+			c.String(http.StatusInternalServerError, "Error: Failed to post RSS feed")
 			return
 		}
 
@@ -125,7 +135,7 @@ func getFeedOpml(router *gin.Engine) {
 
 		xmlContent, err := services.GetFeedsOpml(dbConn)
 		if err != nil {
-			c.String(http.StatusInternalServerError, "Failed to generate OPML")
+			c.String(http.StatusInternalServerError, "Error: Failed to generate OPML")
 			return
 		}
 

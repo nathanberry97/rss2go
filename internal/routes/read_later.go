@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -17,13 +18,14 @@ func postReadLater(router *gin.Engine) {
 
 		dbConn := database.DatabaseConnection()
 		if dbConn == nil {
-			c.String(http.StatusInternalServerError, "Database connection failed")
+			c.String(http.StatusInternalServerError, "Error: Database connection failed")
 			return
 		}
 
 		err := services.PostReadLater(dbConn, articleId)
 		if err != nil {
-			c.String(http.StatusInternalServerError, err.Error())
+			fmt.Printf("Error=%s", err.Error())
+			c.String(http.StatusInternalServerError, "Error: Failed to post article to read later")
 			return
 		}
 
@@ -38,13 +40,14 @@ func deleteReadLater(router *gin.Engine) {
 
 		dbConn := database.DatabaseConnection()
 		if dbConn == nil {
-			c.String(http.StatusInternalServerError, "Database connection failed")
+			c.String(http.StatusInternalServerError, "Error: Database connection failed")
 			return
 		}
 
 		err := services.DeleteReadLater(dbConn, articleId)
 		if err != nil {
-			c.String(http.StatusInternalServerError, err.Error())
+			fmt.Printf("Error=%s", err.Error())
+			c.String(http.StatusInternalServerError, "Error: Failed to delete article from read later")
 			return
 		}
 
@@ -57,25 +60,26 @@ func getReadLater(router *gin.Engine) {
 	router.GET("/partials/later", func(c *gin.Context) {
 		page, err := strconv.Atoi(c.DefaultQuery("page", "0"))
 		if err != nil || page < 0 {
-			c.String(http.StatusBadRequest, "Invalid page parameter")
+			c.String(http.StatusBadRequest, "Error: Invalid page parameter")
 			return
 		}
 
 		limit, err := strconv.Atoi(c.DefaultQuery("limit", "50"))
 		if err != nil || limit <= 0 {
-			c.String(http.StatusBadRequest, "Invalid limit parameter")
+			c.String(http.StatusBadRequest, "Error: Invalid limit parameter")
 			return
 		}
 
 		dbConn := database.DatabaseConnection()
 		if dbConn == nil {
-			c.String(http.StatusInternalServerError, "Database connection failed")
+			c.String(http.StatusInternalServerError, "Error: Database connection failed")
 			return
 		}
 
 		articles, err := services.GetReadLater(dbConn, page, limit)
 		if err != nil {
-			c.String(http.StatusInternalServerError, err.Error())
+			fmt.Printf("Error=%s", err.Error())
+			c.String(http.StatusInternalServerError, "Error: Failed to fetch read later articles")
 			return
 		}
 
