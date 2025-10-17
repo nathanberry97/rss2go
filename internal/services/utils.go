@@ -10,15 +10,21 @@ import (
 	"sync"
 	"time"
 
+	"github.com/nathanberry97/rss2go/internal/database"
 	"github.com/nathanberry97/rss2go/internal/schema"
 )
 
-func GetArticleName(conn *sql.DB, id string) (string, error) {
+func GetArticleName(id string) (string, error) {
+	conn := database.DatabaseConnection()
+	if conn == nil {
+		return "", fmt.Errorf("Database connection failed")
+	}
+
 	query := "SELECT name FROM feeds WHERE id = ?"
 
 	var name string
 	if err := conn.QueryRow(query, id).Scan(&name); err != nil {
-		return "", fmt.Errorf("failed to get feed name for feed id: %w", err)
+		return "", fmt.Errorf("Failed to get feed name for feed id: %w", err)
 	}
 
 	return name, nil
@@ -30,14 +36,14 @@ func formatArticles(rows *sql.Rows) ([]schema.RssArticle, error) {
 	for rows.Next() {
 		var article schema.RssArticle
 		if err := rows.Scan(&article.FeedName, &article.FeedId, &article.Id, &article.Title, &article.Link, &article.PubDate, &article.Fav, &article.Later); err != nil {
-			return []schema.RssArticle{}, fmt.Errorf("failed to scan row: %w", err)
+			return []schema.RssArticle{}, fmt.Errorf("Failed to scan row: %w", err)
 		}
 
 		article.Title = html.UnescapeString(article.Title)
 
 		formatPubDate, err := formatTime(article.PubDate, time.RFC3339)
 		if err != nil {
-			return []schema.RssArticle{}, fmt.Errorf("failed parsing pubDate: %w", err)
+			return []schema.RssArticle{}, fmt.Errorf("Failed parsing pubDate: %w", err)
 		}
 
 		article.PubDate = formatPubDate
@@ -45,7 +51,7 @@ func formatArticles(rows *sql.Rows) ([]schema.RssArticle, error) {
 	}
 
 	if err := rows.Err(); err != nil {
-		return []schema.RssArticle{}, fmt.Errorf("rows iteration error: %w", err)
+		return []schema.RssArticle{}, fmt.Errorf("Rows iteration error: %w", err)
 	}
 
 	return articles, nil
@@ -74,7 +80,7 @@ func inferFeedType(url string) string {
 func formatTime(dateStr, inputFormat string) (string, error) {
 	t, err := time.Parse(inputFormat, dateStr)
 	if err != nil {
-		return "", fmt.Errorf("failed to parse time: %w", err)
+		return "", fmt.Errorf("Failed to parse time: %w", err)
 	}
 
 	duration := time.Since(t)
@@ -110,7 +116,7 @@ func formatTime(dateStr, inputFormat string) (string, error) {
 func parseOpml(data []byte) (*schema.OPML, error) {
 	var opml schema.OPML
 	if err := xml.NewDecoder(bytes.NewReader(data)).Decode(&opml); err != nil {
-		return nil, fmt.Errorf("failed to parse OPML file: %w", err)
+		return nil, fmt.Errorf("Failed to parse OPML file: %w", err)
 	}
 	return &opml, nil
 }
@@ -157,7 +163,7 @@ func importSingleFeed(conn *sql.DB, feedURL string) error {
 			fmt.Printf("Skipping duplicate feed: %s\n", feedURL)
 			return nil
 		}
-		return fmt.Errorf("failed to add %s: %w", feedURL, err)
+		return fmt.Errorf("Failed to add %s: %w", feedURL, err)
 	}
 	return nil
 }

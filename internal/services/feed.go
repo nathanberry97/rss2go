@@ -15,7 +15,7 @@ func GetFeeds(conn *sql.DB) ([]schema.RssFeed, error) {
 	query := queries.GetFeeds()
 	rows, err := conn.Query(query)
 	if err != nil {
-		return nil, fmt.Errorf("error querying database: %w", err)
+		return nil, fmt.Errorf("Error querying database: %w", err)
 	}
 	defer rows.Close()
 
@@ -23,13 +23,13 @@ func GetFeeds(conn *sql.DB) ([]schema.RssFeed, error) {
 	for rows.Next() {
 		var feed schema.RssFeed
 		if err := rows.Scan(&feed.ID, &feed.Name, &feed.URL); err != nil {
-			return nil, fmt.Errorf("error scanning row: %w", err)
+			return nil, fmt.Errorf("Error scanning row: %w", err)
 		}
 		feeds = append(feeds, feed)
 	}
 
 	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("error during rows iteration: %w", err)
+		return nil, fmt.Errorf("Error during rows iteration: %w", err)
 	}
 
 	return feeds, nil
@@ -48,12 +48,12 @@ func PostFeed(conn *sql.DB, postBody schema.RssPostBody) error {
 	query := queries.InsertFeed()
 	result, err := conn.Exec(query, name, postBody.URL)
 	if err != nil {
-		return fmt.Errorf("failed to insert feed into database: %w", err)
+		return fmt.Errorf("Failed to insert feed into database: %w", err)
 	}
 
 	feedID, err := result.LastInsertId()
 	if err != nil {
-		return fmt.Errorf("failed to retrieve last insert ID: %w", err)
+		return fmt.Errorf("Failed to retrieve last insert ID: %w", err)
 	}
 
 	err = InsertArticles(conn, articles, feedID)
@@ -67,13 +67,13 @@ func PostFeed(conn *sql.DB, postBody schema.RssPostBody) error {
 func DeleteFeed(conn *sql.DB, id int) error {
 	_, err := conn.Exec("PRAGMA foreign_keys = ON;")
 	if err != nil {
-		return fmt.Errorf("error enabling foreign keys: %w", err)
+		return fmt.Errorf("Error enabling foreign keys: %w", err)
 	}
 
 	query := queries.DeleteFeed()
 	_, err = conn.Exec(query, id)
 	if err != nil {
-		return fmt.Errorf("error deleting feed: %w", err)
+		return fmt.Errorf("Error deleting feed: %w", err)
 	}
 
 	return nil
@@ -87,7 +87,7 @@ func PostFeedOpml(conn *sql.DB, opmlData []byte) error {
 
 	feedUrls := extractFeedUrls(opml.Body.Outlines)
 	if len(feedUrls) == 0 {
-		return fmt.Errorf("no feed URLs found in OPML file")
+		return fmt.Errorf("No feed URLs found in OPML file")
 	}
 
 	if err := importFeedsConcurrently(conn, feedUrls); err != nil {
@@ -102,7 +102,7 @@ func GetFeedsOpml(conn *sql.DB) ([]byte, error) {
 	query := queries.GetFeedsOpml()
 	rows, err := conn.Query(query)
 	if err != nil {
-		return nil, fmt.Errorf("error querying database: %w", err)
+		return nil, fmt.Errorf("Error querying database: %w", err)
 	}
 	defer rows.Close()
 
@@ -110,7 +110,7 @@ func GetFeedsOpml(conn *sql.DB) ([]byte, error) {
 	for rows.Next() {
 		var feed schema.OpmlFeed
 		if err := rows.Scan(&feed.Name, &feed.URL); err != nil {
-			return nil, fmt.Errorf("error scanning row: %w", err)
+			return nil, fmt.Errorf("Error scanning row: %w", err)
 		}
 		feed.Type = inferFeedType(feed.URL)
 		feeds = append(feeds, feed)

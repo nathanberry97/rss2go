@@ -4,6 +4,7 @@ import (
 	"io"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/nathanberry97/rss2go/internal/components"
@@ -16,12 +17,12 @@ func postFeed(router *gin.Engine) {
 	router.POST("/partials/feed", func(c *gin.Context) {
 		var rssPostBody schema.RssPostBody
 		if err := c.ShouldBind(&rssPostBody); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid form data: " + err.Error()})
+			c.String(http.StatusBadRequest, err.Error())
 			return
 		}
 
-		if rssPostBody.URL == "" {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "URL is required"})
+		if strings.TrimSpace(rssPostBody.URL) == "" {
+			c.String(http.StatusBadRequest, "URL provided is Invalid: Blank URL")
 			return
 		}
 
@@ -30,7 +31,7 @@ func postFeed(router *gin.Engine) {
 
 		err := services.PostFeed(dbConn, rssPostBody)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error posting RSS feed: " + err.Error()})
+			c.String(http.StatusInternalServerError, err.Error())
 			return
 		}
 
@@ -46,7 +47,7 @@ func getFeeds(router *gin.Engine) {
 
 		feeds, err := services.GetFeeds(dbConn)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error retrieving RSS feeds: " + err.Error()})
+			c.String(http.StatusInternalServerError, err.Error())
 			return
 		}
 
@@ -61,7 +62,7 @@ func deleteFeed(router *gin.Engine) {
 		idParam := c.Param("id")
 		id, err := strconv.Atoi(idParam)
 		if err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID format: " + err.Error()})
+			c.String(http.StatusBadRequest, err.Error())
 			return
 		}
 
@@ -70,7 +71,7 @@ func deleteFeed(router *gin.Engine) {
 
 		err = services.DeleteFeed(dbConn, id)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error deleting RSS feed: " + err.Error()})
+			c.String(http.StatusInternalServerError, err.Error())
 			return
 		}
 
@@ -86,26 +87,26 @@ func postFeedOpml(router *gin.Engine) {
 
 		fileHeader, err := c.FormFile("avatar")
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error cannot find file: " + err.Error()})
+			c.String(http.StatusInternalServerError, err.Error())
 			return
 		}
 
 		file, err := fileHeader.Open()
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error cannot open file: " + err.Error()})
+			c.String(http.StatusInternalServerError, err.Error())
 			return
 		}
 		defer file.Close()
 
 		content, err := io.ReadAll(file)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error cannot read content of file: " + err.Error()})
+			c.String(http.StatusInternalServerError, err.Error())
 			return
 		}
 
 		err = services.PostFeedOpml(dbConn, content)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error cannot post OPML content: " + err.Error()})
+			c.String(http.StatusInternalServerError, err.Error())
 			return
 		}
 
