@@ -14,5 +14,7 @@
   {{ if .articles }}
     {{ block "articles_content" . }}{{ end }}
   {{ end }}
+
+  {{ block "error_popup" . }}{{end}}
 </body>
 </html>

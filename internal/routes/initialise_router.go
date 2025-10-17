@@ -13,6 +13,7 @@ func InitialiseRouter(cssFile string) *gin.Engine {
 		"web/templates/base.tmpl",
 		"web/templates/feed/feed.tmpl",
 		"web/templates/articles/articles.tmpl",
+		"web/templates/general/error_popup.tmpl",
 	)))
 
 	// Health check

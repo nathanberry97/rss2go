@@ -2,7 +2,7 @@
 
 ![rss2go](./.assets/rss2go.png)
 
-> rss2go is a self-hosted RSS reader built with Go
+> rss2go is a self-hosted RSS Feed aggregator built with Go
 
 - [Link to docker hub](https://hub.docker.com/repository/docker/nathanberry97/rss2go/general)
 
