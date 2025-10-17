@@ -21,7 +21,7 @@ run: build ## Build and run rss2go api
 
 .PHONY: test
 test: ## Test backend for rss2go app
-	@go test internal/utils/*.go -v
+	@go test -v -race -parallel 4 -cover ./internal/...
 
 .PHONY: clean
 clean: ## Clean up build artifacts

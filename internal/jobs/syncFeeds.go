@@ -1,7 +1,7 @@
 package jobs
 
 import (
-	"fmt"
+	"log"
 	"sync"
 	"time"
 
@@ -26,7 +26,7 @@ func runFeedUpdate(workers int) {
 	jobs := make(chan schema.Task, 10)
 	var wg sync.WaitGroup
 
-	for w := 1; w <= workers; w++ {
+	for range workers {
 		wg.Add(1)
 		go worker(jobs, &wg)
 	}
@@ -36,8 +36,11 @@ func runFeedUpdate(workers int) {
 
 	feeds, err := services.GetFeeds(conn)
 	if err != nil {
-		fmt.Println(err)
+		log.Printf("Error getting feeds: %v", err)
+		return
 	}
+
+	log.Printf("Starting feed update for %d feeds with %d workers", len(feeds), workers)
 
 	for _, url := range feeds {
 		jobs <- schema.Task{
@@ -49,6 +52,7 @@ func runFeedUpdate(workers int) {
 
 	close(jobs)
 	wg.Wait()
+	log.Println("Feed update completed")
 }
 
 func worker(jobs <-chan schema.Task, wg *sync.WaitGroup) {
@@ -57,9 +61,12 @@ func worker(jobs <-chan schema.Task, wg *sync.WaitGroup) {
 	for job := range jobs {
 		_, articles, err := rss.FeedHandler(job.URL)
 		if err != nil {
-			fmt.Println(err)
+			log.Printf("Error handling feed %s: %v", job.URL, err)
+			continue
 		}
 
-		services.InsertArticles(job.Conn, articles, job.FeedId)
+		if err := services.InsertArticles(job.Conn, articles, job.FeedId); err != nil {
+			log.Printf("Error inserting articles for feed %s: %v", job.URL, err)
+		}
 	}
 }
