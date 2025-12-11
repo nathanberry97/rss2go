@@ -146,6 +146,8 @@ the following to save into an XML file to upload:
 
       <outline text="Nathan Berry" type="rss" xmlUrl="https://nathanberry.co.uk/feed.xml" />
 
+      <outline text="Raccoon’s Trash Can" type="rss" xmlUrl="https://raccoon.bearblog.dev/feed/?type=rss" />
+
     </outline>
   </body>
 </opml>
@@ -165,18 +167,20 @@ GET    /articles/{feedId}          # Articles by feed ID
 # HTMX Partials
 
 GET    /partials/articles          # All articles (partial)
-GET    /partials/articles/{id}     # All feed articles (partial)
+GET    /partials/articles/{id}     # All rss feed articles (partial)
+
 GET    /partials/favourite         # Favourite list (partial)
-GET    /partials/later             # Read-later list (partial)
-GET    /partials/feed              # Feed form (partial)
-GET    /partials/feed/opml         # OPML import form
-
 POST   /partials/favourite/{id}    # Mark article as favourite
-POST   /partials/later/{id}        # Save article for later
-POST   /partials/feed              # Add new feed
-POST   /partials/feed/opml         # Upload OPML file
-
 DELETE /partials/favourite/{id}    # Remove from favourite
+
+GET    /partials/later             # Read-later list (partial)
+POST   /partials/later/{id}        # Save article for later
 DELETE /partials/later/{id}        # Remove from read-later
-DELETE /partials/feed/{id}         # Delete feed
+
+GET    /partials/feed              # Feed form (partial)
+POST   /partials/feed              # Add new rss feed
+DELETE /partials/feed/{id}         # Delete rss feed
+
+GET    /partials/feed/opml         # OPML import form
+POST   /partials/feed/opml         # Upload OPML file
 ```

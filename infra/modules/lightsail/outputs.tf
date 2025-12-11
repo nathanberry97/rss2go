@@ -1,0 +1,1 @@
+output "instance_ip" { value = aws_lightsail_static_ip.app_ip.ip_address }
