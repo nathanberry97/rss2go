@@ -2,7 +2,3 @@ bin
 internal/database/rss.db
 web/static/css/*
 .DS_Store
-.terraform/
-*.tfstate
-*.tfstate.*
-.terraform.lock.hcl
