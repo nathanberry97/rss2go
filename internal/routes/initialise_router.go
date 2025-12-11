@@ -2,12 +2,20 @@ package routes
 
 import (
 	"html/template"
+	"os"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
 
 func InitialiseRouter(cssFile string) *gin.Engine {
 	router := gin.Default()
+
+	authEnabled, _ := strconv.ParseBool(os.Getenv("AUTH"))
+	if authEnabled {
+		router.Use(basicAuthMiddleware(os.Getenv("APP_USER"), os.Getenv("APP_PASS")))
+	}
+
 	router.Static("/static", "./web/static")
 	router.SetHTMLTemplate(template.Must(template.ParseFiles(
 		"web/templates/base.tmpl",
