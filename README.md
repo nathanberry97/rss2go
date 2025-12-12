@@ -85,6 +85,8 @@ This project uses the following technology:
 - [htmx](https://htmx.org/)
 - JavaScript
 
+---
+
 ## OPML
 
 The application supports OPML to bulk upload your feeds, to find this feature
@@ -191,10 +193,10 @@ POST   /partials/feed/opml         # Upload OPML file
 > rss2go.local with HTTPS using `Nginx` and `mkcert`, so browsers like Firefox
 > and Chrome trust it.
 
-1. First add your domain into `/etc/hosts`:
+### First add your domain into `/etc/hosts`
     - `127.0.0.1 rss2go.local`
 
-2. Install Nginx:
+### Install Nginx
 
 Fedora
 ```bash
@@ -209,7 +211,7 @@ brew install nginx
 brew services start nginx
 ```
 
-3. Install mkcert:
+### Install mkcert
 
 Fedora
 ```bash
@@ -226,7 +228,7 @@ mkcert -install
 > `mkcert -install` adds a trusted local CA to your system and Firefox
 > (if supported).
 
-4. Generate Certificates for rss2go.local:
+### Generate Certificates for rss2go.local
 
 ```bash
 mkcert rss2go.local
@@ -236,7 +238,7 @@ mv rss2go.local.pem rss2go.local-key.pem ~/.localCerts/
 
 > Move the certs to a permanent location, like in the example above
 
-5. (Optional) Firefox Certificate Import
+### (Optional) Firefox Certificate Import
 
 If Firefox does not trust the certificate:
 
@@ -251,7 +253,7 @@ mkcert -CAROOT
 - Import rootCA.pem
 - Check “Trust this CA to identify websites”
 
-6. Nginx Configuration:
+### Nginx Configuration:
 
 Fedora location - `/etc/nginx/conf.d/rss2go.local.conf`
 
@@ -285,7 +287,7 @@ server {
 
 > __Important__: Update certificate paths
 
-7. SELinux Note (Fedora Only):
+### SELinux Note (Fedora Only):
 
 If you get “502 Bad Gateway”, allow Nginx to connect to port 8000:
 
@@ -296,7 +298,7 @@ sudo systemctl reload nginx
 
 > MacOS users can ignore this.
 
-8. Validate and Reload Nginx:
+### Validate and Reload Nginx:
 
 Fedora
 ```bash
@@ -310,7 +312,7 @@ nginx -t
 brew services restart nginx
 ```
 
-9. Run Your Docker Container
+### Run Your Docker Container
 
 ```bash
 # Docker
@@ -346,7 +348,7 @@ podman run --name rss2go -dit \
 
 > Nginx proxies to http://127.0.0.1:8000.
 
-10. Open Your Site
+### Open Your Site
 
 Visit: `https://rss2go.local`
 
