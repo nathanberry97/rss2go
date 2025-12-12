@@ -2,8 +2,6 @@ package routes
 
 import (
 	"html/template"
-	"os"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
