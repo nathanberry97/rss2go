@@ -194,7 +194,8 @@ POST   /partials/feed/opml         # Upload OPML file
 > and Chrome trust it.
 
 ### First add your domain into `/etc/hosts`
-    - `127.0.0.1 rss2go.local`
+
+- `127.0.0.1 rss2go.local`
 
 ### Install Nginx
 
