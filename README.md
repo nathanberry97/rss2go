@@ -85,6 +85,8 @@ This project uses the following technology:
 - [htmx](https://htmx.org/)
 - JavaScript
 
+---
+
 ## OPML
 
 The application supports OPML to bulk upload your feeds, to find this feature
@@ -146,6 +148,8 @@ the following to save into an XML file to upload:
 
       <outline text="Nathan Berry" type="rss" xmlUrl="https://nathanberry.co.uk/feed.xml" />
 
+      <outline text="Raccoon’s Trash Can" type="rss" xmlUrl="https://raccoon.bearblog.dev/feed/?type=rss" />
+
     </outline>
   </body>
 </opml>
@@ -165,18 +169,188 @@ GET    /articles/{feedId}          # Articles by feed ID
 # HTMX Partials
 
 GET    /partials/articles          # All articles (partial)
-GET    /partials/articles/{id}     # All feed articles (partial)
+GET    /partials/articles/{id}     # All rss feed articles (partial)
+
 GET    /partials/favourite         # Favourite list (partial)
-GET    /partials/later             # Read-later list (partial)
-GET    /partials/feed              # Feed form (partial)
-GET    /partials/feed/opml         # OPML import form
-
 POST   /partials/favourite/{id}    # Mark article as favourite
-POST   /partials/later/{id}        # Save article for later
-POST   /partials/feed              # Add new feed
-POST   /partials/feed/opml         # Upload OPML file
-
 DELETE /partials/favourite/{id}    # Remove from favourite
+
+GET    /partials/later             # Read-later list (partial)
+POST   /partials/later/{id}        # Save article for later
 DELETE /partials/later/{id}        # Remove from read-later
-DELETE /partials/feed/{id}         # Delete feed
+
+GET    /partials/feed              # Feed form (partial)
+POST   /partials/feed              # Add new rss feed
+DELETE /partials/feed/{id}         # Delete rss feed
+
+GET    /partials/feed/opml         # OPML import form
+POST   /partials/feed/opml         # Upload OPML file
 ```
+
+## Local Domain + HTTPS Setup for rss2go.local (Fedora & MacOS)
+
+> This guide shows how to serve your local Container via a custom domain
+> rss2go.local with HTTPS using `Nginx` and `mkcert`, so browsers like Firefox
+> and Chrome trust it.
+
+### First add your domain into `/etc/hosts`
+
+- `127.0.0.1 rss2go.local`
+
+### Install Nginx
+
+Fedora
+```bash
+sudo dnf install -y nginx
+sudo systemctl enable nginx
+sudo systemctl start nginx
+```
+
+MacOS (Homebrew)
+```bash
+brew install nginx
+brew services start nginx
+```
+
+### Install mkcert
+
+Fedora
+```bash
+sudo dnf install mkcert
+mkcert -install
+```
+
+MacOS
+```bash
+brew install mkcert
+mkcert -install
+```
+
+> `mkcert -install` adds a trusted local CA to your system and Firefox
+> (if supported).
+
+### Generate Certificates for rss2go.local
+
+```bash
+mkcert rss2go.local
+mkdir -p ~/.localCerts
+mv rss2go.local.pem rss2go.local-key.pem ~/.localCerts/
+```
+
+> Move the certs to a permanent location, like in the example above
+
+### (Optional) Firefox Certificate Import
+
+If Firefox does not trust the certificate:
+
+``` bash
+mkcert -CAROOT
+```
+
+- Then import rootCA.pem into Firefox:
+- Open about:preferences
+- Go to Privacy & Security
+- Scroll to Certificates → View Certificates → Authorities
+- Import rootCA.pem
+- Check “Trust this CA to identify websites”
+
+### Nginx Configuration:
+
+Fedora location - `/etc/nginx/conf.d/rss2go.local.conf`
+
+MacOS location - `/usr/local/etc/nginx/servers/rss2go.local.conf`
+
+```txt
+# Redirect HTTP to HTTPS
+server {
+    listen 80;
+    server_name rss2go.local;
+    return 301 https://$host$request_uri;
+}
+
+# HTTPS server block
+server {
+    listen 443 ssl;
+    server_name rss2go.local;
+
+    ssl_certificate /home/example/.localCerts/rss2go.local.pem;
+    ssl_certificate_key /home/example/.localCerts/rss2go.local-key.pem;
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+> __Important__: Update certificate paths
+
+### SELinux Note (Fedora Only):
+
+If you get “502 Bad Gateway”, allow Nginx to connect to port 8000:
+
+```bash
+sudo semanage port -a -t http_port_t -p tcp 8000
+sudo systemctl reload nginx
+```
+
+> MacOS users can ignore this.
+
+### Validate and Reload Nginx:
+
+Fedora
+```bash
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+MacOS
+```bash
+nginx -t
+brew services restart nginx
+```
+
+### Run Your Docker Container
+
+```bash
+# Docker
+docker pull nathanberry97/rss2go:latest
+
+# Podman
+podman pull docker.io/nathanberry97/rss2go:latest
+```
+
+By default, rss2go expects its database at `internal/database/rss.db` inside
+the container.
+To persist it on your host machine (e.g., at `~/.config/rss2go/rss.db`),
+mount it as a volume:
+
+```bash
+mkdir -p ~/.config/rss2go
+touch ~/.config/rss2go/rss.db
+
+# Docker volume mount
+docker run --name rss2go -dit \
+  -p 8000:8080 \
+  -v ~/.config/rss2go/rss.db:/app/internal/database/rss.db \
+  --restart=always \
+  nathanberry97/rss2go:latest
+
+# Podman volume mount with SELinux context
+podman run --name rss2go -dit \
+  -p 8000:8080 \
+  -v ~/.config/rss2go/rss.db:/app/internal/database/rss.db:Z \
+  --restart=always \
+  docker.io/nathanberry97/rss2go:latest
+```
+
+> Nginx proxies to http://127.0.0.1:8000.
+
+### Open Your Site
+
+Visit: `https://rss2go.local`
+
+> You should see your application with a valid trusted HTTPS certificate.

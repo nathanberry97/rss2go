@@ -51,6 +51,8 @@
 
       <outline text="Nathan Berry" type="rss" xmlUrl="https://nathanberry.co.uk/feed.xml" />
 
+      <outline text="Raccoon’s Trash Can" type="rss" xmlUrl="https://raccoon.bearblog.dev/feed/?type=rss" />
+
     </outline>
   </body>
 </opml>
