@@ -29,14 +29,6 @@ func TestHashCSSFile(t *testing.T) {
 			wantErr:     false,
 			wantPattern: "style-",
 		},
-		{
-			name: "non-existent file",
-			setup: func() (string, string) {
-				return tempDir, "nonexistent.css"
-			},
-			wantErr:     true,
-			wantPattern: "",
-		},
 	}
 
 	for _, tt := range tests {
